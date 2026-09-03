@@ -30,7 +30,22 @@ body {
   }
 }
 
+h2 {
+  font-size: 5rem;
+  line-height: 5.2rem;
+}
+
 h4 {
   font-size: 3rem;
   line-height: 3.2rem;
+}
+
+h5 {
+  font-size: 2rem;
+  line-height: 2.2rem;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.2rem;
 }

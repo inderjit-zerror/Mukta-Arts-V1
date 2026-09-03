@@ -1,4 +1,5 @@
 import React from 'react';
+import HeadphonesCanvas from './HeadphonesModel';
 
 const Hero = () => {
   return (
@@ -12,7 +13,8 @@ const Hero = () => {
         </h1>
       </div>
 
-
+      {/* 3D Headphones Model */}
+      <HeadphonesCanvas />
 
       {/* Bottom Left Content */}
       <div className=" z-20 max-w-[280px] md:max-w-[340px]  justify-start mr-auto">

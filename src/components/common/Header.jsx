@@ -18,12 +18,31 @@ const Header = () => {
   const { contextSafe } = useGSAP({ scope: containerRef });
 
   const menuItems = [
-    "FILMS",
-    "WHO WE ARE",
-    "SGM STUDIO",
-    "WHISTLING WOODS",
-    "MUKTA A2 CINEMAS",
-    "SUBMIT SCRIPT"
+    {
+      name: "WORK IN PROGRESS",
+      url: '/work-in-progress'
+    },
+    {
+      name: "WHO WE ARE",
+      url: '/'
+    },
+    {
+      name: "SGM STUDIO",
+      url: '/'
+    },
+    {
+      name: "WHISTLING WOODS",
+      url: '/'
+    },
+    {
+      name: "MUKTA A2 CINEMAS",
+      url: '/'
+    },
+    {
+      name: "SUBMIT SCRIPT",
+      url: '/'
+    },
+
   ];
 
   useGSAP(() => {
@@ -118,9 +137,9 @@ const Header = () => {
       >
         <button
           ref={menuButtonRef}
-          className="relative flex items-center justify-center gap-3 bg-[#111] text-white px-4 py-2 rounded-full overflow-hidden group hover:bg-[#222] transition-colors duration-300"
+          className="relative flex items-center justify-center gap-3 bg-[#111] text-white px-7 py-1  overflow-hidden group hover:bg-[#222] transition-colors duration-300"
         >
-          <div className="absolute inset-0 bg-[#4E829F] translate-y-[101%] rounded-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
+          <div className="absolute inset-0 bg-[#4E829F] translate-y-[101%]  group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
           <span
             ref={menuTextRef}
             className="relative z-10  transition-colors duration-500 delay-100 block"
@@ -147,10 +166,10 @@ const Header = () => {
           <div className="w-0 h-[1px] bg-white/80 menu-line"></div>
           {menuItems.map((item, index) => (
             <React.Fragment key={index}>
-              <a href="#" className="py-1 block overflow-hidden group">
+              <a href={item.url} className="py-1 block overflow-hidden group">
                 <div className="menu-item-text translate-y-full text-white">
                   <h4 className="inline-block font-light! transform origin-left transition-all duration-300 ease-out  group-hover:-skew-x-17  ">
-                    {item}
+                    {item.name}
                   </h4>
                 </div>
               </a>
