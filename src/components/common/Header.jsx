@@ -3,6 +3,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { usePathname, useRouter } from 'next/navigation';
 
 const Header = () => {
   const containerRef = useRef(null);
@@ -14,39 +15,14 @@ const Header = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const tl = useRef();
+  const router = useRouter();
+  const pathname = usePathname();
+  const isTransitioningRef = useRef(false);
 
   const { contextSafe } = useGSAP({ scope: containerRef });
 
-  const menuItems = [
-    {
-      name: "WORK IN PROGRESS",
-      url: '/work-in-progress'
-    },
-    {
-      name: "WHO WE ARE",
-      url: '/'
-    },
-    {
-      name: "SGM STUDIO",
-      url: '/'
-    },
-    {
-      name: "WHISTLING WOODS",
-      url: '/'
-    },
-    {
-      name: "MUKTA A2 CINEMAS",
-      url: '/'
-    },
-    {
-      name: "SUBMIT SCRIPT",
-      url: '/'
-    },
-
-  ];
-
-  useGSAP(() => {
-    // Menu reveal timeline
+  const createTimeline = contextSafe(() => {
+    if (tl.current) tl.current.kill();
     tl.current = gsap.timeline({ paused: true });
 
     tl.current.to(menuOverlayRef.current, {
@@ -75,7 +51,10 @@ const Header = () => {
         duration: 0.5,
         ease: "power2.out"
       }, "-=0.5");
+  });
 
+  useGSAP(() => {
+    createTimeline();
   }, { scope: containerRef });
 
   useEffect(() => {
@@ -85,6 +64,57 @@ const Header = () => {
       tl.current.reverse();
     }
   }, [isMenuOpen]);
+
+  const handleLinkClick = (e, href) => {
+    e.preventDefault();
+    if (isTransitioningRef.current) return;
+
+    // If clicking the current page, just close the menu
+    if (href === pathname || href === pathname + '/') {
+      setIsMenuOpen(false);
+      return;
+    }
+
+    isTransitioningRef.current = true;
+
+    // Fade out menu contents
+    gsap.to('.menu-item-text, .menu-line', { opacity: 0, duration: 0.3, ease: 'power2.inOut' });
+    gsap.to(closeButtonRef.current, { opacity: 0, duration: 0.3, ease: 'power2.inOut' });
+
+    // Expand menu to cover screen
+    gsap.to(menuOverlayRef.current, {
+      width: '100vw',
+      duration: 0.8,
+      ease: 'power3.inOut',
+      onComplete: () => {
+        router.push(href);
+      }
+    });
+  };
+
+  useEffect(() => {
+    // If the pathname changed and we are in the middle of a transition, slide it out
+    if (isTransitioningRef.current) {
+      gsap.to(menuOverlayRef.current, {
+        x: '-100%',
+        duration: 0.8,
+        ease: 'power3.inOut',
+        delay: 0.1, // brief delay to allow new page to render
+        onComplete: () => {
+          setIsMenuOpen(false);
+          isTransitioningRef.current = false;
+
+          // Reset styles to CSS defaults
+          gsap.set(menuOverlayRef.current, { clearProps: 'all' });
+          gsap.set('.menu-item-text, .menu-line', { clearProps: 'all' });
+          gsap.set(closeButtonRef.current, { clearProps: 'all' });
+
+          // Rebuild the menu timeline to prevent GSAP overwrite issues
+          createTimeline();
+        }
+      });
+    }
+  }, [pathname]);
 
   const handleMouseMove = contextSafe((e) => {
     if (isMenuOpen) return; // Don't do magnetic effect if menu is open
@@ -164,9 +194,17 @@ const Header = () => {
 
         <div className="flex flex-col w-full relative mt-[20vh] mb-auto">
           <div className="w-0 h-[1px] bg-white/80 menu-line"></div>
-          {menuItems.map((item, index) => (
+          {[
+            { name: "HOME", url: '/' },
+            { name: "WORK IN PROGRESS", url: '/work-in-progress' },
+            { name: "WHO WE ARE", url: '/' },
+            { name: "SGM STUDIO", url: '/' },
+            { name: "WHISTLING WOODS", url: '/' },
+            { name: "MUKTA A2 CINEMAS", url: '/' },
+            { name: "SUBMIT SCRIPT", url: '/' }
+          ].map((item, index) => (
             <React.Fragment key={index}>
-              <a href={item.url} className="py-1 block overflow-hidden group">
+              <a href={item.url} onClick={(e) => handleLinkClick(e, item.url)} className="py-1 block overflow-hidden group">
                 <div className="menu-item-text translate-y-full text-white">
                   <h4 className="inline-block font-light! transform origin-left transition-all duration-300 ease-out  group-hover:-skew-x-17  ">
                     {item.name}
