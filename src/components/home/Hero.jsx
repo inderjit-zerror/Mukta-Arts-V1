@@ -22,7 +22,7 @@ const Hero = () => {
           Share your script with Mukta Arts and give your idea the opportunity to grow into a powerful cinematic experience
         </p>
         <button className="bg-[#4e829f] hover:bg-[#3d6982] text-white px-5 py-2.5 text-xs md:text-sm tracking-wide font-medium rounded-[3px] flex items-center gap-3 transition-colors cursor-pointer group">
-          Submit script
+          About Us
           <span className="text-lg leading-none transform group-hover:translate-x-1 transition-transform">→</span>
         </button>
       </div>

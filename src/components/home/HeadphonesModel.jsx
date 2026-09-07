@@ -21,7 +21,7 @@ export function Model(props) {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: document.body,
-          start: "top top",
+          start: "top -49%",
           end: "100vh top", // Finishes when you've scrolled past the hero (100vh)
           scrub: 1, // Smooth animation linked to scroll
           onUpdate: (self) => {
@@ -51,6 +51,55 @@ export function Model(props) {
         y: 3, // Moves up towards the top edge of the camera (navbar)
         ease: "power2.inOut"
       }, 0);
+
+      // Animate the headphones into the footer when it comes into view
+      let mm = gsap.matchMedia();
+
+      mm.add("(min-width: 1024px)", () => {
+        const footerTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: "#footer",
+            start: "top bottom",
+            end: "top 20%",
+            scrub: 1,
+          }
+        });
+
+        footerTl.to(groupRef.current.scale, {
+          x: 11, y: 11, z: 11, ease: "power2.inOut"
+        }, 0);
+
+        footerTl.to(groupRef.current.position, {
+          x: -3, y: -0.5, z: 0, ease: "power2.inOut"
+        }, 0);
+
+        footerTl.to(groupRef.current.rotation, {
+          y: Math.PI / 4, ease: "power2.inOut"
+        }, 0);
+      });
+
+      mm.add("(max-width: 1023px)", () => {
+        const footerTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: "#footer",
+            start: "top bottom",
+            end: "top 20%",
+            scrub: 1,
+          }
+        });
+
+        footerTl.to(groupRef.current.scale, {
+          x: 8, y: 8, z: 8, ease: "power2.inOut"
+        }, 0);
+
+        footerTl.to(groupRef.current.position, {
+          x: 0, y: 1, z: 0, ease: "power2.inOut"
+        }, 0);
+
+        footerTl.to(groupRef.current.rotation, {
+          y: Math.PI / 4, ease: "power2.inOut"
+        }, 0);
+      });
     });
 
     return () => ctx.revert();
@@ -78,13 +127,6 @@ export default function HeadphonesCanvas() {
           {/* We scale the model based on the viewport to make it responsive, but 1.5 is a good start */}
           <Model position={[0, 0.2, 0]} scale={11} />
 
-          {/* <ContactShadows
-            position={[0, -3, 0]}
-            opacity={0.6}
-            scale={15}
-            blur={2.5}
-            far={4}
-          /> */}
           <OrbitControls
             enableZoom={false}
             enablePan={false}

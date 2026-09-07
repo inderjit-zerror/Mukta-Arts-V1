@@ -182,7 +182,7 @@ const Header = () => {
       {/* Side Menu Overlay */}
       <div
         ref={menuOverlayRef}
-        className="fixed top-0 right-0 w-full md:w-[50vw] h-[100svh] bg-[#1a1a1a] translate-x-full pointer-events-auto flex flex-col justify-center px-8 md:px-20 z-50 shadow-2xl"
+        className="fixed top-0 right-0 w-full md:w-[50vw] h-[100svh] bg-[#4E829F] translate-x-full pointer-events-auto flex flex-col justify-center px-8 md:px-20 z-50 shadow-2xl"
       >
         <button
           ref={closeButtonRef}
