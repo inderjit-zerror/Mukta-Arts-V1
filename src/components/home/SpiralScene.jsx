@@ -1,0 +1,392 @@
+"use client";
+
+import React, { useRef, useMemo, Suspense } from "react";
+import { Canvas, useFrame, extend } from "@react-three/fiber";
+import { shaderMaterial, useTexture } from "@react-three/drei";
+import * as THREE from "three";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+// =============================================
+// Constants extracted from the reference code
+// =============================================
+const RADIUS = 12;
+const SPIRAL_TURNS = 2;
+const TWO_PI = 2 * Math.PI;
+const TOTAL_ANGLE = TWO_PI * SPIRAL_TURNS; // 4π
+const RISE_RATE = 28 / TOTAL_ANGLE; // b ≈ 2.228 — vertical rise per radian
+const ARC_PER_RAD = Math.sqrt(RADIUS * RADIUS + RISE_RATE * RISE_RATE); // x ≈ 12.205
+const TOTAL_ARC = TOTAL_ANGLE * ARC_PER_RAD; // y ≈ 153.3 — total spiral arc length
+
+const NUM_CARDS = 9;
+const CARD_ARC_LENGTH = 5.8 * 1.15; // arc length each card spans — 15% bigger
+const CARD_SPACING = 6 * 1.18; // arc length between successive card starts — scaled to match
+const CARD_ASPECT = 5 / 7.5; // 16:9 aspect-video (height/width)
+const CARD_HEIGHT = CARD_ARC_LENGTH * CARD_ASPECT; // ≈ 3.75
+const TOTAL_CARDS_LENGTH = (NUM_CARDS - 1) * CARD_SPACING + CARD_ARC_LENGTH; // 55.4
+const SEGMENTS_X = 116; // horizontal subdivisions per card mesh
+
+// Placeholder images (9 cards)
+const images = [
+  "/img/home/1.jpg",
+  "/img/home/2.jpg",
+  "/img/home/3.jpg",
+  "/img/home/4.jpg",
+  "/img/home/5.jpg",
+  "/img/home/6.jpg",
+  "/img/home/7.jpg",
+  "/img/home/8.jpg",
+  "/img/home/9.jpg",
+
+];
+
+// =============================================
+// Custom Shader Material
+// SDF rounded corners + gl_FrontFacing backface
+// =============================================
+const CardShaderMaterial = shaderMaterial(
+  {
+    uTexture: new THREE.Texture(),
+    uSize: new THREE.Vector2(CARD_ARC_LENGTH, CARD_HEIGHT),
+    uRadius: 0.0,
+  },
+  // Vertex Shader
+  /* glsl */ `
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  // Fragment Shader
+  /* glsl */ `
+    uniform sampler2D uTexture;
+    varying vec2 vUv;
+
+    void main() {
+      vec2 uv = vUv;
+
+      // Flip UV vertically so images appear right-side up
+      uv.y = 1.0 - uv.y;
+
+      // Flip UV horizontally on backface so the image isn't mirrored
+      if (!gl_FrontFacing) {
+        uv.x = 1.0 - uv.x;
+      }
+
+      vec4 tex = texture2D(uTexture, uv);
+      gl_FragColor = tex;
+    }
+  `
+);
+
+extend({ CardShaderMaterial });
+
+// =============================================
+// Vertex-level spiral deformation
+// Exactly replicates the reference SpiralScroll.js
+// =============================================
+function placeCardOnSpiral(geometry, arcPos, uvWrittenMap, cardIdx, scale = 1) {
+  const positions = geometry.attributes.position;
+  const uvs = geometry.attributes.uv;
+  const scaledArc = CARD_ARC_LENGTH * scale;
+  const scaledHeight = CARD_HEIGHT * scale;
+  const halfH = scaledHeight * 0.5;
+  // Center the scale: offset so the card grows equally from its center
+  const startArc = arcPos - (scaledArc - CARD_ARC_LENGTH) * 0.5;
+
+  for (let col = 0; col <= SEGMENTS_X; col++) {
+    const u = col / SEGMENTS_X; // 0 → 1 across card width
+    const arcAtCol = startArc + u * scaledArc;
+    const theta = arcAtCol / ARC_PER_RAD; // convert arc length → angle
+
+    const cosT = Math.cos(theta);
+    const sinT = Math.sin(theta);
+
+    // Gaussian dip near the spiral midpoint (reference: V = 2π)
+    const dt = (theta - TWO_PI) / 2;
+    const gaussVal = 2.5 * Math.exp(-dt * dt);
+    const gaussDeriv = -2 * dt / 2 * gaussVal; // = -dt * gaussVal
+
+    // Spiral center point
+    // Clockwise: negate sin for Z so cards rotate clockwise from above
+    const cx = RADIUS * cosT;
+    const cy = -16 + theta * RISE_RATE - gaussVal;
+    const cz = RADIUS * sinT; // negated for clockwise
+
+    // Cards stand perfectly vertical (like a cylinder)
+    // Top and bottom edges are always horizontal — no tilt
+    const bx = 0;
+    const by = 1;
+    const bz = 0;
+
+    // PlaneGeometry(1,1,116,1) vertex layout:
+    //   Row 0 (indices 0..116)      = top    (default y = +0.5)
+    //   Row 1 (indices 117..233)     = bottom (default y = -0.5)
+
+    // Top vertex (+halfH along Y)
+    const topIdx = col;
+    positions.setXYZ(
+      topIdx,
+      cx,
+      cy + halfH,
+      cz
+    );
+
+    // Bottom vertex (-halfH along Y)
+    const botIdx = (SEGMENTS_X + 1) + col;
+    positions.setXYZ(
+      botIdx,
+      cx,
+      cy - halfH,
+      cz
+    );
+
+    // Write UVs once
+    if (!uvWrittenMap[cardIdx]) {
+      uvs.setXY(topIdx, u, 0); // top row → bottom of texture (fixes Y inversion)
+      uvs.setXY(botIdx, u, 1); // bottom row → top of texture
+    }
+  }
+
+  positions.needsUpdate = true;
+  if (!uvWrittenMap[cardIdx]) {
+    uvs.needsUpdate = true;
+    uvWrittenMap[cardIdx] = true;
+  }
+}
+
+// =============================================
+// SpiralCards — the 3D scene content
+// =============================================
+const SpiralCards = ({ progressRef }) => {
+  const meshRefs = useRef([]);
+  const textures = useTexture(images);
+  const uvWritten = useRef({});
+  const smoothP = useRef(0);
+  const hoverStates = useRef(new Array(NUM_CARDS).fill(false));
+  const hoverScales = useRef(new Array(NUM_CARDS).fill(1));
+
+  // Create one PlaneGeometry per card (shared would cause conflicts)
+  const geometries = useMemo(() => {
+    return images.map(() => {
+      const geo = new THREE.PlaneGeometry(1, 1, SEGMENTS_X, 1);
+      // Disable frustum culling by expanding bounds
+      geo.boundingBox = new THREE.Box3(
+        new THREE.Vector3(-1000, -1000, -1000),
+        new THREE.Vector3(1000, 1000, 1000)
+      );
+      geo.boundingSphere = new THREE.Sphere(new THREE.Vector3(0, 0, 0), 1000);
+      return geo;
+    });
+  }, []);
+
+  useFrame((_, delta) => {
+    // Smooth interpolation of scroll progress
+    const target = progressRef.current;
+    smoothP.current += (target - smoothP.current) * 0.1;
+    const p = smoothP.current;
+
+    // Reference formula for arc offset:
+    //   offset = p * (TOTAL_ARC + TOTAL_CARDS_LENGTH) - TOTAL_CARDS_LENGTH + 25
+    const arcOffset =
+      p * (TOTAL_ARC + TOTAL_CARDS_LENGTH) - TOTAL_CARDS_LENGTH + 25;
+
+    // Smoothly interpolate hover scales
+    const lerpSpeed = 1 - Math.pow(0.001, delta);
+    for (let i = 0; i < NUM_CARDS; i++) {
+      const targetScale = hoverStates.current[i] ? 1.1 : 1;
+      hoverScales.current[i] += (targetScale - hoverScales.current[i]) * lerpSpeed;
+    }
+
+    for (let i = 0; i < NUM_CARDS; i++) {
+      const mesh = meshRefs.current[i];
+      if (!mesh) continue;
+
+      const cardArcPos = arcOffset + CARD_SPACING * i;
+      const visible = p < 0.999 && cardArcPos > 0 && cardArcPos < TOTAL_ARC;
+
+      mesh.visible = visible;
+      if (!visible) continue;
+
+      // Deform mesh vertices to follow the spiral (with hover scale)
+      placeCardOnSpiral(
+        mesh.geometry,
+        Math.min(cardArcPos, TOTAL_ARC - 0.001),
+        uvWritten.current,
+        i,
+        hoverScales.current[i]
+      );
+
+      // Set renderOrder higher for hovered cards so they appear on top
+      mesh.renderOrder = hoverStates.current[i] ? 10 : 1;
+
+      // Reset transform — vertex positions are already in world space
+      mesh.position.set(0, 0, 0);
+      mesh.rotation.set(0, 0, 0);
+      mesh.scale.set(1, 1, 1);
+    }
+  });
+
+  return (
+    <group>
+      {images.map((_, i) => (
+        <mesh
+          key={i}
+          ref={(el) => {
+            meshRefs.current[i] = el;
+          }}
+          visible={false}
+          frustumCulled={false}
+          renderOrder={1}
+          onPointerOver={(e) => {
+            e.stopPropagation();
+            hoverStates.current[i] = true;
+            document.body.style.cursor = "pointer";
+          }}
+          onPointerOut={() => {
+            hoverStates.current[i] = false;
+            document.body.style.cursor = "auto";
+          }}
+        >
+          <primitive object={geometries[i]} attach="geometry" />
+          <cardShaderMaterial
+            uTexture={textures[i]}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+};
+
+// =============================================
+// Main exported component
+// =============================================
+export default function SpiralScene() {
+  const containerRef = useRef(null);
+  const progressRef = useRef(0);
+
+  const timelineRef = useRef(null);
+
+  useGSAP(
+    () => {
+      timelineRef.current = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true,
+        },
+      });
+
+      // 1. First, animate the 3D spiral from start to finish
+      // By tweening progressRef.current, the spiral completes before moving to the next animation.
+      timelineRef.current.to(progressRef, {
+        current: 1,
+        duration: 1,
+        ease: "none"
+      });
+
+      // 2. THEN, after the spiral is completely finished, run the next animation
+      timelineRef.current.to(".NAMEDIV1", {
+        opacity: 0,
+        y: -50,
+        duration: 0.5
+      }, 'aa1');
+
+      // 3. Make the OUTIMAGES animate automatically (not scrubbed) when we reach 'aa1'
+
+      // First, set their initial position outside the screen so they are hidden
+      gsap.set(".OUTIMAGES", { y: "-100vh" });
+
+      // Then add a dummy tween at 'aa1' just to act as a trigger point in the scrub timeline
+      timelineRef.current.to({}, {
+        duration: 0.1, // Small duration to give it a tiny bit of scroll space
+        onStart: () => {
+          // Trigger automatic forward animation
+          gsap.to(".OUTIMAGES", {
+            y: "0",
+            stagger: 0.1,
+            duration: 0.8,
+            ease: "power3.out",
+            overwrite: "auto"
+          });
+        },
+        onReverseComplete: () => {
+          // Trigger automatic reverse animation if user scrolls back up
+          gsap.to(".OUTIMAGES", {
+            y: "-100vh",
+            stagger: 0.1,
+            duration: 0.5,
+            ease: "power3.in",
+            overwrite: "auto"
+          });
+        }
+      }, 'aa1');
+    },
+    { scope: containerRef }
+  );
+
+  return (
+    <div
+      ref={containerRef}
+      className="w-full h-[400vh] relative bg-[white]"
+    >
+
+      <div className="sticky top-0 w-full h-screen overflow-hidden">
+
+        <div className=" NAMEDIV1 absolute top-0 left-0 z-[-1]  w-full h-full flex justify-center items-center">
+          <h2 className="font-bold tracking-tighter">Films.</h2>
+        </div>
+        <div className=" NAMEDIV2 absolute top-0 left-0 z-[0]  w-full h-full flex justify-center items-center">
+
+          <div className="w-[60vw] h-fit grid grid-cols-3 grid-rows-3 gap-2 ">
+            <div className="w-full aspect-video ">
+              <img src={"/img/home/1.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
+            </div>
+            <div className="w-full aspect-video ">
+              <img src={"/img/home/2.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
+
+            </div>
+            <div className="w-full aspect-video ">
+              <img src={"/img/home/3.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
+            </div>
+            <div className="w-full aspect-video ">
+              <img src={"/img/home/4.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
+            </div>
+            <div className="w-full aspect-video ">
+              <img src={"/img/home/5.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
+            </div>
+            <div className="w-full aspect-video ">
+              <img src={"/img/home/6.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
+            </div>
+            <div className="w-full aspect-video ">
+              <img src={"/img/home/7.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
+            </div>
+            <div className="w-full aspect-video ">
+              <img src={"/img/home/8.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
+            </div>
+            <div className="w-full aspect-video ">
+              <img src={"/img/home/9.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
+            </div>
+          </div>
+        </div>
+
+        <Canvas
+          className=""
+          camera={{ position: [0, 0, 22], fov: 52 }}
+          gl={{ antialias: true, alpha: true }}
+          style={{ background: "transparent" }}
+        >
+          <Suspense fallback={null}>
+            <SpiralCards progressRef={progressRef} />
+          </Suspense>
+        </Canvas>
+      </div>
+    </div>
+  );
+}

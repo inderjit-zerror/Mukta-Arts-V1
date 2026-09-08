@@ -1,7 +1,8 @@
 "use client"
 import React, { useRef, useEffect } from 'react';
-import { useGLTF, Environment, OrbitControls, ContactShadows, Float } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
+import { useGLTF, Environment } from '@react-three/drei';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import * as THREE from 'three';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 
@@ -12,26 +13,109 @@ if (typeof window !== 'undefined') {
 export function Model(props) {
   const { scene } = useGLTF('/model/headphones.glb');
   const groupRef = useRef();
+  const spinRef = useRef();
+  const { size, camera } = useThree();
+
+  const stateRef = useRef({ footerProgress: 0 });
+  const isDragging = useRef(false);
+  const previousMouse = useRef({ x: 0, y: 0 });
+  const targetRotation = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handlePointerDown = (e) => {
+      // Allow dragging everywhere
+      isDragging.current = true;
+      previousMouse.current = { x: e.clientX, y: e.clientY };
+    };
+    const handlePointerUp = () => {
+      isDragging.current = false;
+    };
+    const handlePointerMove = (e) => {
+      if (isDragging.current) {
+        const deltaX = e.clientX - previousMouse.current.x;
+        const deltaY = e.clientY - previousMouse.current.y;
+        targetRotation.current.y += deltaX * 0.01;
+        targetRotation.current.x += deltaY * 0.01;
+        previousMouse.current = { x: e.clientX, y: e.clientY };
+      }
+    };
+
+    window.addEventListener('pointerdown', handlePointerDown);
+    window.addEventListener('pointerup', handlePointerUp);
+    window.addEventListener('pointermove', handlePointerMove);
+
+    return () => {
+      window.removeEventListener('pointerdown', handlePointerDown);
+      window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('pointermove', handlePointerMove);
+    };
+  }, []);
+
+  useFrame((state, delta) => {
+    // 1. Follow the footer div position
+    if (groupRef.current) {
+      const footerProgress = stateRef.current.footerProgress;
+
+      if (footerProgress > 0) {
+        const targetDiv = document.getElementById('footer-headphone');
+        if (targetDiv) {
+          const rect = targetDiv.getBoundingClientRect();
+          // Map center of the div in screen coordinates (-1 to 1)
+          const x = ((rect.left + rect.width / 2) / size.width) * 2 - 1;
+          const y = -((rect.top + rect.height / 2) / size.height) * 2 + 1;
+
+          // Unproject to 3D space
+          const vector = new THREE.Vector3(x, y, 0);
+          vector.unproject(camera);
+          const dir = vector.sub(camera.position).normalize();
+          const distance = -camera.position.z / dir.z;
+          const targetPos = camera.position.clone().add(dir.multiplyScalar(distance));
+
+          const startX = 0;
+          const startY = 3;
+
+          // Eased progress for smooth transition matching GSAP
+          const easeProgress = footerProgress < 0.5
+            ? 2 * footerProgress * footerProgress
+            : 1 - Math.pow(-2 * footerProgress + 2, 2) / 2;
+
+          groupRef.current.position.x = startX + (targetPos.x - startX) * easeProgress;
+          groupRef.current.position.y = startY + (targetPos.y - startY) * easeProgress;
+          groupRef.current.position.z = targetPos.z * easeProgress;
+        }
+      }
+    }
+
+    // 2. Mouse Rotation
+    if (spinRef.current) {
+      // Smoothly interpolate current rotation to target drag rotation
+      spinRef.current.rotation.y = THREE.MathUtils.lerp(spinRef.current.rotation.y, targetRotation.current.y, 0.1);
+      spinRef.current.rotation.x = THREE.MathUtils.lerp(spinRef.current.rotation.x, targetRotation.current.x, 0.1);
+
+      // Auto rotate locally when in hero and not dragging
+      if (stateRef.current.footerProgress === 0 && !isDragging.current) {
+        targetRotation.current.y += delta * 0.5;
+      }
+    }
+  });
 
   useEffect(() => {
     if (!groupRef.current) return;
 
-    // Animate the headphones into the navbar when scrolling
     const ctx = gsap.context(() => {
+      // Hero to Navbar timeline
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: document.body,
           start: "top -49%",
-          end: "100vh top", // Finishes when you've scrolled past the hero (100vh)
-          scrub: 1, // Smooth animation linked to scroll
+          end: "100vh top",
+          scrub: 1,
           onUpdate: (self) => {
             const canvasContainer = document.getElementById('3d-canvas-container');
             if (canvasContainer) {
-              // Disable interactions on the 3D model when scrolled down
-              // so the user can interact with the video section and background
-              if (self.progress > 0.05) {
+              if (self.progress > 0.05 && stateRef.current.footerProgress === 0) {
                 canvasContainer.style.pointerEvents = 'none';
-              } else {
+              } else if (stateRef.current.footerProgress === 0) {
                 canvasContainer.style.pointerEvents = 'auto';
               }
             }
@@ -39,20 +123,10 @@ export function Model(props) {
         }
       });
 
-      // Target scale and position in the navbar
-      tl.to(groupRef.current.scale, {
-        x: 1,
-        y: 1,
-        z: 1,
-        ease: "power2.inOut"
-      }, 0);
+      tl.to(groupRef.current.scale, { x: 1, y: 1, z: 1, ease: "power2.inOut" }, 0);
+      tl.to(groupRef.current.position, { y: 3, ease: "power2.inOut" }, 0);
 
-      tl.to(groupRef.current.position, {
-        y: 3, // Moves up towards the top edge of the camera (navbar)
-        ease: "power2.inOut"
-      }, 0);
-
-      // Animate the headphones into the footer when it comes into view
+      // Footer timeline setup
       let mm = gsap.matchMedia();
 
       mm.add("(min-width: 1024px)", () => {
@@ -62,20 +136,12 @@ export function Model(props) {
             start: "top bottom",
             end: "top 20%",
             scrub: 1,
+            onUpdate: (self) => {
+              stateRef.current.footerProgress = self.progress;
+            }
           }
         });
-
-        footerTl.to(groupRef.current.scale, {
-          x: 11, y: 11, z: 11, ease: "power2.inOut"
-        }, 0);
-
-        footerTl.to(groupRef.current.position, {
-          x: -3, y: -0.5, z: 0, ease: "power2.inOut"
-        }, 0);
-
-        footerTl.to(groupRef.current.rotation, {
-          y: Math.PI / 4, ease: "power2.inOut"
-        }, 0);
+        footerTl.to(groupRef.current.scale, { x: 11, y: 11, z: 11, ease: "power2.inOut" }, 0);
       });
 
       mm.add("(max-width: 1023px)", () => {
@@ -85,20 +151,12 @@ export function Model(props) {
             start: "top bottom",
             end: "top 20%",
             scrub: 1,
+            onUpdate: (self) => {
+              stateRef.current.footerProgress = self.progress;
+            }
           }
         });
-
-        footerTl.to(groupRef.current.scale, {
-          x: 8, y: 8, z: 8, ease: "power2.inOut"
-        }, 0);
-
-        footerTl.to(groupRef.current.position, {
-          x: 0, y: 1, z: 0, ease: "power2.inOut"
-        }, 0);
-
-        footerTl.to(groupRef.current.rotation, {
-          y: Math.PI / 4, ease: "power2.inOut"
-        }, 0);
+        footerTl.to(groupRef.current.scale, { x: 8, y: 8, z: 8, ease: "power2.inOut" }, 0);
       });
     });
 
@@ -107,7 +165,9 @@ export function Model(props) {
 
   return (
     <group ref={groupRef} {...props}>
-      <primitive object={scene} />
+      <group ref={spinRef}>
+        <primitive object={scene} />
+      </group>
     </group>
   );
 }
@@ -123,18 +183,7 @@ export default function HeadphonesCanvas() {
           <directionalLight position={[10, 10, 5]} intensity={2} />
           <directionalLight position={[-10, -10, -5]} intensity={1} />
           <Environment preset="city" />
-
-          {/* We scale the model based on the viewport to make it responsive, but 1.5 is a good start */}
           <Model position={[0, 0.2, 0]} scale={11} />
-
-          <OrbitControls
-            enableZoom={false}
-            enablePan={false}
-            autoRotate={true}
-            autoRotateSpeed={1}
-            minPolarAngle={Math.PI / 2}
-            maxPolarAngle={Math.PI / 2}
-          />
         </Canvas>
       </div>
     </div>

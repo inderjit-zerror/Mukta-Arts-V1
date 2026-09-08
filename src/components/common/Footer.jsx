@@ -23,7 +23,7 @@ export default function Footer() {
         </div>
 
         {/* Right Column - Text & Call to Action */}
-        <div className="w-full lg:w-1/2 flex flex-col items-start max-w-xl">
+        <div className="w-full lg:w-1/2 flex flex-col items-start max-w-xl relative z-20">
           <h1 className="text-4xl md:text-5xl lg:text-[54px] font-medium leading-tight mb-6">
             Have something<br />
             worth Sharing?<br />
