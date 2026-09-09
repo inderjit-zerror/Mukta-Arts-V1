@@ -7,6 +7,7 @@ import * as THREE from "three";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import FilmsSection from "./FilmsSection";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -274,12 +275,75 @@ export default function SpiralScene() {
 
   useGSAP(
     () => {
+      // Initial states
+      gsap.set(".NAMEDIV2", { autoAlpha: 0, pointerEvents: "none" }); // Hide entirely initially
+      gsap.set(".spiral-canvas", { pointerEvents: "auto" });
+      gsap.set(".film-carousel-image", { y: "100vh" }); // Images outside screen
+      gsap.set(".film-text-content", { opacity: 0 }); // Text opacity 0
+
+      let filmsVisible = false;
+
       timelineRef.current = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "bottom bottom",
+          end: "bottom top",
           scrub: true,
+          onUpdate: (self) => {
+            if (self.progress > 0.95 && !filmsVisible) {
+              filmsVisible = true;
+
+              // Show the section container and allow clicks
+              gsap.set(".NAMEDIV2", { autoAlpha: 1, pointerEvents: "auto" });
+              gsap.set(".spiral-canvas", { pointerEvents: "none" });
+
+              // Force Embla carousel to recalculate dimensions after visibility change
+              setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
+
+              // Animate images sliding up from outside the screen
+              gsap.to(".film-carousel-image", {
+                y: "0",
+                stagger: 0.1,
+                duration: 0.8,
+                ease: "power3.out",
+                overwrite: "auto"
+              });
+
+              // Animate text fading in
+              gsap.to(".film-text-content", {
+                opacity: 1,
+                stagger: 0.1,
+                duration: 0.8,
+                delay: 0.3,
+                ease: "power2.out",
+                overwrite: "auto"
+              });
+            } else if (self.progress <= 0.95 && filmsVisible) {
+              filmsVisible = false;
+
+              // Reverse animations when scrolling back up
+              gsap.to(".film-text-content", {
+                opacity: 0,
+                duration: 0.3,
+                overwrite: "auto"
+              });
+
+              gsap.to(".film-carousel-image", {
+                y: "100vh",
+                duration: 0.5,
+                ease: "power3.in",
+                overwrite: "auto"
+              });
+
+              gsap.set(".NAMEDIV2", {
+                autoAlpha: 0,
+                pointerEvents: "none",
+                delay: 0.5
+              });
+
+              gsap.set(".spiral-canvas", { pointerEvents: "auto", delay: 0.5 });
+            }
+          }
         },
       });
 
@@ -289,44 +353,14 @@ export default function SpiralScene() {
         current: 1,
         duration: 1,
         ease: "none"
-      });
+      }, 'a1');
 
       // 2. THEN, after the spiral is completely finished, run the next animation
       timelineRef.current.to(".NAMEDIV1", {
         opacity: 0,
         y: -50,
         duration: 0.5
-      }, 'aa1');
-
-      // 3. Make the OUTIMAGES animate automatically (not scrubbed) when we reach 'aa1'
-
-      // First, set their initial position outside the screen so they are hidden
-      gsap.set(".OUTIMAGES", { y: "-100vh" });
-
-      // Then add a dummy tween at 'aa1' just to act as a trigger point in the scrub timeline
-      timelineRef.current.to({}, {
-        duration: 0.1, // Small duration to give it a tiny bit of scroll space
-        onStart: () => {
-          // Trigger automatic forward animation
-          gsap.to(".OUTIMAGES", {
-            y: "0",
-            stagger: 0.1,
-            duration: 0.8,
-            ease: "power3.out",
-            overwrite: "auto"
-          });
-        },
-        onReverseComplete: () => {
-          // Trigger automatic reverse animation if user scrolls back up
-          gsap.to(".OUTIMAGES", {
-            y: "-100vh",
-            stagger: 0.1,
-            duration: 0.5,
-            ease: "power3.in",
-            overwrite: "auto"
-          });
-        }
-      }, 'aa1');
+      }, 'a1');
     },
     { scope: containerRef }
   );
@@ -340,44 +374,11 @@ export default function SpiralScene() {
       <div className="sticky top-0 w-full h-screen overflow-hidden">
 
         <div className=" NAMEDIV1 absolute top-0 left-0 z-[-1]  w-full h-full flex justify-center items-center">
-          <h2 className="font-bold tracking-tighter">Films.</h2>
-        </div>
-        <div className=" NAMEDIV2 absolute top-0 left-0 z-[0]  w-full h-full flex justify-center items-center">
-
-          <div className="w-[60vw] h-fit grid grid-cols-3 grid-rows-3 gap-2 ">
-            <div className="w-full aspect-video ">
-              <img src={"/img/home/1.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
-            </div>
-            <div className="w-full aspect-video ">
-              <img src={"/img/home/2.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
-
-            </div>
-            <div className="w-full aspect-video ">
-              <img src={"/img/home/3.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
-            </div>
-            <div className="w-full aspect-video ">
-              <img src={"/img/home/4.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
-            </div>
-            <div className="w-full aspect-video ">
-              <img src={"/img/home/5.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
-            </div>
-            <div className="w-full aspect-video ">
-              <img src={"/img/home/6.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
-            </div>
-            <div className="w-full aspect-video ">
-              <img src={"/img/home/7.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
-            </div>
-            <div className="w-full aspect-video ">
-              <img src={"/img/home/8.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
-            </div>
-            <div className="w-full aspect-video ">
-              <img src={"/img/home/9.jpg"} className="w-full OUTIMAGES h-full object-cover object-center"></img>
-            </div>
-          </div>
+          <h3 className=" tracking-tighter max-w-[600px] uppercase text-center">Have a story that deserves to be seen? Share your script with Mukta Arts and give your idea the opportunity to grow into a powerful cinematic experience, brought to life with the craft, creativity, and vision of a team that has been telling stories for generations.</h3>
         </div>
 
         <Canvas
-          className=""
+          className="spiral-canvas relative z-[1]"
           camera={{ position: [0, 0, 22], fov: 52 }}
           gl={{ antialias: true, alpha: true }}
           style={{ background: "transparent" }}

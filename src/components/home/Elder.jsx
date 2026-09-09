@@ -10,25 +10,25 @@ gsap.registerPlugin(ScrollTrigger);
 const data = [
     {
         title: "Whistling Woods",
-        image: "/img/home/C1.png",
+        image: "/img/home/1.jpg",
         desc: "19 films one visionary voice.\nSubhash Ghai reflect a distinctive cinematic vision that has left an enduring mark on Indian cinema. shorter",
         pos: "top-[15%] left-[15%]"
     },
     {
         title: "Mukta Art Production",
-        image: "/img/home/C2.png",
+        image: "/img/home/2.jpg",
         desc: "19 films one visionary voice.\nSubhash Ghai reflect a distinctive cinematic vision that has left an enduring mark on Indian cinema. shorter",
         pos: "bottom-[5%] left-[85%]"
     },
     {
         title: "Mukta VN Films",
-        image: "/img/home/C3.png",
+        image: "/img/home/3.jpg",
         desc: "19 films one visionary voice.\nSubhash Ghai reflect a distinctive cinematic vision that has left an enduring mark on Indian cinema. shorter",
         pos: "top-[5%] right-[0%]"
     },
     {
         title: "Mukta A2 Cinemas",
-        image: "/img/home/C1.png",
+        image: "/img/home/4.jpg",
         desc: "19 films one visionary voice.\nSubhash Ghai reflect a distinctive cinematic vision that has left an enduring mark on Indian cinema. shorter",
         pos: "bottom-[5%] left-[15%]"
     }
@@ -105,9 +105,9 @@ const Elder = () => {
             <div className="w-full h-[100vh] sticky top-0 left-0 overflow-hidden flex items-center justify-center">
 
                 {/* Background Grid  */}
-                <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-30">
-                    {/* Horizontal Line with Arrows */}
-                    <div className="absolute w-[96vw] max-w-full flex items-center justify-between top-1/2 -translate-y-1/2 z-0">
+                <div className="absolute inset-0 pointer-events-none flex items-center justify-center ">
+
+                    {/* <div className="absolute w-[96vw] max-w-full flex items-center justify-between top-1/2 -translate-y-1/2 z-0">
                         <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" className="text-white">
                             <polygon points="16,4 0,8 16,12" />
                         </svg>
@@ -117,12 +117,14 @@ const Elder = () => {
                         </svg>
                     </div>
 
-                    {/* Vertical Line */}
+                  
                     <div className="absolute h-full w-[1px] bg-white/40 left-1/2 -translate-x-1/2 z-0"></div>
 
-                    {/* Circles */}
+                   
                     <div className="absolute w-[35vw] h-[35vw] min-w-[300px] min-h-[300px] rounded-full border border-white/40 z-0"></div>
-                    <div className="absolute w-[65vw] h-[65vw] min-w-[600px] min-h-[600px] rounded-full border border-white/40 z-0"></div>
+                    <div className="absolute w-[65vw] h-[65vw] min-w-[600px] min-h-[600px] rounded-full border border-white/40 z-0"></div> */}
+
+                    <img src="/img/home/BGt.png" alt="IMG" className='w-full h-full object-cover object-center' />
                 </div>
 
                 {/* List Container */}

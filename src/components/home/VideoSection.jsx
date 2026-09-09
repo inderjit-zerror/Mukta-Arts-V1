@@ -10,7 +10,7 @@ const VideoSection = () => {
                 src="/video/video.mp4"
                 loop muted autoPlay
                 alt="Video Thumbnail"
-                className="absolute inset-0 w-full h-full object-cover  group-hover:scale-105 transition-transform duration-700 ease-in-out"
+                className="absolute inset-0 w-full h-full object-cover  scale-[2] group-hover:scale-105 transition-transform duration-700 ease-in-out"
             />
 
             {/* Black Gradient Overlay */}

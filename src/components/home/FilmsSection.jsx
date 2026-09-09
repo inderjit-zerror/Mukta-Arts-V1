@@ -64,7 +64,13 @@ const films = [
 ];
 
 const FilmsSection = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start", slidesToScroll: 1 });
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "start",
+    slidesToScroll: 1,
+    duration: 60,
+    dragFree: true
+  });
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -75,9 +81,9 @@ const FilmsSection = () => {
   }, [emblaApi]);
 
   return (
-    <section className="w-full py-16 px-4 md:px-8 lg:px-12 bg-white text-black">
+    <section className="w-full py-16 px-4 md:px-8 lg:px-12 text-black film-section-wrapper">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4 film-text-content">
         <h2 className="text-6xl md:text-8xl font-bold tracking-tight">Films.</h2>
         <div className="flex gap-4 pb-2">
           <button
@@ -107,16 +113,16 @@ const FilmsSection = () => {
             >
               <div className="flex flex-col group cursor-pointer h-full">
                 {/* Image */}
-                <div className="relative w-full aspect-[4/5] mb-6 overflow-hidden bg-gray-200">
+                <div className="relative w-full aspect-[4/5] mb-6 overflow-hidden ">
                   <img
                     src={film.image}
                     alt={film.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className=" w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
                   />
                 </div>
 
                 {/* Details */}
-                <div className="flex flex-col flex-grow">
+                <div className="flex flex-col flex-grow film-text-content">
                   <h3 className="text-2xl font-bold mb-4 uppercase tracking-wide">
                     {film.title}
                   </h3>
