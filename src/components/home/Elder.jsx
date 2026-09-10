@@ -12,27 +12,40 @@ const data = [
         title: "Whistling Woods",
         image: "/img/home/1.jpg",
         desc: "19 films one visionary voice.\nSubhash Ghai reflect a distinctive cinematic vision that has left an enduring mark on Indian cinema. shorter",
-        pos: "top-[15%] left-[15%]"
+        pos: "top-[15%] left-[15%]",
+        color1: "#c02690",
+        color2: "#2d346b"
     },
     {
         title: "Mukta Art Production",
         image: "/img/home/2.jpg",
         desc: "19 films one visionary voice.\nSubhash Ghai reflect a distinctive cinematic vision that has left an enduring mark on Indian cinema. shorter",
-        pos: "bottom-[5%] left-[85%]"
+        pos: "bottom-[5%] left-[85%]",
+        color1: "#a52288",
+        color2: "#272a63"
     },
     {
         title: "Mukta VN Films",
         image: "/img/home/3.jpg",
         desc: "19 films one visionary voice.\nSubhash Ghai reflect a distinctive cinematic vision that has left an enduring mark on Indian cinema. shorter",
-        pos: "top-[5%] right-[0%]"
+        pos: "top-[5%] right-[0%]",
+        color1: "#7e1c79",
+        color2: "#202257"
     },
     {
         title: "Mukta A2 Cinemas",
         image: "/img/home/4.jpg",
         desc: "19 films one visionary voice.\nSubhash Ghai reflect a distinctive cinematic vision that has left an enduring mark on Indian cinema. shorter",
-        pos: "bottom-[5%] left-[15%]"
+        pos: "bottom-[5%] left-[15%]",
+        color1: "#5d186c",
+        color2: "#191a4b"
     }
 ];
+
+const finalColors = {
+    color1: "#3c1a5e",
+    color2: "#881a28"
+};
 
 const Elder = () => {
     const containerRef = useRef(null);
@@ -51,9 +64,32 @@ const Elder = () => {
             }
         });
 
-        data.forEach((_, i) => {
+        // 1. Draw SVG
+        tl.fromTo(".h-line", { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 1.5, ease: "power1.inOut" }, "start")
+            .fromTo(".v-line", { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 1.5, ease: "power1.inOut" }, "start")
+            .fromTo(".draw-circle", { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 1.5, ease: "power1.inOut" }, "start")
+            .fromTo(".arrowhead", { opacity: 0 }, { opacity: 1, duration: 0.5 }, "start+=1");
+
+        // 2. Text animates from bottom
+        tl.fromTo(titlesRef.current,
+            { y: 100, opacity: 0 },
+            { y: 0, opacity: 0.5, stagger: 0.15, duration: 1, ease: "power2.out" },
+            "start+=1.5"
+        );
+
+        // Hold a little bit before continuing
+        tl.to({}, { duration: 0.5 });
+
+        data.forEach((item, i) => {
             // Fade in the title
             tl.to(titlesRef.current[i], { color: "#ffffff", opacity: 1, duration: 1 }, `step${i}`);
+
+            // Change background gradient
+            tl.to(containerRef.current, {
+                "--color1": item.color1,
+                "--color2": item.color2,
+                duration: 1
+            }, `step${i}`);
 
             // Continuous vertical parallax movement
             tl.fromTo(popupsRef.current[i],
@@ -83,7 +119,13 @@ const Elder = () => {
             }
         });
 
-        // Fade in final text container
+        // Fade in final text container & change background to final
+        tl.to(containerRef.current, {
+            "--color1": finalColors.color1,
+            "--color2": finalColors.color2,
+            duration: 1
+        }, "-=1");
+
         tl.to(finalRef.current, { autoAlpha: 1, duration: 0.1 }, "-=1");
 
         // Animate words staggered
@@ -101,30 +143,27 @@ const Elder = () => {
     }, { scope: containerRef });
 
     return (
-        <div ref={containerRef} className="w-full h-[600vh] relative bg-[#2f496e] text-white overflow-clip">
+        <div
+            ref={containerRef}
+            className="w-full h-[700vh] relative text-white overflow-clip"
+            style={{
+                "--color1": "#2f496e",
+                "--color2": "#2f496e",
+                background: "linear-gradient(135deg, var(--color1) 0%, var(--color2) 100%)"
+            }}
+        >
             <div className="w-full h-[100vh] sticky top-0 left-0 overflow-hidden flex items-center justify-center">
 
                 {/* Background Grid  */}
-                <div className="absolute inset-0 pointer-events-none flex items-center justify-center ">
-
-                    {/* <div className="absolute w-[96vw] max-w-full flex items-center justify-between top-1/2 -translate-y-1/2 z-0">
-                        <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" className="text-white">
-                            <polygon points="16,4 0,8 16,12" />
-                        </svg>
-                        <div className="absolute left-3 right-3 h-[1px] bg-white/40"></div>
-                        <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" className="text-white">
-                            <polygon points="0,4 16,8 0,12" />
-                        </svg>
-                    </div>
-
-                  
-                    <div className="absolute h-full w-[1px] bg-white/40 left-1/2 -translate-x-1/2 z-0"></div>
-
-                   
-                    <div className="absolute w-[35vw] h-[35vw] min-w-[300px] min-h-[300px] rounded-full border border-white/40 z-0"></div>
-                    <div className="absolute w-[65vw] h-[65vw] min-w-[600px] min-h-[600px] rounded-full border border-white/40 z-0"></div> */}
-
-                    <img src="/img/home/BGt.png" alt="IMG" className='w-full h-full object-cover object-center' />
+                <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden">
+                    <svg className="w-full h-full min-w-[800px] object-cover opacity-60" viewBox="0 0 1478 782" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line className="v-line" x1="739.15" y1="-6.55671e-09" x2="739.15" y2="782" stroke="white" strokeWidth="0.3" pathLength="100" strokeDasharray="100" />
+                        <line className="h-line" x1="41" y1="390.85" x2="1437" y2="390.85" stroke="white" strokeWidth="0.3" pathLength="100" strokeDasharray="100" />
+                        <circle className="draw-circle" cx="739" cy="391" r="239.85" stroke="white" strokeWidth="0.3" pathLength="100" strokeDasharray="100" />
+                        <circle className="draw-circle" cx="739" cy="391" r="400.85" stroke="white" strokeWidth="0.3" pathLength="100" strokeDasharray="100" />
+                        <path className="arrowhead" d="M1437 386L1478 391.5L1437 396V386Z" fill="#D9D9D9" fillOpacity="0.4" />
+                        <path className="arrowhead" d="M41 386L0 391.5L41 396V386Z" fill="#D9D9D9" fillOpacity="0.4" />
+                    </svg>
                 </div>
 
                 {/* List Container */}

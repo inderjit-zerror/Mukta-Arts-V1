@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Footer() {
   return (
-    <div id="footer" className="min-h-screen bg-[#22385b] text-white flex flex-col font-sans relative overflow-hidden">
+    <div id="footer" className="min-h-screen bg-[#0474BA] text-white flex flex-col font-sans relative overflow-hidden">
 
       {/* Top Navigation / Stats Bar */}
       <div className="w-full flex flex-wrap justify-between items-center px-4 md:px-8 py-4 text-[10px] md:text-xs font-semibold tracking-wider uppercase opacity-90">
@@ -31,15 +31,15 @@ export default function Footer() {
             your story.
           </h1>
 
-          <p className="text-[#a8b8d0] text-sm md:text-base leading-relaxed mb-8">
+          <h3 className=" tracking-tighter  capitalize mb-6">
             Have a story that deserves to be seen? Share your script
             with Mukta Arts and give your idea the opportunity to
             grow into a powerful cinematic experience, brought to
             life with the craft, creativity, and vision of a team that has
             been telling stories for generations.
-          </p>
+          </h3>
 
-          <button className="bg-white text-[#22385b] px-6 py-2.5 text-sm font-semibold rounded shadow-md hover:bg-gray-100 transition-colors mb-16">
+          <button className="bg-white text-[#22385b] px-6 py-2.5 text-sm font-semibold  shadow-md hover:bg-gray-100 transition-colors mb-16">
             Submit Script
           </button>
 

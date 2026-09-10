@@ -1,228 +1,86 @@
 
 "use client";
 
-import { PerspectiveCamera } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import { useEffect, useState, useRef } from "react";
-import { DoubleSide } from "three";
-import gsap from "gsap";
-
+import Image from "next/image";
 
 let arr = [
-  {
-    no: 1,
-    clr: `#0470B1`,
-  },
-  {
-    no: 2
-  },
-  {
-    no: 3,
-    clr: `#0470B1`,
-  },
-  {
-    no: 4
-  },
-  {
-    no: 5, clr: `#0470B1`,
-  },
-  {
-    no: 6, clr: `#00A7E1`,
-  },
-  {
-    no: 7, clr: `#0470B1`,
-  },
-  {
-    no: 8, clr: `#00A7E1`,
-  },
-  {
-    no: 9, clr: `#0470B1`,
-  },
-  {
-    no: 10, clr: `#00A7E1`,
-  },
-  {
-    no: 11, clr: `#0470B1`,
-  },
-  {
-    no: 12, clr: `#00A7E1`,
-  },
-  {
-    no: 13, clr: `#0470B1`,
-  },
-  {
-    no: 14, clr: `#00A7E1`,
-  },
-  {
-    no: 15, clr: `#0470B1`,
-  },
-  {
-    no: 16, clr: `#00A7E1`,
-  },
-  {
-    no: 17, clr: `#0470B1`,
-  },
-  {
-    no: 18, clr: `#00A7E1`,
-  },
-  {
-    no: 19, clr: `#0470B1`,
-  },
-  {
-    no: 20, clr: `#00A7E1`,
-  },
-  {
-    no: 21, clr: `#0470B1`,
-  },
-  {
-    no: 22, clr: `#00A7E1`,
-  },
-  {
-    no: 23, clr: `#0470B1`,
-  },
-  {
-    no: 24, clr: `#00A7E1`,
-  },
-  {
-    no: 25, clr: `#0470B1`,
-  },
-  {
-    no: 26, clr: `#00A7E1`,
-  },
-  {
-    no: 27, clr: `#0470B1`,
-  },
-  {
-    no: 28, clr: `#00A7E1`,
-  },
-  {
-    no: 29, clr: `#0470B1`,
-  },
-  {
-    no: 30, clr: `#00A7E1`,
-  },
-  {
-    no: 31, clr: `#0470B1`,
-  },
-  {
-    no: 32, clr: `#00A7E1`,
-  },
-  {
-    no: 33, clr: `#0470B1`,
-  },
-  {
-    no: 34, clr: `#00A7E1`,
-  },
-  {
-    no: 35, clr: `#0470B1`,
-  },
-  {
-    no: 36, clr: `#00A7E1`,
-  },
-  {
-    no: 37, clr: `#0470B1`,
-  },
-  {
-    no: 38, clr: `#00A7E1`,
-  },
-  {
-    no: 39, clr: `#0470B1`,
-  },
-  {
-    no: 40, clr: `#00A7E1`,
-  },
-]
-
-
-const Card = ({ index, total }) => {
-  const meshRef = useRef();
-
-  // Adjust gapX and gapZ to change the spacing between cards
-  const gapX = 80;
-  const gapZ = 10;
-
-  // Center the stack around the origin
-  const xOffset = (index - total / 2) * gapX;
-  const zOffset = (index - total / 16) * gapZ;
-
-  const handlePointerOver = (e) => {
-    e.stopPropagation();
-    if (meshRef.current) {
-      gsap.to(meshRef.current.position, {
-        y: -100,
-        duration: 0.4,
-        ease: "power3.out",
-      });
-    }
-  };
-
-  const handlePointerOut = () => {
-    if (meshRef.current) {
-      gsap.to(meshRef.current.position, {
-        y: -350,
-        duration: 0.4,
-        ease: "power3.out",
-      });
-    }
-  };
-
-  return (
-    <mesh
-      ref={meshRef}
-      position={[xOffset, -350, zOffset]}
-      rotation={[0, Math.PI / 8, 0]}
-      onPointerOver={handlePointerOver}
-      onPointerOut={handlePointerOut}
-    >
-      <planeGeometry args={[280, 400]} />
-      <meshBasicMaterial color={arr[index].clr} side={DoubleSide} />
-    </mesh>
-  );
-};
+  { no: ".4", clr: "#0470B1" },
+  { no: ".3", clr: "#00A7E1" },
+  { no: ".2", clr: "#0470B1" },
+  { no: ".1", clr: "#00A7E1" },
+];
 
 export default function CardsShowcase() {
-  const distance = 600;
-  const [fov, setFov] = useState(75);
-
-  useEffect(() => {
-    const FovCalculator = () => {
-      const newFov =
-        2 *
-        Math.atan(window.innerHeight / 2 / distance) *
-        (180 / Math.PI);
-
-      setFov(newFov);
-    };
-
-    FovCalculator();
-
-    window.addEventListener("resize", FovCalculator);
-
-    return () => {
-      window.removeEventListener("resize", FovCalculator);
-    };
-  }, []);
-
   return (
-    <div className="w-full h-screen max-sm:hidden relative z-[10] ">
-      <Canvas className="w-full h-full">
-        <PerspectiveCamera
-          makeDefault
-          fov={fov}
-          position={[0, 0, distance]}
-        />
+    <div className="w-full h-screen max-sm:hidden  relative z-[10] overflow-hidden ">
+      {/* Title */}
+      <div className="w-full absolute top-[-10%] left-2 px-10 pt-20 z-50 pointer-events-none">
+        <h1 className="text-[8vw] font-semibold tracking-tighter text-black">Awards.</h1>
+      </div>
 
-        {
-          arr.map((item, index) => {
+      {/* 3D Container */}
+      <div
+        className="absolute inset-0 flex items-center justify-center pt-[15vh] translate-y-30"
+        style={{ perspective: "1500px" }}
+      >
+        <div
+          className="relative w-full max-w-6xl h-[65vh] flex items-center justify-center"
+          style={{ transformStyle: "preserve-3d" }}
+        >
+          {arr.map((item, index) => {
+            const isFront = index === 3;
+
             return (
-              <Card key={index} index={index} total={arr.length} />
-            )
-          })
-        }
-      </Canvas>
+              <div
+                key={index}
+                className="absolute w-[55vw] max-w-[90%] h-full shadow-[-15px_15px_40px_rgba(0,0,0,0.2)] transition-all duration-500 ease-out hover:-translate-y-30 cursor-pointer flex border-l border-white/10"
+                style={{
+                  backgroundColor: item.clr,
+                  zIndex: index,
+                  transform: `translateX(${(index - 1.5) * 17}%) translateZ(${index * 60}px) rotateY(15deg)`,
+                  transformOrigin: "center center",
+                }}
+              >
+                {/* Number */}
+                <div className="absolute top-8 left-8 text-white text-5xl md:text-7xl font-bold opacity-95 z-10  tracking-tighter">
+                  {item.no}
+                </div>
 
-      <div className="w-full absolute top-5 left-2 px-10 pt-20">
-        <h1 className="text-[8vw] font-semibold tracking-tighter">Awards.</h1>
+                {/* Content - Only on Front Card for performance and visual match */}
+                {isFront && (
+                  <div className="w-full h-full flex flex-row items-center pt-16">
+                    {/* Image Area */}
+                    <div className="w-1/2 h-full relative flex items-center justify-center p-8">
+                      <div className="relative w-full h-[80%]">
+                        <Image
+                          src="/img/home/halftone_trophy.jpg"
+                          alt="Trophy"
+                          fill
+                          className="object-contain drop-shadow-2xl mix-blend-multiply"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Vertical Divider */}
+                    <div className="w-px h-[50%] bg-white/50"></div>
+
+                    {/* Text Area */}
+                    <div className="w-1/2 h-full flex flex-col  p-12 pl-10 text-white">
+                      <div className="mt-1 mb-5">
+                        <h2 className="text-3xl md:text-4xl ">Title Here</h2>
+                      </div>
+                      <div className="mb-4">
+                        <h3 className=" tracking-tighter  capitalize  ">
+                          Lorem ipsum dolor sit amet consectetur. Et eu ullamcorper eget lorem nunc. At quisque nunc libero sapien risus in. Felis dolor vitae consectetur imperdiet justo integer. Venenatis interdum commodo gravida sed. Risus pharetra non congue nec molestie commodo.
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

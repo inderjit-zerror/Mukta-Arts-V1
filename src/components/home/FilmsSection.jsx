@@ -11,6 +11,7 @@ const films = [
     director: "SUBASH GHAI",
     producer: "SUBASH GHAI",
     image: `/img/home/C1.png`,
+    description: "Memories that last forever. A beautiful journey exploring the bonds of family, love, and friendship in modern times."
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ const films = [
     director: "SUBASH GHAI",
     producer: "SUBASH GHAI",
     image: `/img/home/C2.png`,
+    description: "A gripping tale of ambition and betrayal. When past choices return to haunt the present, one man must fight for his honor."
   },
   {
     id: 3,
@@ -25,6 +27,7 @@ const films = [
     director: "SUBASH GHAI",
     producer: "SUBASH GHAI",
     image: `/img/home/C3.png`,
+    description: "The unbreakable spirit of a young woman fighting against power and corruption to seek justice for her loved ones."
   },
   {
     id: 4,
@@ -32,6 +35,7 @@ const films = [
     director: "SUBASH GHAI",
     producer: "SUBASH GHAI",
     image: `/img/home/C1.png`,
+    description: "An emotional rollercoaster that touches upon the delicate relationship between a father and his three daughters."
   },
   {
     id: 5,
@@ -39,6 +43,7 @@ const films = [
     director: "SUBASH GHAI",
     producer: "SUBASH GHAI",
     image: `/img/home/C2.png`,
+    description: "Navigating the complexities of corporate life and personal ethics in a thrilling courtroom drama that keeps you guessing."
   },
   {
     id: 6,
@@ -46,6 +51,7 @@ const films = [
     director: "SUBASH GHAI",
     producer: "SUBASH GHAI",
     image: `/img/home/C3.png`,
+    description: "A cinematic masterpiece that captures the breathtaking beauty of the mountains and the fierce fire of revolution."
   },
   {
     id: 7,
@@ -53,6 +59,7 @@ const films = [
     director: "SUBASH GHAI",
     producer: "SUBASH GHAI",
     image: `/img/home/C1.png`,
+    description: "Experience the magic of true love and the pain of heartbreak in this classic tale of romance and family values."
   },
   {
     id: 8,
@@ -60,6 +67,7 @@ const films = [
     director: "SUBASH GHAI",
     producer: "SUBASH GHAI",
     image: `/img/home/C2.png`,
+    description: "A story of courage, resilience, and the relentless pursuit of truth against all odds in a world driven by greed."
   },
 ];
 
@@ -81,9 +89,9 @@ const FilmsSection = () => {
   }, [emblaApi]);
 
   return (
-    <section className="w-full py-16 px-4 md:px-8 lg:px-12 text-black film-section-wrapper">
+    <section className="relative w-full py-16 px-4 md:px-8 lg:px-12  film-section-wrapper z-[20]">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4 film-text-content">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4 ">
         <h2 className="text-6xl md:text-8xl font-bold tracking-tight">Films.</h2>
         <div className="flex gap-4 pb-2">
           <button
@@ -117,25 +125,31 @@ const FilmsSection = () => {
                   <img
                     src={film.image}
                     alt={film.title}
-                    className=" w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 will-change-transform"
                   />
                 </div>
 
                 {/* Details */}
-                <div className="flex flex-col flex-grow film-text-content">
+                <div className="flex flex-col  ">
                   <h3 className="text-2xl font-bold mb-4 uppercase tracking-wide">
                     {film.title}
                   </h3>
 
-                  <div className="border-t border-black py-4 mt-auto">
-                    <p className="text-sm font-medium uppercase tracking-wider mb-1 text-gray-700">
-                      DIRECTOR: {film.director}
-                    </p>
-                    <p className="text-sm font-medium uppercase tracking-wider text-gray-700">
-                      PRODUCER: {film.producer}
-                    </p>
+                  <div className="relative py-4 mt-auto">
+                    {/* Top animated line (draws left to right) */}
+                    <div className="absolute top-0 left-0 w-full h-[1px] bg-black/20">
+                      <div className="absolute top-0 left-0 h-full bg-black w-0 transition-all duration-500 ease-out group-hover:w-full"></div>
+                    </div>
+
+                    <h3 className=" tracking-tighter capitalize opacity-75 ">
+                      {film.description}
+                    </h3>
                   </div>
-                  <div className="border-t border-black w-full h-[1px]"></div>
+
+                  {/* Bottom animated line (draws right to left) */}
+                  <div className="relative w-full h-[1px] bg-black/20">
+                    <div className="absolute top-0 right-0 h-full bg-black w-0 transition-all duration-500 ease-out group-hover:w-full delay-75"></div>
+                  </div>
                 </div>
               </div>
             </div>

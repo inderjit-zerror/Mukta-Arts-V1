@@ -287,7 +287,7 @@ export default function SpiralScene() {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "bottom top",
+          end: "bottom -120%",
           scrub: true,
           onUpdate: (self) => {
             if (self.progress > 0.95 && !filmsVisible) {
@@ -374,7 +374,7 @@ export default function SpiralScene() {
       <div className="sticky top-0 w-full h-screen overflow-hidden">
 
         <div className=" NAMEDIV1 absolute top-0 left-0 z-[-1]  w-full h-full flex justify-center items-center">
-          <h3 className=" tracking-tighter max-w-[600px] uppercase text-center">Have a story that deserves to be seen? Share your script with Mukta Arts and give your idea the opportunity to grow into a powerful cinematic experience, brought to life with the craft, creativity, and vision of a team that has been telling stories for generations.</h3>
+          <h3 className=" tracking-tighter max-w-[700px] capitalize  text-center">Mukta Arts Limited is one of India's leading production houses with business interests across the entertainment spectrum from Exhibition to Education. Founded by Mr Subhash Ghai, one of India's most successful film directors, the company has a library of over 42 films (including 35 blockbusters) and has a brand that is globally recognized with quality and entertainment.</h3>
         </div>
 
         <Canvas

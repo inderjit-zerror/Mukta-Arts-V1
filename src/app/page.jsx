@@ -16,6 +16,7 @@ const HomePage = () => {
       <SpiralScene />
       <FilmsSection />
       <Elder />
+
       <div className="w-full h-fit relative">
         <img src={'/img/home/TempMovie.png'} className="w-full object-cover object-center" />
       </div>

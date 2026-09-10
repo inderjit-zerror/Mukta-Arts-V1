@@ -18,9 +18,9 @@ const Hero = () => {
 
       {/* Bottom Left Content */}
       <div className=" z-20 max-w-[280px] md:max-w-[340px]  justify-start mr-auto">
-        <p className="text-black text-base md:text-[1.1rem] font-medium leading-[1.4] mb-6">
-          Share your script with Mukta Arts and give your idea the opportunity to grow into a powerful cinematic experience
-        </p>
+        <h3 className=" tracking-tighter max-w-[600px] capitalize   mb-6">
+          Mukta Arts Limited is one of India's leading production houses with business interests across the entertainment spectrum from Exhibition to Education.
+        </h3>
         <button className="bg-[#4e829f] hover:bg-[#3d6982] text-white px-5 py-2.5 text-xs md:text-sm tracking-wide font-medium rounded-[3px] flex items-center gap-3 transition-colors cursor-pointer group">
           About Us
           <span className="text-lg leading-none transform group-hover:translate-x-1 transition-transform">→</span>

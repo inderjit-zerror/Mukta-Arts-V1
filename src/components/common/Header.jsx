@@ -197,7 +197,7 @@ const Header = () => {
           {[
             { name: "HOME", url: '/' },
             { name: "WORK IN PROGRESS", url: '/work-in-progress' },
-            { name: "WHO WE ARE", url: '/' },
+            { name: "Our Films", url: '/our-films' },
             { name: "SGM STUDIO", url: '/' },
             { name: "WHISTLING WOODS", url: '/' },
             { name: "MUKTA A2 CINEMAS", url: '/' },
