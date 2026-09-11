@@ -38,9 +38,11 @@ export default function SiteLayout({ children }) {
           {children}
         </main>
 
-        <footer>
-          <Footer />
-        </footer>
+        {pathname !== '/under-development' && (
+          <footer>
+            <Footer />
+          </footer>
+        )}
       </LenisScroll>
     </ViewTransitions>
 

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { useRouter } from "next/navigation";
 
 export const filmsData = [
   {
@@ -77,12 +78,99 @@ export const filmsData = [
 ];
 
 export default function FilmsComponent() {
+  const router = useRouter();
   const [activeCategory, setActiveCategory] = useState("ALL");
   const [displayCategory, setDisplayCategory] = useState("ALL");
   const [isAnimating, setIsAnimating] = useState(false);
 
   const gridRef = useRef(null);
   const containerRef = useRef(null);
+
+  const handleFilmClick = (e, film) => {
+    e.preventDefault();
+    if (isAnimating) return;
+    setIsAnimating(true);
+
+    localStorage.setItem("selectedFilmImage", film.image);
+    localStorage.setItem("selectedFilmTitle", film.title);
+    localStorage.setItem("selectedFilmDesc", film.description);
+
+    const card = e.currentTarget;
+    const imgContainer = card.querySelector(".relative.w-full.aspect-\\[4\\/5\\]");
+    const img = imgContainer.querySelector("img");
+    const rect = img.getBoundingClientRect();
+
+    const clone = img.cloneNode();
+    clone.id = "transition-clone";
+    document.body.appendChild(clone);
+
+    gsap.set(clone, {
+      position: "fixed",
+      top: rect.top,
+      left: rect.left,
+      width: rect.width,
+      height: rect.height,
+      zIndex: 9999,
+      objectFit: "cover",
+      margin: 0
+    });
+
+    gsap.set(img, { opacity: 0 });
+
+    const elementsToHide = [
+      containerRef.current.querySelector("h2"),
+      containerRef.current.querySelector(".flex.flex-wrap"),
+      ...gsap.utils.toArray(".film-card").filter((c) => c !== card.parentElement)
+    ];
+
+    gsap.to(elementsToHide, { opacity: 0, duration: 0.4, ease: "power2.inOut" });
+    gsap.to(card.querySelectorAll("h3, .relative.py-4, .bg-black\\/20"), {
+      opacity: 0,
+      duration: 0.4,
+      ease: "power2.inOut"
+    });
+
+    const containerWidth = window.innerWidth;
+    const px = 40;
+    const gap = 48;
+    const maxW2xl = 672;
+
+    let targetWidth, targetHeight, targetLeft, targetTop;
+
+    if (containerWidth >= 768) {
+      const flexContainerInnerWidth = containerWidth - px * 2;
+      const availableForFlexItems = flexContainerInnerWidth - gap;
+      let leftWidth = availableForFlexItems / 2;
+      let rightWidth = availableForFlexItems / 2;
+
+      if (leftWidth > maxW2xl) {
+        leftWidth = maxW2xl;
+        rightWidth = availableForFlexItems - leftWidth;
+      }
+
+      targetWidth = Math.min(600, rightWidth);
+      targetHeight = targetWidth * (5 / 4);
+      targetLeft = containerWidth - px - targetWidth;
+      targetTop = (window.innerHeight - targetHeight) / 2;
+    } else {
+      targetWidth = Math.min(600, containerWidth - px * 2);
+      targetHeight = targetWidth * (5 / 4);
+      targetLeft = (containerWidth - targetWidth) / 2;
+      targetTop = window.innerHeight * 0.3;
+    }
+
+    gsap.to(clone, {
+      top: targetTop,
+      left: targetLeft,
+      width: targetWidth,
+      height: targetHeight,
+      duration: 0.7,
+      ease: "expo.inOut",
+      onComplete: () => {
+        router.push("/work-in-progress");
+      }
+    });
+  };
 
   const handleCategoryChange = (category) => {
     if (category === activeCategory || isAnimating) return;
@@ -172,7 +260,11 @@ export default function FilmsComponent() {
             key={film.id}
             className="film-card opacity-0 flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_25%] pl-8"
           >
-            <div className="flex flex-col group cursor-pointer h-full">
+            <div 
+              className="flex flex-col group cursor-pointer h-full" 
+              onClick={(e) => handleFilmClick(e, film)}
+              onMouseEnter={() => router.prefetch("/work-in-progress")}
+            >
               {/* Image */}
               <div className="relative w-full aspect-[4/5] mb-6 overflow-hidden ">
                 <img

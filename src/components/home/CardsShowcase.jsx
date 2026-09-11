@@ -2,15 +2,42 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 
 let arr = [
-  { no: ".4", clr: "#0470B1" },
-  { no: ".3", clr: "#00A7E1" },
-  { no: ".2", clr: "#0470B1" },
-  { no: ".1", clr: "#00A7E1" },
+  {
+    no: ".4",
+    clr: "#0470B1",
+    img: "/img/home/1.jpg",
+    title: "Global Recognition",
+    desc: "Recognized worldwide for pushing boundaries and creating impactful digital experiences that inspire and engage users on a global scale. Recognized worldwide for pushing boundaries and creating impactful digital experiences that inspire and engage users on a global scale."
+  },
+  {
+    no: ".3",
+    clr: "#00A7E1",
+    img: "/img/home/2.jpg",
+    title: "Design Excellence",
+    desc: "Awarded for exceptional user interface design, balancing aesthetic appeal with highly intuitive user journeys.Awarded for exceptional user interface design, balancing aesthetic appeal with highly intuitive user journeys."
+  },
+  {
+    no: ".2",
+    clr: "#0470B1",
+    img: "/img/home/3.jpg",
+    title: "Innovation Award",
+    desc: "Celebrating groundbreaking approaches to solving complex problems through technology, creativity, and forward-thinking. Celebrating groundbreaking approaches to solving complex problems through technology, creativity, and forward-thinking."
+  },
+  {
+    no: ".1",
+    clr: "#00A7E1",
+    img: "/img/home/4.jpg",
+    title: "Best In Class",
+    desc: "Honored as the industry standard for excellence, setting the benchmark for quality, performance, and user satisfaction.Honored as the industry standard for excellence, setting the benchmark for quality, performance, and user satisfaction."
+  },
 ];
 
 export default function CardsShowcase() {
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
   return (
     <div className="w-full h-screen max-sm:hidden  relative z-[10] overflow-hidden ">
       {/* Title */}
@@ -28,16 +55,21 @@ export default function CardsShowcase() {
           style={{ transformStyle: "preserve-3d" }}
         >
           {arr.map((item, index) => {
-            const isFront = index === 3;
+            let translateY = "0px";
+            if (hoveredIndex !== null) {
+              translateY = hoveredIndex === index ? "-100px" : "400px";
+            }
 
             return (
               <div
                 key={index}
-                className="absolute w-[55vw] max-w-[90%] h-full shadow-[-15px_15px_40px_rgba(0,0,0,0.2)] transition-all duration-500 ease-out hover:-translate-y-30 cursor-pointer flex border-l border-white/10"
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                className="absolute w-[55vw] max-w-[90%] h-full shadow-[-15px_15px_40px_rgba(0,0,0,0.2)] transition-all duration-500 ease-out cursor-pointer flex border-l border-white/10"
                 style={{
                   backgroundColor: item.clr,
                   zIndex: index,
-                  transform: `translateX(${(index - 1.5) * 17}%) translateZ(${index * 60}px) rotateY(15deg)`,
+                  transform: `translateX(${(index - 1.5) * 17}%) translateY(${translateY}) translateZ(${index * 60}px) rotateY(15deg)`,
                   transformOrigin: "center center",
                 }}
               >
@@ -46,37 +78,35 @@ export default function CardsShowcase() {
                   {item.no}
                 </div>
 
-                {/* Content - Only on Front Card for performance and visual match */}
-                {isFront && (
-                  <div className="w-full h-full flex flex-row items-center pt-16">
-                    {/* Image Area */}
-                    <div className="w-1/2 h-full relative flex items-center justify-center p-8">
-                      <div className="relative w-full h-[80%]">
-                        <Image
-                          src="/img/home/halftone_trophy.jpg"
-                          alt="Trophy"
-                          fill
-                          className="object-contain drop-shadow-2xl mix-blend-multiply"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Vertical Divider */}
-                    <div className="w-px h-[50%] bg-white/50"></div>
-
-                    {/* Text Area */}
-                    <div className="w-1/2 h-full flex flex-col  p-12 pl-10 text-white">
-                      <div className="mt-1 mb-5">
-                        <h2 className="text-3xl md:text-4xl ">Title Here</h2>
-                      </div>
-                      <div className="mb-4">
-                        <h3 className=" tracking-tighter  capitalize  ">
-                          Lorem ipsum dolor sit amet consectetur. Et eu ullamcorper eget lorem nunc. At quisque nunc libero sapien risus in. Felis dolor vitae consectetur imperdiet justo integer. Venenatis interdum commodo gravida sed. Risus pharetra non congue nec molestie commodo.
-                        </h3>
-                      </div>
+                {/* Content */}
+                <div className="w-full h-full flex flex-row items-center pt-16">
+                  {/* Image Area */}
+                  <div className="w-1/2 h-full relative flex items-center justify-center p-8">
+                    <div className="relative w-full h-[80%]">
+                      <Image
+                        src={item.img}
+                        alt={item.title}
+                        fill
+                        className="object-contain drop-shadow-2xl "
+                      />
                     </div>
                   </div>
-                )}
+
+                  {/* Vertical Divider */}
+                  <div className="w-px h-[50%] bg-white/50"></div>
+
+                  {/* Text Area */}
+                  <div className="w-1/2 h-full flex flex-col  p-12 pl-10 text-white">
+                    <div className="mt-1 mb-5">
+                      <h3 className="text-3xl md:text-4xl ">{item.title}</h3>
+                    </div>
+                    <div className="mb-4">
+                      <p className=" tracking-tighter  capitalize  ">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             );
           })}

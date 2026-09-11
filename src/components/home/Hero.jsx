@@ -21,7 +21,7 @@ const Hero = () => {
         <h3 className=" tracking-tighter max-w-[600px] capitalize   mb-6">
           Mukta Arts Limited is one of India's leading production houses with business interests across the entertainment spectrum from Exhibition to Education.
         </h3>
-        <button className="bg-[#4e829f] hover:bg-[#3d6982] text-white px-5 py-2.5 text-xs md:text-sm tracking-wide font-medium rounded-[3px] flex items-center gap-3 transition-colors cursor-pointer group">
+        <button className="bg-[#0474BA] hover:bg-[#0666a1] text-white px-5 py-2.5 text-xs md:text-sm tracking-wide font-medium rounded-[3px] flex items-center gap-3 transition-colors cursor-pointer group">
           About Us
           <span className="text-lg leading-none transform group-hover:translate-x-1 transition-transform">→</span>
         </button>

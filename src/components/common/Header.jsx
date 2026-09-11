@@ -27,30 +27,32 @@ const Header = () => {
 
     tl.current.to(menuOverlayRef.current, {
       x: '0%',
-      duration: 0.8,
-      ease: "power4.inOut"
+      duration: 1,
+      ease: "expo.inOut"
     })
       .to('.menu-line', {
         width: '100%',
-        duration: 0.6,
-        stagger: 0.08,
-        ease: "power3.inOut"
-      }, "-=0.4")
+        duration: 0.8,
+        stagger: 0.05,
+        ease: "expo.inOut"
+      }, "-=0.6")
       .to('.menu-item-text', {
         y: '0%',
-        duration: 0.5,
-        stagger: 0.08,
-        ease: "power3.out"
-      }, "-=0.6")
+        duration: 0.8,
+        stagger: 0.05,
+        ease: "expo.out"
+      }, "-=0.7")
       .fromTo(closeButtonRef.current, {
         opacity: 0,
-        rotate: -90
+        rotate: -90,
+        scale: 0.5
       }, {
         opacity: 1,
         rotate: 0,
-        duration: 0.5,
-        ease: "power2.out"
-      }, "-=0.5");
+        scale: 1,
+        duration: 0.8,
+        ease: "expo.out"
+      }, "-=0.6");
   });
 
   useGSAP(() => {
@@ -78,14 +80,14 @@ const Header = () => {
     isTransitioningRef.current = true;
 
     // Fade out menu contents
-    gsap.to('.menu-item-text, .menu-line', { opacity: 0, duration: 0.3, ease: 'power2.inOut' });
+    gsap.to('.menu-item-text, .menu-line', { opacity: 0, duration: 0.4, ease: 'power2.inOut', stagger: 0.02 });
     gsap.to(closeButtonRef.current, { opacity: 0, duration: 0.3, ease: 'power2.inOut' });
 
     // Expand menu to cover screen
     gsap.to(menuOverlayRef.current, {
       width: '100vw',
-      duration: 0.8,
-      ease: 'power3.inOut',
+      duration: 1,
+      ease: 'expo.inOut',
       onComplete: () => {
         router.push(href);
       }
@@ -97,9 +99,9 @@ const Header = () => {
     if (isTransitioningRef.current) {
       gsap.to(menuOverlayRef.current, {
         x: '-100%',
-        duration: 0.8,
-        ease: 'power3.inOut',
-        delay: 0.1, // brief delay to allow new page to render
+        duration: 1,
+        ease: 'expo.inOut',
+        delay: 0.2, // brief delay to allow new page to render
         onComplete: () => {
           setIsMenuOpen(false);
           isTransitioningRef.current = false;
@@ -128,15 +130,15 @@ const Header = () => {
     gsap.to(menuButtonRef.current, {
       x: x * 0.4,
       y: y * 0.4,
-      duration: 1,
-      ease: "power3.out"
+      duration: 0.6,
+      ease: "power2.out"
     });
 
     gsap.to(menuTextRef.current, {
       x: x * 0.2,
       y: y * 0.2,
-      duration: 1,
-      ease: "power3.out"
+      duration: 0.6,
+      ease: "power2.out"
     });
   });
 
@@ -147,7 +149,7 @@ const Header = () => {
       x: 0,
       y: 0,
       duration: 1,
-      ease: "elastic.out(1, 0.3)"
+      ease: "elastic.out(1, 0.4)"
     });
   });
 
@@ -169,7 +171,7 @@ const Header = () => {
           ref={menuButtonRef}
           className="relative flex items-center justify-center gap-3 bg-[#111] text-white px-7 py-1  overflow-hidden group hover:bg-[#222] transition-colors duration-300"
         >
-          <div className="absolute inset-0 bg-[#4E829F] translate-y-[101%]  group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
+          <div className="absolute inset-0 bg-[#0474BA] translate-y-[101%]  group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
           <span
             ref={menuTextRef}
             className="relative z-10  transition-colors duration-500 delay-100 block"
@@ -182,7 +184,7 @@ const Header = () => {
       {/* Side Menu Overlay */}
       <div
         ref={menuOverlayRef}
-        className="fixed top-0 right-0 w-full md:w-[50vw] h-[100svh] bg-[#4E829F] translate-x-full pointer-events-auto flex flex-col justify-center px-8 md:px-20 z-50 shadow-2xl"
+        className="fixed top-0 right-0 w-full md:w-[50vw] h-[100svh] bg-[#0474BA] translate-x-full pointer-events-auto flex flex-col justify-center px-8 md:px-20 z-50 shadow-2xl"
       >
         <button
           ref={closeButtonRef}
@@ -196,17 +198,17 @@ const Header = () => {
           <div className="w-0 h-[1px] bg-white/80 menu-line"></div>
           {[
             { name: "HOME", url: '/' },
-            { name: "WORK IN PROGRESS", url: '/work-in-progress' },
             { name: "Our Films", url: '/our-films' },
-            { name: "SGM STUDIO", url: '/' },
-            { name: "WHISTLING WOODS", url: '/' },
-            { name: "MUKTA A2 CINEMAS", url: '/' },
-            { name: "SUBMIT SCRIPT", url: '/' }
+            // { name: "WORK IN PROGRESS", url: '/work-in-progress' },
+            { name: "SGM STUDIO", url: '/under-development' },
+            { name: "WHISTLING WOODS", url: '/under-development' },
+            { name: "MUKTA A2 CINEMAS", url: '/under-development' },
+            { name: "SUBMIT SCRIPT", url: '/under-development' }
           ].map((item, index) => (
             <React.Fragment key={index}>
               <a href={item.url} onClick={(e) => handleLinkClick(e, item.url)} className="py-1 block overflow-hidden group">
                 <div className="menu-item-text translate-y-full text-white">
-                  <h4 className="inline-block font-light! transform origin-left transition-all duration-300 ease-out  group-hover:-skew-x-17  ">
+                  <h4 className="inline-block font-light! transform origin-left transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-skew-x-12 group-hover:translate-x-4">
                     {item.name}
                   </h4>
                 </div>

@@ -9,7 +9,7 @@ const page = () => {
             <WorkHero />
             <WorkCarousel />
             <WorkVideo />
-            <BehindTheScenes />
+            {/* <BehindTheScenes /> */}
         </main>
     )
 }
