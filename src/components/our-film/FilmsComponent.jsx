@@ -222,7 +222,7 @@ export default function FilmsComponent() {
   return (
     <section
       ref={containerRef}
-      className=" mx-auto px-4 sm:px-6 lg:px-8 py-16 min-h-screen bg-white text-black"
+      className=" mx-auto px-4 sm:px-6 pt-[20vh] lg:px-8 py-16 min-h-screen bg-white text-black"
       style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}
     >
       {/* Page Title */}
@@ -260,8 +260,8 @@ export default function FilmsComponent() {
             key={film.id}
             className="film-card opacity-0 flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_25%] pl-8"
           >
-            <div 
-              className="flex flex-col group cursor-pointer h-full" 
+            <div
+              className="flex flex-col group cursor-pointer h-full"
               onClick={(e) => handleFilmClick(e, film)}
               onMouseEnter={() => router.prefetch("/work-in-progress")}
             >

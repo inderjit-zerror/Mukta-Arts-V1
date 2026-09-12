@@ -4,6 +4,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { usePathname, useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const Header = () => {
   const containerRef = useRef(null);
@@ -12,6 +13,7 @@ const Header = () => {
   const magneticAreaRef = useRef(null);
   const menuOverlayRef = useRef(null);
   const closeButtonRef = useRef(null);
+  const bgOverlayRef = useRef(null);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const tl = useRef();
@@ -25,11 +27,17 @@ const Header = () => {
     if (tl.current) tl.current.kill();
     tl.current = gsap.timeline({ paused: true });
 
-    tl.current.to(menuOverlayRef.current, {
-      x: '0%',
-      duration: 1,
-      ease: "expo.inOut"
-    })
+    tl.current.to(bgOverlayRef.current, {
+      opacity: 1,
+      pointerEvents: "auto",
+      duration: 0.8,
+      ease: "power2.inOut"
+    }, 0)
+      .to(menuOverlayRef.current, {
+        x: '0%',
+        duration: 1,
+        ease: "expo.inOut"
+      }, 0)
       .to('.menu-line', {
         width: '100%',
         duration: 0.8,
@@ -82,6 +90,7 @@ const Header = () => {
     // Fade out menu contents
     gsap.to('.menu-item-text, .menu-line', { opacity: 0, duration: 0.4, ease: 'power2.inOut', stagger: 0.02 });
     gsap.to(closeButtonRef.current, { opacity: 0, duration: 0.3, ease: 'power2.inOut' });
+    gsap.to(bgOverlayRef.current, { opacity: 0, duration: 0.5, ease: 'power2.inOut' });
 
     // Expand menu to cover screen
     gsap.to(menuOverlayRef.current, {
@@ -107,6 +116,7 @@ const Header = () => {
           isTransitioningRef.current = false;
 
           // Reset styles to CSS defaults
+          gsap.set(bgOverlayRef.current, { clearProps: 'all' });
           gsap.set(menuOverlayRef.current, { clearProps: 'all' });
           gsap.set('.menu-item-text, .menu-line', { clearProps: 'all' });
           gsap.set(closeButtonRef.current, { clearProps: 'all' });
@@ -155,9 +165,21 @@ const Header = () => {
 
   return (
     <header ref={containerRef} className="fixed top-0 left-0 w-full z-50 p-6 md:p-8 flex justify-between items-center pointer-events-none">
-      <div className="text-2xl md:text-3xl font-black tracking-tighter uppercase pointer-events-auto mix-blend-difference text-white relative z-[60]">
-
+      <div className="pointer-events-auto relative z-[60]">
+        {pathname !== '/' && (
+          <Link href="/">
+            <img src="/img/logo/logo.png" alt="Logo" className="h-8 md:h-12 w-auto object-contain" />
+          </Link>
+        )}
       </div>
+
+      {/* Background Blur Overlay */}
+      <div
+        ref={bgOverlayRef}
+        className="fixed inset-0 w-screen h-screen bg-black/70 opacity-0 pointer-events-none z-[40]"
+        style={{ backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)' }}
+        onClick={() => setIsMenuOpen(false)}
+      ></div>
 
       {/* Main Menu Button */}
       <div
@@ -197,13 +219,13 @@ const Header = () => {
         <div className="flex flex-col w-full relative mt-[20vh] mb-auto">
           <div className="w-0 h-[1px] bg-white/80 menu-line"></div>
           {[
-            { name: "HOME", url: '/' },
-            { name: "Our Films", url: '/our-films' },
+            { name: "Home", url: '/' },
+            { name: "Films", url: '/our-films' },
             // { name: "WORK IN PROGRESS", url: '/work-in-progress' },
-            { name: "SGM STUDIO", url: '/under-development' },
-            { name: "WHISTLING WOODS", url: '/under-development' },
-            { name: "MUKTA A2 CINEMAS", url: '/under-development' },
-            { name: "SUBMIT SCRIPT", url: '/under-development' }
+            { name: "Directors", url: '/under-development' },
+            { name: "Subhash Ghai ", url: '/under-development' },
+            { name: "⁠About", url: '/under-development' },
+            { name: "⁠Script Submission", url: '/under-development' }
           ].map((item, index) => (
             <React.Fragment key={index}>
               <a href={item.url} onClick={(e) => handleLinkClick(e, item.url)} className="py-1 block overflow-hidden group">
