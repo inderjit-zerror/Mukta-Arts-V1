@@ -7,7 +7,7 @@ const VideoSection = () => {
 
 
             <video
-                src="/video/video.mp4"
+                src="/video/video.mov"
                 loop muted autoPlay
                 alt="Video Thumbnail"
                 className="absolute inset-0 w-full h-full object-cover  scale-[2] group-hover:scale-105 transition-transform duration-700 ease-in-out"

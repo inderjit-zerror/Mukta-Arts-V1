@@ -6,6 +6,7 @@ import Elder from "@/components/home/Elder";
 import SpiralScene from "@/components/home/SpiralScene";
 import CardsShowcase from "@/components/home/CardsShowcase";
 import StackedCards from "@/components/home/StackedCards";
+import OldCamera from "@/components/home/OldCamera";
 
 const HomePage = () => {
   return (
@@ -17,11 +18,11 @@ const HomePage = () => {
       <FilmsSection />
       <Elder />
 
-      <div className="w-full h-fit relative">
-        <img src={'/img/home/TempMovie.png'} className="w-full object-cover object-center" />
-      </div>
+      <OldCamera />
 
       <CardsShowcase />
+
+      <div className="w-full h-[10vh] bg-white "></div>
     </>
   );
 };

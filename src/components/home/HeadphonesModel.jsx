@@ -133,8 +133,9 @@ export function Model(props) {
         const footerTl = gsap.timeline({
           scrollTrigger: {
             trigger: "#footer",
-            start: "top bottom",
-            end: "top 20%",
+            start: "top 15%",
+            end: "top 0%",
+
             scrub: 1,
             onUpdate: (self) => {
               stateRef.current.footerProgress = self.progress;
@@ -148,9 +149,10 @@ export function Model(props) {
         const footerTl = gsap.timeline({
           scrollTrigger: {
             trigger: "#footer",
-            start: "top bottom",
-            end: "top 20%",
+            start: "top 20%",
+            end: "top 0%",
             scrub: 1,
+
             onUpdate: (self) => {
               stateRef.current.footerProgress = self.progress;
             }
