@@ -5,7 +5,10 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, Environment, ContactShadows, OrbitControls } from "@react-three/drei";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import * as THREE from "three";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function FilmReel() {
     const marqueeRef = useRef();
@@ -33,7 +36,7 @@ function FilmReel() {
     const loopContent = [...content, ...content, ...content, ...content, ...content, ...content];
 
     return (
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-[120vw] z-[100] transform -rotate-[3deg] pointer-events-none">
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[120vw] z-[100] transform -rotate-[3deg] pointer-events-none">
             <div className="bg-black py-8 relative flex shadow-2xl overflow-hidden">
                 {/* Top holes */}
                 <div
@@ -48,10 +51,10 @@ function FilmReel() {
                     {loopContent.map((item, i) => (
                         <div
                             key={i}
-                            className={`flex flex-col items-center justify-center min-w-[300px] h-[90px] px-8 ${item.active ? 'bg-[#0077b6]' : 'bg-transparent'
+                            className={`flex flex-col items-center justify-center min-w-[300px] h-[120px] px-8 ${item.active ? 'bg-[#0077b6]' : 'bg-transparent'
                                 }`}
                         >
-                            <h3 className="text-[#f97316] text-3xl font-bold font-serif mb-1">{item.title}</h3>
+                            <h3 className="text-[#f97316] text-3xl font-bold mb-1">{item.title}</h3>
                             <p className="text-white text-sm opacity-90">{item.subtitle}</p>
                         </div>
                     ))}
@@ -110,69 +113,138 @@ function CameraModel({ url }) {
     );
 }
 
-export default function OldCamera() {
+function AnimatedCameraGroup() {
+    const groupRef = useRef();
+
+    useGSAP(() => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".old-camera-container",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1,
+            }
+        });
+
+        // Initial state
+        gsap.set(groupRef.current.position, { x: 0, y: -2, z: 0 });
+        gsap.set(groupRef.current.rotation, { x: 0, y: -2, z: 0 });
+
+        tl.to(groupRef.current.position, { x: 2, y: -2.5, z: 0, duration: 1 }, 0)
+            .to(groupRef.current.rotation, { y: -Math.PI / 1.3 - Math.PI * 2, duration: 1 }, 0)
+            .to(groupRef.current.rotation, { y: "-=" + Math.PI * 2, duration: 1 }, 1.5)
+            .to(groupRef.current.rotation, { y: "-=" + Math.PI * 2, duration: 1 }, 2.7)
+            .to({}, { duration: 0.3 }); // pad to 4.0
+    });
+
     return (
-        <section className="relative w-full h-[100vh] bg-white overflow-hidden flex items-center justify-center">
+        <group ref={groupRef} scale={0.05}>
+            <CameraModel url="/model/camera.glb" />
+            <ContactShadows
+                position={[0, -1, 0]}
+                opacity={0.6}
+                scale={10}
+                blur={2.5}
+                far={4}
+                color="#000000"
+            />
+        </group>
+    );
+}
 
-            {/* Title */}
-            <h2 className="absolute top-[10%] tracking-tighter font-bold left-[4%] f z-40 text-black leading-none pointer-events-none">
-                About us.
-            </h2>
+export default function OldCamera() {
+    const containerRef = useRef(null);
+    const text1Ref = useRef(null);
+    const text2Ref = useRef(null);
+    const text3Ref = useRef(null);
 
-            {/* Projection Cone */}
-            <div
-                className="absolute top-[-10%] right-0 h-full w-[70vw] z-40 pointer-events-none"
-                style={{
-                    background: 'linear-gradient(to right, rgba(230, 165, 126, 0.05) 0%, rgba(216, 108, 35, 0.8) 50%, rgba(200, 80, 20, 1) 100%)',
-                    clipPath: 'polygon(0% 60%, 100% 10%, 100% 90%)'
-                }}
-            ></div>
+    useGSAP(() => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1,
+            }
+        });
 
-            {/* Projection Text Content */}
-            <div className="absolute top-[45%] -translate-y-1/2 right-[5%] md:right-[5%] w-full max-w-lg z-[60] text-white pointer-events-none">
-                <h3 className="text-4xl md:text-5xl font-serif mb-2">45+ Years Of Cinema</h3>
-                <p className="tracking-[0.2em] uppercase text-xs mb-6 opacity-80">LEGACY</p>
-                <p className="text-base opacity-90 leading-relaxed font-light">
-                    For Over Four Decades, Mukta Arts Has Been Part Of India's Cinematic Journey, Creating Films And Stories That Have Entertained, Inspired, And Stayed With Audiences Across Generations.
-                </p>
-            </div>
+        gsap.set([text1Ref.current, text2Ref.current, text3Ref.current], { opacity: 0, y: 30 });
 
-            {/* 3D Canvas */}
-            <div className="absolute inset-0 z-50">
-                <Canvas
+        tl.to(text1Ref.current, { opacity: 1, y: 0, duration: 0.2 }, 0.8)
+            .to(text1Ref.current, { opacity: 0, y: -20, duration: 0.2 }, 1.5)
+            .to(text2Ref.current, { opacity: 1, y: 0, duration: 0.2 }, 2.0)
+            .to(text2Ref.current, { opacity: 0, y: -20, duration: 0.2 }, 2.7)
+            .to(text3Ref.current, { opacity: 1, y: 0, duration: 0.2 }, 3.2)
+            .to({}, { duration: 0.6 }); // pad to 4.0
+    }, { scope: containerRef });
 
-                    camera={{ position: [0, 0, 5], fov: 45 }}
-                    className="w-full h-full cursor-grab active:cursor-grabbing"
-                    dpr={[1, 2]} // Support for high-res screens
-                >
-                    <ambientLight intensity={0.4} />
-                    <directionalLight position={[5, 10, 5]} intensity={1.2} />
-                    <Environment preset="studio" />
+    return (
+        <div ref={containerRef} className="old-camera-container w-full h-[400vh] relative">
 
-                    <group position={[-2, -2.5, 0]} scale={0.05} rotation={[0, Math.PI / 1.3, 0]}>
-                        <CameraModel url="/model/camera.glb" />
-                        <ContactShadows
-                            position={[0, -1, 0]}
-                            opacity={0.6}
-                            scale={10}
-                            blur={2.5}
-                            far={4}
-                            color="#000000"
-                        />
-                    </group>
 
-                    {/* <OrbitControls
+            <section className="sticky top-0 w-full h-[100vh] bg-white  flex items-center justify-center">
+
+                {/* Title */}
+                <h2 className="absolute top-[10%] tracking-tighter font-bold left-[4%] f z-40 text-black leading-none pointer-events-none">
+                    About us.
+                </h2>
+
+                {/* Text Content */}
+                <div className="absolute top-[45%] -translate-y-1/2 left-[5%] md:left-[4%] w-full max-w-lg z-[60] text-black pointer-events-none">
+
+                    {/* Text Content 1 */}
+                    <div ref={text1Ref} className="absolute top-0 left-0 w-full">
+                        <h3 className="text-4xl md:text-5xl font-semibold mb-2">45+ Years Of Cinema</h3>
+                        <p className="text-base opacity-90 leading-relaxed ">
+                            For Over Four Decades, Mukta Arts Has Been Part Of India's Cinematic Journey, Creating Films And Stories That Have Entertained, Inspired, And Stayed With Audiences Across Generations.For Over Four Decades, Mukta Arts Has Been Part Of India's Cinematic Journey, Creating Films And Stories That Have Entertained, Inspired, And Stayed With Audiences Across Generations.
+                        </p>
+                    </div>
+
+                    {/* Text Content 2 */}
+                    <div ref={text2Ref} className="absolute top-0 left-0 w-full">
+                        <h3 className="text-4xl md:text-5xl font-semibold mb-2">Global Recognition</h3>
+                        <p className="text-base opacity-90 leading-relaxed ">
+                            With numerous national and international awards, our commitment to excellence has resonated with audiences and critics alike, setting new benchmarks in the industry.  With numerous national and international awards, our commitment to excellence has resonated with audiences and critics alike, setting new benchmarks in the industry.
+                        </p>
+                    </div>
+
+                    {/* Text Content 3 */}
+                    <div ref={text3Ref} className="absolute top-0 left-0 w-full">
+                        <h3 className="text-4xl md:text-5xl font-semibold mb-2">Future of Storytelling</h3>
+                        <p className="text-base opacity-90 leading-relaxed ">
+                            Embracing new technologies and fresh narratives, we continue to evolve, bringing innovative and captivating stories to screens worldwide for the next generation. Embracing new technologies and fresh narratives, we continue to evolve, bringing innovative and captivating stories to screens worldwide for the next generation.
+                        </p>
+                    </div>
+
+                </div>
+
+                {/* 3D Canvas */}
+                <div className="absolute inset-0 z-50">
+                    <Canvas
+
+                        camera={{ position: [0, 0, 5], fov: 45 }}
+                        className="w-full h-full cursor-grab active:cursor-grabbing"
+                        dpr={[1, 2]} // Support for high-res screens
+                    >
+                        <ambientLight intensity={0.4} />
+                        <directionalLight position={[5, 10, 5]} intensity={1.2} />
+                        <Environment preset="studio" />
+
+                        <AnimatedCameraGroup />
+
+                        {/* <OrbitControls
                         enableZoom={false}
                         enablePan={false}
                         minPolarAngle={Math.PI / 3}
                         maxPolarAngle={Math.PI / 1.5}
                     /> */}
-                </Canvas>
-            </div>
+                    </Canvas>
+                </div>
 
-            <FilmReel />
+                <FilmReel />
 
-        </section>
+            </section>
+        </div>
     );
 }
 

@@ -145,14 +145,14 @@ const Elder = () => {
     return (
         <div
             ref={containerRef}
-            className="w-full h-[700vh] relative text-white overflow-clip"
+            className="w-full h-[700vh]   relative text-white overflow-clip"
             style={{
-                "--color1": "#2f496e",
-                "--color2": "#2f496e",
+                "--color1": "#0474BA",
+                "--color2": "#0474BA",
                 background: "linear-gradient(135deg, var(--color1) 0%, var(--color2) 100%)"
             }}
         >
-            <div className="w-full h-[100vh] sticky top-0 left-0 overflow-hidden flex items-center justify-center">
+            <div className="w-full h-[100vh]  sticky top-0 left-0 overflow-hidden flex items-center justify-center">
 
                 {/* Background Grid  */}
                 <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden">
@@ -172,7 +172,7 @@ const Elder = () => {
                         <h2
                             key={i}
                             ref={el => titlesRef.current[i] = el}
-                            className="text-4xl md:text-6xl lg:text-8xl font-bold tracking-tight text-[#5c6d86] opacity-50"
+                            className="text-4xl md:text-6xl lg:text-8xl font-bold tracking-tight text-[#7889a1] opacity-50"
                         >
                             {item.title}
                         </h2>

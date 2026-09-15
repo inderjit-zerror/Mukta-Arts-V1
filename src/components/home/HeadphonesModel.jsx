@@ -16,6 +16,19 @@ export function Model(props) {
   const spinRef = useRef();
   const { size, camera } = useThree();
 
+  useEffect(() => {
+    scene.traverse((child) => {
+      if (child.isMesh && child.material && child.material.color) {
+        // Check if the original color is dark/black
+        if (child.material.color.r < 0.3 && child.material.color.g < 0.3 && child.material.color.b < 0.3) {
+          // Change to slightly darker #0474BA
+          child.material.color = new THREE.Color("#0474BA").multiplyScalar(0.8);
+          child.material.needsUpdate = true;
+        }
+      }
+    });
+  }, [scene]);
+
   const stateRef = useRef({ footerProgress: 0 });
   const isDragging = useRef(false);
   const previousMouse = useRef({ x: 0, y: 0 });
@@ -33,9 +46,7 @@ export function Model(props) {
     const handlePointerMove = (e) => {
       if (isDragging.current) {
         const deltaX = e.clientX - previousMouse.current.x;
-        const deltaY = e.clientY - previousMouse.current.y;
         targetRotation.current.y += deltaX * 0.01;
-        targetRotation.current.x += deltaY * 0.01;
         previousMouse.current = { x: e.clientX, y: e.clientY };
       }
     };
@@ -90,7 +101,6 @@ export function Model(props) {
     if (spinRef.current) {
       // Smoothly interpolate current rotation to target drag rotation
       spinRef.current.rotation.y = THREE.MathUtils.lerp(spinRef.current.rotation.y, targetRotation.current.y, 0.1);
-      spinRef.current.rotation.x = THREE.MathUtils.lerp(spinRef.current.rotation.x, targetRotation.current.x, 0.1);
 
       // Auto rotate locally when in hero and not dragging
       if (stateRef.current.footerProgress === 0 && !isDragging.current) {

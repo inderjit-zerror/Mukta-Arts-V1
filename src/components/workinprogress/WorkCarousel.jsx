@@ -8,35 +8,35 @@ gsap.registerPlugin(useGSAP);
 const carouselData = [
   {
     id: 1,
-    title: 'Hritik Roshan',
+    title: 'Actress 1',
     subtitle: 'Actor • Dancer',
     description: 'Hritik Rakesh Nagrath (born 10 January 1974), known professionally as Hrithik Roshan, known professionally as Hrithik Roshan (born 10 January 1974), known professionally as Hrithik Roshan',
-    bgImage: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=2000&auto=format&fit=crop',
-    cardImage: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop',
+    bgImage: '/img/actor/1.jpg',
+    cardImage: '/img/actor/1.jpg',
   },
   {
     id: 2,
-    title: 'Jackie Shroff',
+    title: 'Actress 2',
     subtitle: 'Actor • Dancer',
     description: 'Jaikishan Kakubhai "Jackie" Shroff is an Indian actor. He has been in the Hindi cinema (Bollywood) industry for almost four decades...',
-    bgImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2000&auto=format&fit=crop',
-    cardImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop',
+    bgImage: '/img/actor/2.jpg',
+    cardImage: '/img/actor/2.jpg',
   },
   {
     id: 3,
-    title: 'Avni',
+    title: 'Actress 3',
     subtitle: 'Moutain • Forest • Treck',
     description: 'Avni is a nature lover and an experienced trekker who has scaled several peaks...',
-    bgImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2000&auto=format&fit=crop',
-    cardImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop',
+    bgImage: '/img/actor/3.jpg',
+    cardImage: '/img/actor/3.jpg',
   },
   {
     id: 4,
-    title: 'Kareena Kapoor',
+    title: 'Actress 4',
     subtitle: 'Moutain • Forest • Treck',
     description: 'Kareena Kapoor Khan is an Indian actress who appears in Hindi films. She is the daughter of actors Randhir Kapoor and Babita...',
-    bgImage: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=2000&auto=format&fit=crop',
-    cardImage: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=400&auto=format&fit=crop',
+    bgImage: '/img/actor/4.jpg',
+    cardImage: '/img/actor/4.jpg',
   }
 ];
 

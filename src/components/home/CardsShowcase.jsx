@@ -8,38 +8,53 @@ let arr = [
   {
     no: ".4",
     clr: "#0470B1",
-    img: "/img/home/1.jpg",
+    img: "/img/home/trophy_nb1.jpg",
     title: "Global Recognition",
     desc: "Recognized worldwide for pushing boundaries and creating impactful digital experiences that inspire and engage users on a global scale. Recognized worldwide for pushing boundaries and creating impactful digital experiences that inspire and engage users on a global scale."
   },
   {
     no: ".3",
     clr: "#00A7E1",
-    img: "/img/home/2.jpg",
+    img: "/img/home/trophy_nb2.jpg",
     title: "Design Excellence",
     desc: "Awarded for exceptional user interface design, balancing aesthetic appeal with highly intuitive user journeys.Awarded for exceptional user interface design, balancing aesthetic appeal with highly intuitive user journeys."
   },
   {
     no: ".2",
     clr: "#0470B1",
-    img: "/img/home/3.jpg",
+    img: "/img/home/trophy_nb3.jpg",
     title: "Innovation Award",
     desc: "Celebrating groundbreaking approaches to solving complex problems through technology, creativity, and forward-thinking. Celebrating groundbreaking approaches to solving complex problems through technology, creativity, and forward-thinking."
   },
   {
     no: ".1",
     clr: "#00A7E1",
-    img: "/img/home/4.jpg",
+    img: "/img/home/trophy_nb4.jpg",
     title: "Best In Class",
     desc: "Honored as the industry standard for excellence, setting the benchmark for quality, performance, and user satisfaction.Honored as the industry standard for excellence, setting the benchmark for quality, performance, and user satisfaction."
   },
 ];
 
 export default function CardsShowcase() {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [cardOrder, setCardOrder] = useState(arr.map((_, i) => i));
+
+  const handleCardClick = (clickedIndex) => {
+    const currentVisualIndex = cardOrder.indexOf(clickedIndex);
+    const frontVisualIndex = cardOrder.length - 1;
+
+    if (currentVisualIndex === frontVisualIndex) return; // Already at the front
+
+    const newCardOrder = [...cardOrder];
+    // Swap the clicked card with the front card
+    const temp = newCardOrder[currentVisualIndex];
+    newCardOrder[currentVisualIndex] = newCardOrder[frontVisualIndex];
+    newCardOrder[frontVisualIndex] = temp;
+
+    setCardOrder(newCardOrder);
+  };
 
   return (
-    <div className="w-full h-screen max-sm:hidden  relative z-[10] overflow-hidden ">
+    <div className="w-full h-[120vh] max-sm:hidden  relative z-[10] mt-[30vh] overflow-hidden ">
       {/* Title */}
       <div className="w-full absolute top-[-10%] left-2 px-10 pt-20 z-50 pointer-events-none">
         <h1 className="text-[8vw] font-semibold tracking-tighter text-black">Awards.</h1>
@@ -54,22 +69,18 @@ export default function CardsShowcase() {
           className="relative w-full max-w-6xl h-[65vh] flex items-center justify-center"
           style={{ transformStyle: "preserve-3d" }}
         >
-          {arr.map((item, index) => {
-            let translateY = "0px";
-            if (hoveredIndex !== null) {
-              translateY = hoveredIndex === index ? "-100px" : "400px";
-            }
+          {arr.map((item, originalIndex) => {
+            const visualIndex = cardOrder.indexOf(originalIndex);
 
             return (
               <div
-                key={index}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
+                key={originalIndex}
+                onClick={() => handleCardClick(originalIndex)}
                 className="absolute w-[55vw] max-w-[90%] h-full shadow-[-15px_15px_40px_rgba(0,0,0,0.2)] transition-all duration-500 ease-out cursor-pointer flex border-l border-white/10"
                 style={{
                   backgroundColor: item.clr,
-                  zIndex: index,
-                  transform: `translateX(${(index - 1.5) * 17}%) translateY(${translateY}) translateZ(${index * 60}px) rotateY(15deg)`,
+                  zIndex: visualIndex,
+                  transform: `translateX(${(visualIndex - 1.5) * 17}%) translateY(-100px) translateZ(${visualIndex * 60}px) rotateY(15deg)`,
                   transformOrigin: "center center",
                 }}
               >
@@ -87,7 +98,7 @@ export default function CardsShowcase() {
                         src={item.img}
                         alt={item.title}
                         fill
-                        className="object-contain drop-shadow-2xl "
+                        className="object-contain drop-shadow-2xl mix-blend-screen"
                       />
                     </div>
                   </div>
