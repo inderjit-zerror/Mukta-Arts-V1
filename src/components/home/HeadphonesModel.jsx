@@ -25,6 +25,12 @@ export function Model(props) {
           child.material.color = new THREE.Color("#0474BA").multiplyScalar(0.8);
           child.material.needsUpdate = true;
         }
+        // Check if the original color is white/light
+        else if (child.material.color.r > 0.7 && child.material.color.g > 0.7 && child.material.color.b > 0.7) {
+          // Change to pure orange
+          child.material.color = new THREE.Color("#FF7F00");
+          child.material.needsUpdate = true;
+        }
       }
     });
   }, [scene]);
@@ -192,8 +198,8 @@ export default function HeadphonesCanvas() {
       <div id="3d-canvas-container" className="w-full h-full pointer-events-auto">
         <Canvas camera={{ position: [0, 0, 8], fov: 45 }} className="w-full h-full">
           <ambientLight intensity={1} />
-          <directionalLight position={[10, 10, 5]} intensity={2} />
-          <directionalLight position={[-10, -10, -5]} intensity={1} />
+          <directionalLight position={[10, 10, 5]} intensity={0} />
+          <directionalLight position={[-10, -10, -5]} intensity={0} />
           <Environment preset="city" />
           <Model position={[0, 0.2, 0]} scale={11} />
         </Canvas>

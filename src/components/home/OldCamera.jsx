@@ -26,10 +26,10 @@ function FilmReel() {
     });
 
     const content = [
-        { title: "1976", subtitle: "Founded", active: true },
-        { title: "300+", subtitle: "Films Produced" },
-        { title: "5+", subtitle: "National & international awards" },
-        { title: "45+", subtitle: "Years of Legacy" },
+        { title: "1976", subtitle: "Founded", active: true, image: "/img/home/1.jpg" },
+        { title: "300+", subtitle: "Films Produced", image: "/img/home/2.jpg" },
+        { title: "5+", subtitle: "National & international awards", image: "/img/home/3.jpg" },
+        { title: "45+", subtitle: "Years of Legacy", image: "/img/home/4.jpg" },
     ];
 
     // Duplicate multiple times for a seamless scroll effect
@@ -37,34 +37,44 @@ function FilmReel() {
 
     return (
         <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[120vw] z-[100] transform -rotate-[3deg] pointer-events-none">
-            <div className="bg-black py-8 relative flex shadow-2xl overflow-hidden">
+            <div className="bg-[#111] py-6 relative flex shadow-2xl overflow-hidden">
                 {/* Top holes */}
                 <div
-                    className="absolute top-1.5 left-0 w-full h-2.5 z-10"
+                    className="absolute top-2 left-0 w-full h-3 z-10"
                     style={{
-                        backgroundImage: 'repeating-linear-gradient(to right, #ffffff 0, #ffffff 12px, transparent 12px, transparent 24px)'
+                        backgroundImage: 'repeating-linear-gradient(to right, #ffffff 0, #ffffff 16px, transparent 16px, transparent 32px)'
                     }}
                 ></div>
 
                 {/* Scrolling content */}
-                <div className="flex w-max" ref={marqueeRef}>
+                <div className="flex w-max gap-2 px-2" ref={marqueeRef}>
                     {loopContent.map((item, i) => (
                         <div
                             key={i}
-                            className={`flex flex-col items-center justify-center min-w-[300px] h-[120px] px-8 ${item.active ? 'bg-[#0077b6]' : 'bg-transparent'
-                                }`}
+                            className="relative flex flex-col items-center justify-center min-w-[280px] h-[160px] px-8 rounded-sm overflow-hidden"
                         >
-                            <h3 className="text-[#f97316] text-3xl font-bold mb-1">{item.title}</h3>
-                            <p className="text-white text-sm opacity-90">{item.subtitle}</p>
+                            {/* Background Image for each frame */}
+                            <div
+                                className="absolute inset-0 bg-cover bg-center z-0 opacity-45"
+                                style={{ backgroundImage: `url(${item.image})` }}
+                            ></div>
+                            {/* Overlay for text readability */}
+                            <div className="absolute inset-0 bg-black/50 z-0"></div>
+
+                            {/* Text Content */}
+                            <div className="relative z-10 text-center">
+                                <h3 className="text-[#f97316] text-3xl font-bold mb-1 drop-shadow-md">{item.title}</h3>
+                                <p className="text-white text-sm opacity-90 drop-shadow-md font-semibold">{item.subtitle}</p>
+                            </div>
                         </div>
                     ))}
                 </div>
 
                 {/* Bottom holes */}
                 <div
-                    className="absolute bottom-1.5 left-0 w-full h-2.5 z-10"
+                    className="absolute bottom-2 left-0 w-full h-3 z-10"
                     style={{
-                        backgroundImage: 'repeating-linear-gradient(to right, #ffffff 0, #ffffff 12px, transparent 12px, transparent 24px)'
+                        backgroundImage: 'repeating-linear-gradient(to right, #ffffff 0, #ffffff 16px, transparent 16px, transparent 32px)'
                     }}
                 ></div>
             </div>

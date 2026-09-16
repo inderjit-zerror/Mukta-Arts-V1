@@ -6,33 +6,53 @@ import { useState } from "react";
 
 let arr = [
   {
-    no: ".4",
     clr: "#0470B1",
     img: "/img/home/trophy_nb1.jpg",
     title: "Global Recognition",
-    desc: "Recognized worldwide for pushing boundaries and creating impactful digital experiences that inspire and engage users on a global scale. Recognized worldwide for pushing boundaries and creating impactful digital experiences that inspire and engage users on a global scale."
+    desc: "Recognized worldwide for pushing boundaries and creating impactful digital experiences that inspire and engage users on a global scale."
   },
   {
-    no: ".3",
     clr: "#00A7E1",
     img: "/img/home/trophy_nb2.jpg",
     title: "Design Excellence",
-    desc: "Awarded for exceptional user interface design, balancing aesthetic appeal with highly intuitive user journeys.Awarded for exceptional user interface design, balancing aesthetic appeal with highly intuitive user journeys."
+    desc: "Awarded for exceptional user interface design, balancing aesthetic appeal with highly intuitive user journeys."
   },
   {
-    no: ".2",
     clr: "#0470B1",
     img: "/img/home/trophy_nb3.jpg",
     title: "Innovation Award",
-    desc: "Celebrating groundbreaking approaches to solving complex problems through technology, creativity, and forward-thinking. Celebrating groundbreaking approaches to solving complex problems through technology, creativity, and forward-thinking."
+    desc: "Celebrating groundbreaking approaches to solving complex problems through technology, creativity, and forward-thinking."
   },
   {
-    no: ".1",
     clr: "#00A7E1",
     img: "/img/home/trophy_nb4.jpg",
     title: "Best In Class",
-    desc: "Honored as the industry standard for excellence, setting the benchmark for quality, performance, and user satisfaction.Honored as the industry standard for excellence, setting the benchmark for quality, performance, and user satisfaction."
+    desc: "Honored as the industry standard for excellence, setting the benchmark for quality, performance, and user satisfaction."
   },
+  {
+    clr: "#0470B1",
+    img: "/img/home/trophy_nb1.jpg",
+    title: "Creative Mastery",
+    desc: "Demonstrating exceptional creativity and vision in crafting compelling narratives that resonate with audiences everywhere."
+  },
+  {
+    clr: "#00A7E1",
+    img: "/img/home/trophy_nb2.jpg",
+    title: "Tech Innovator",
+    desc: "Recognized for leveraging cutting-edge technology to deliver seamless and engaging interactive experiences."
+  },
+  {
+    clr: "#0470B1",
+    img: "/img/home/trophy_nb3.jpg",
+    title: "Audience Choice",
+    desc: "Voted as the absolute favorite by audiences worldwide, signifying a deep connection with our core demographics."
+  },
+  {
+    clr: "#00A7E1",
+    img: "/img/home/trophy_nb4.jpg",
+    title: "Legacy Award",
+    desc: "Honoring decades of consistent excellence and a lasting positive impact on the digital and entertainment landscape."
+  }
 ];
 
 export default function CardsShowcase() {
@@ -76,18 +96,17 @@ export default function CardsShowcase() {
               <div
                 key={originalIndex}
                 onClick={() => handleCardClick(originalIndex)}
-                className="absolute w-[55vw] max-w-[90%] h-full shadow-[-15px_15px_40px_rgba(0,0,0,0.2)] transition-all duration-500 ease-out cursor-pointer flex border-l border-white/10"
+                className="absolute w-[40vw] max-w-[90%] h-[80%] shadow-[-15px_15px_40px_rgba(0,0,0,0.2)] transition-all duration-500 ease-out cursor-pointer flex border-l border-white/10"
                 style={{
                   backgroundColor: item.clr,
                   zIndex: visualIndex,
-                  transform: `translateX(${(visualIndex - 1.5) * 17}%) translateY(-100px) translateZ(${visualIndex * 60}px) rotateY(15deg)`,
+                  // We center the 8 cards by using (arr.length - 1) / 2 which is 3.5
+                  // Kept a similar proportion for X offset and Z spacing to retain the exact same animation feel!
+                  transform: `translateX(${(visualIndex - 3.5) * 11}%) translateY(-80px) translateZ(${visualIndex * 35}px) rotateY(15deg)`,
                   transformOrigin: "center center",
                 }}
               >
-                {/* Number */}
-                <div className="absolute top-8 left-8 text-white text-5xl md:text-7xl font-bold opacity-95 z-10  tracking-tighter">
-                  {item.no}
-                </div>
+                {/* Number is removed as requested */}
 
                 {/* Content */}
                 <div className="w-full h-full flex flex-row items-center pt-16">

@@ -75,19 +75,19 @@ const WorkHero = () => {
             {/* Left Column - Text Content */}
             <div className="flex-1 w-full max-w-2xl flex flex-col justify-center work-hero-text opacity-0">
                 {/* Title Area */}
-                <div className="flex items-baseline mb-12">
+                <div className="flex mb-12 ">
                     {/* Using tracking and scale to mimic the condensed font look without needing a custom font */}
-                    <h2 className=" uppercase font-bold!"
-                        style={{ transform: 'scaleY(1.5) scaleX(0.95)' }}>
+                    <h2 className=" uppercase font-bold! text-black"
+                    >
                         {title}
                     </h2>
-                    <h5 className="text-3xl md:text-5xl font-bold ml-6 lg:ml-8 mb-4 tracking-tight text-black whitespace-nowrap">
+                    <h5 className="text-3xl md:text-5xl font-bold ml-6 lg:ml-8 mb-4 text-black ">
                         (1942)
                     </h5>
                 </div>
 
                 {/* Paragraphs */}
-                <div className="  max-w-[90%] work-hero-text opacity-0">
+                <div className="max-w-[90%] work-hero-text opacity-0">
                     <p className="mb-4">
                         {description}
                     </p>

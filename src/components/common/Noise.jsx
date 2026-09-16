@@ -1,37 +1,87 @@
-export default function Noise() {
+"use client";
+
+import { useEffect, useRef } from "react";
+import { div } from "three/src/nodes/math/OperatorNode";
+
+export default function Noise({
+  opacity = 0.14,      // overlay strength (0–1)
+  speed = 30,          // how often the grain pattern refreshes (ms)
+  patternSize = 200,   // size of the tileable noise tile (px)
+  blendMode = "overlay", // try "overlay", "screen", "soft-light", etc.
+}) {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    let animationId;
+    let lastDraw = 0;
+
+    const patternCanvas = document.createElement("canvas");
+    patternCanvas.width = patternSize;
+    patternCanvas.height = patternSize;
+    const patternCtx = patternCanvas.getContext("2d");
+    const patternData = patternCtx.createImageData(patternSize, patternSize);
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function generateNoise() {
+      const buffer = patternData.data;
+      const len = buffer.length;
+      for (let i = 0; i < len; i += 4) {
+        const value = Math.random() * 255;
+        buffer[i] = value;
+        buffer[i + 1] = value;
+        buffer[i + 2] = value;
+        buffer[i + 3] = 255;
+      }
+      patternCtx.putImageData(patternData, 0, 0);
+
+      const pattern = ctx.createPattern(patternCanvas, "repeat");
+      ctx.fillStyle = pattern;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function loop(timestamp) {
+      if (timestamp - lastDraw >= speed) {
+        generateNoise();
+        lastDraw = timestamp;
+      }
+      animationId = requestAnimationFrame(loop);
+    }
+
+    resize();
+    window.addEventListener("resize", resize);
+    animationId = requestAnimationFrame(loop);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener("resize", resize);
+    };
+  }, [speed, patternSize]);
+
   return (
-    <>
-      <style>
-        {`
-          @keyframes noise-anim {
-            0%, 100% { transform: translate(0, 0); }
-            10% { transform: translate(-10px, -10px); }
-            20% { transform: translate(-20px, 10px); }
-            30% { transform: translate(10px, -20px); }
-            40% { transform: translate(-10px, 20px); }
-            50% { transform: translate(-20px, 10px); }
-            60% { transform: translate(20px, 0); }
-            70% { transform: translate(0, 20px); }
-            80% { transform: translate(10px, 30px); }
-            90% { transform: translate(-10px, 10px); }
-          }
-        `}
-      </style>
-      <div
-        className="pointer-events-none fixed inset-0 z-[9999]"
+    <div className="w-full h-full fixed top-0 left-0 z-9999999 pointer-events-none">
+
+
+      <canvas
+        ref={canvasRef}
         style={{
-          top: "-50%",
-          left: "-50%",
-          width: "200vw",
-          height: "200vh",
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          backgroundSize: "120px",
-          backgroundRepeat: "repeat",
-          opacity: 0.37,
-          animation: "noise-anim 0.2s infinite steps(1)",
-          willChange: "transform",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          pointerEvents: "none",
+          opacity,
+          mixBlendMode: blendMode,
+          zIndex: 9999,
         }}
       />
-    </>
+    </div>
   );
 }

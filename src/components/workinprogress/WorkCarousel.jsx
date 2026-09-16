@@ -8,35 +8,59 @@ gsap.registerPlugin(useGSAP);
 const carouselData = [
   {
     id: 1,
-    title: 'Actress 1',
-    subtitle: 'Actor • Dancer',
-    description: 'Hritik Rakesh Nagrath (born 10 January 1974), known professionally as Hrithik Roshan, known professionally as Hrithik Roshan (born 10 January 1974), known professionally as Hrithik Roshan',
-    bgImage: '/img/actor/1.jpg',
-    cardImage: '/img/actor/1.jpg',
+    title: 'Subhash Ghai',
+    subtitle: 'Executive Chairman',
+    description: 'Executive Chairman: Mukta Arts Ltd • Founder/Chairman: Whistling Woods International • Director - Mukta A2 Cinemas Private Ltd',
+    bgImage: '/img/last/1.jpg',
+    cardImage: '/img/last/1.jpg',
   },
   {
     id: 2,
-    title: 'Actress 2',
-    subtitle: 'Actor • Dancer',
-    description: 'Jaikishan Kakubhai "Jackie" Shroff is an Indian actor. He has been in the Hindi cinema (Bollywood) industry for almost four decades...',
-    bgImage: '/img/actor/2.jpg',
-    cardImage: '/img/actor/2.jpg',
+    title: 'Rahul Puri',
+    subtitle: 'Managing Director',
+    description: 'Managing Director: Mukta Arts Ltd • Director - Academics: Whistling Woods International • Director: Mukta A2 Cinemas Private Ltd',
+    bgImage: '/img/last/7.jpg',
+    cardImage: '/img/last/7.jpg',
   },
   {
     id: 3,
-    title: 'Actress 3',
-    subtitle: 'Moutain • Forest • Treck',
-    description: 'Avni is a nature lover and an experienced trekker who has scaled several peaks...',
-    bgImage: '/img/actor/3.jpg',
-    cardImage: '/img/actor/3.jpg',
+    title: 'Parvez Farooqui',
+    subtitle: 'Director',
+    description: 'Director: Mukta Arts Ltd • Executive Director: Mukta A2 Cinemas Private Ltd',
+    bgImage: '/img/last/2.jpg',
+    cardImage: '/img/last/2.jpg',
   },
   {
     id: 4,
-    title: 'Actress 4',
-    subtitle: 'Moutain • Forest • Treck',
-    description: 'Kareena Kapoor Khan is an Indian actress who appears in Hindi films. She is the daughter of actors Randhir Kapoor and Babita...',
-    bgImage: '/img/actor/4.jpg',
-    cardImage: '/img/actor/4.jpg',
+    title: 'Kapil Bagla',
+    subtitle: 'Independent Director',
+    description: 'Independent Director: Mukta Arts Ltd',
+    bgImage: '/img/last/3.jpg',
+    cardImage: '/img/last/3.jpg',
+  },
+  {
+    id: 5,
+    title: 'Rajendra Doshi',
+    subtitle: 'Independent Director',
+    description: 'Independent Director: Mukta Arts Ltd',
+    bgImage: '/img/last/4.jpg',
+    cardImage: '/img/last/4.jpg',
+  },
+  {
+    id: 6,
+    title: 'Madhumati Ramchandra Lele',
+    subtitle: 'Independent Director',
+    description: 'Independent Director: Mukta Arts Ltd',
+    bgImage: '/img/last/5.jpg',
+    cardImage: '/img/last/5.jpg',
+  },
+  {
+    id: 7,
+    title: 'Rentala Chandrashekhar',
+    subtitle: 'Independent Director',
+    description: 'Independent Director: Mukta Arts Ltd',
+    bgImage: '/img/last/6.jpg',
+    cardImage: '/img/last/6.jpg',
   }
 ];
 
@@ -116,10 +140,10 @@ const WorkCarousel = () => {
 
           {/* Left Text Content */}
           <div ref={textRef} className="flex-1 w-full max-w-xl">
-            <h2 className="text-[4rem] md:text-[6rem] lg:text-[7rem] font-bold leading-none tracking-tighter uppercase origin-bottom-left"
-              style={{ transform: 'scaleY(1.4)', marginBottom: '2rem' }}>
+            <h3 className="text-[4rem] md:text-[6rem] lg:text-[7rem] font-bold leading-none  uppercase origin-bottom-left"
+            >
               {activeItem.title}
-            </h2>
+            </h3>
             <p className="text-xl md:text-2xl font-bold mb-4">
               {activeItem.subtitle}
             </p>
@@ -186,11 +210,11 @@ const WorkCarousel = () => {
           <div className="w-48 md:w-80 h-[2px] bg-white/20 relative overflow-hidden">
             <div
               ref={progressRef}
-              className="absolute top-0 left-0 bottom-0 bg-blue-600 w-0"
+              className="absolute top-0 left-0 bottom-0 bg-white w-0"
             />
           </div>
 
-          <span className="font-bold text-lg md:text-xl ml-2 uppercase tracking-wide">The team</span>
+          <span className="font-bold text-lg md:text-xl ml-2 uppercase tracking-wide">Board of Directors</span>
         </div>
 
       </div>
