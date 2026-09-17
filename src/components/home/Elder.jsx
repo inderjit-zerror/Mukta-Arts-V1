@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -62,6 +62,31 @@ const Elder = () => {
     const popupsRef = useRef([]);
     const finalRef = useRef(null);
     const [activeItem, setActiveItem] = useState(null);
+    const [isScrolling, setIsScrolling] = useState(false);
+    const scrollTimeout = useRef(null);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolling(true);
+            if (scrollTimeout.current) {
+                clearTimeout(scrollTimeout.current);
+            }
+            scrollTimeout.current = setTimeout(() => {
+                setIsScrolling(false);
+            }, 150);
+        };
+
+        window.addEventListener('wheel', handleScroll);
+        window.addEventListener('touchmove', handleScroll);
+
+        return () => {
+            window.removeEventListener('wheel', handleScroll);
+            window.removeEventListener('touchmove', handleScroll);
+            if (scrollTimeout.current) {
+                clearTimeout(scrollTimeout.current);
+            }
+        };
+    }, []);
 
     useGSAP(() => {
         const tl = gsap.timeline({
@@ -73,13 +98,7 @@ const Elder = () => {
             }
         });
 
-        // 1. Draw SVG
-        tl.fromTo(".h-line", { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 1.5, ease: "power1.inOut" }, "start")
-            .fromTo(".v-line", { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 1.5, ease: "power1.inOut" }, "start")
-            .fromTo(".draw-circle", { strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 1.5, ease: "power1.inOut" }, "start")
-            .fromTo(".arrowhead", { opacity: 0 }, { opacity: 1, duration: 0.5 }, "start+=1");
-
-        // 2. Text animates from bottom
+        // 1. Text animates from bottom
         tl.fromTo(titlesRef.current,
             { y: 100, opacity: 0 },
             { y: 0, opacity: 0.5, stagger: 0.15, duration: 1, ease: "power2.out" },
@@ -103,8 +122,8 @@ const Elder = () => {
 
             // Continuous vertical parallax movement
             tl.fromTo(popupsRef.current[i],
-                { y: "60vh" },
-                { y: "-60vh", duration: 3.5, ease: "none" },
+                { y: "100vh" },
+                { y: "-100vh", duration: 3.5, ease: "none" },
                 `step${i}`
             );
 
@@ -156,7 +175,7 @@ const Elder = () => {
     return (
         <div
             ref={containerRef}
-            className="w-full h-[1000vh] relative z-[888] text-white overflow-clip"
+            className="w-full h-[700vh] relative z-[888] text-white overflow-clip"
             style={{
                 "--color1": "#0474BA",
                 "--color2": "#0474BA",
@@ -165,29 +184,63 @@ const Elder = () => {
         >
             <div className="w-full h-[100vh] sticky top-0 left-0 overflow-hidden flex items-center justify-center">
 
-                {/* Background Grid  */}
-                <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden">
-                    <svg className="w-full h-full min-w-[800px] object-cover opacity-60" viewBox="0 0 1478 782" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <line className="v-line" x1="739.15" y1="-6.55671e-09" x2="739.15" y2="782" stroke="white" strokeWidth="0.3" pathLength="100" strokeDasharray="100" />
-                        <line className="h-line" x1="41" y1="390.85" x2="1437" y2="390.85" stroke="white" strokeWidth="0.3" pathLength="100" strokeDasharray="100" />
-                        <circle className="draw-circle" cx="739" cy="391" r="239.85" stroke="white" strokeWidth="0.3" pathLength="100" strokeDasharray="100" />
-                        <circle className="draw-circle" cx="739" cy="391" r="400.85" stroke="white" strokeWidth="0.3" pathLength="100" strokeDasharray="100" />
-                        <path className="arrowhead" d="M1437 386L1478 391.5L1437 396V386Z" fill="#D9D9D9" fillOpacity="0.4" />
-                        <path className="arrowhead" d="M41 386L0 391.5L41 396V386Z" fill="#D9D9D9" fillOpacity="0.4" />
-                    </svg>
+                {/* Camera Recording Overlay */}
+                <div className={`absolute inset-0 pointer-events-none z-[880] transition-transform duration-500 ease-out flex items-center justify-center ${isScrolling ? 'scale-[1.03]' : 'scale-100'}`}>
+                    {/* Top Left - REC */}
+                    <div className="absolute top-8 left-8 md:top-12 md:left-12 flex items-center gap-3">
+                        <div className="w-3 h-3 md:w-4 md:h-4 bg-red-600 rounded-full animate-[pulse_1.5s_ease-in-out_infinite]"></div>
+                        <span className="text-white font-mono text-sm md:text-base tracking-widest font-bold">REC</span>
+                    </div>
+
+                    {/* Top Right - Specs */}
+                    <div className="absolute top-8 right-8 md:top-12 md:right-12 flex items-center gap-4">
+                        <span className="text-white/80 font-mono text-xs md:text-sm">4K</span>
+                        <span className="text-white/80 font-mono text-xs md:text-sm border border-white/40 px-1">60FPS</span>
+                        <div className="w-8 h-4 border border-white/60 rounded-sm p-[2px] flex">
+                            <div className="w-full bg-white/80 rounded-[1px]"></div>
+                        </div>
+                    </div>
+
+                    {/* Bottom Left - Settings */}
+                    <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 text-white/80 font-mono text-xs md:text-sm flex gap-3">
+                        <span>ISO 800</span>
+                        <span>F/2.8</span>
+                        <span>1/50</span>
+                    </div>
+
+                    {/* Bottom Right - Timecode */}
+                    <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 text-white/80 font-mono text-xs md:text-sm">
+                        TC 01:23:45:12
+                    </div>
+
+                    {/* Center Focus Area */}
+                    <div className="opacity-40 w-[97%] h-[92%] absolute inset-0 m-auto pointer-events-none">
+                        <div className="w-full h-full border border-white/20 relative">
+                            {/* Focus Corners */}
+                            <div className="absolute -top-[1px] -left-[1px] w-6 h-6 border-t-[3px] border-l-[3px] border-white"></div>
+                            <div className="absolute -top-[1px] -right-[1px] w-6 h-6 border-t-[3px] border-r-[3px] border-white"></div>
+                            <div className="absolute -bottom-[1px] -left-[1px] w-6 h-6 border-b-[3px] border-l-[3px] border-white"></div>
+                            <div className="absolute -bottom-[1px] -right-[1px] w-6 h-6 border-b-[3px] border-r-[3px] border-white"></div>
+
+                            {/* Center Dot */}
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-white/60 rounded-full"></div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* List Container */}
-                <div ref={listRef} className="relative z-10 flex flex-col items-center gap-1 md:gap-2 pointer-events-none">
-                    {data.map((item, i) => (
-                        <h2
-                            key={i}
-                            ref={el => titlesRef.current[i] = el}
-                            className="text-4xl md:text-6xl lg:text-8xl font-bold tracking-tight text-[#7889a1] opacity-50"
-                        >
-                            {item.title}
-                        </h2>
-                    ))}
+                <div className="absolute left-6 md:left-12 lg:left-24 top-1/2 -translate-y-1/2 z-10 pointer-events-none w-full max-w-[45vw]">
+                    <div ref={listRef} className="flex flex-col items-start gap-4 md:gap-6">
+                        {data.map((item, i) => (
+                            <h2
+                                key={i}
+                                ref={el => titlesRef.current[i] = el}
+                                className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-[#7889a1] opacity-50 text-left"
+                            >
+                                {item.title}
+                            </h2>
+                        ))}
+                    </div>
                 </div>
 
                 {/* Popups */}
@@ -195,7 +248,7 @@ const Elder = () => {
                     <div
                         key={i}
                         ref={el => popupsRef.current[i] = el}
-                        className={`absolute z-[888] w-64 md:w-80 lg:w-96 flex flex-col gap-3 opacity-0 invisible transform -translate-x-1/2 ${item.pos}`}
+                        className="absolute right-6 md:right-12 lg:right-24 top-0 z-[888] w-64 md:w-80 lg:w-[28rem] flex flex-col gap-3 opacity-0 invisible"
                     >
                         <div className="w-full aspect-video relative overflow-hidden shadow-2xl rounded-sm">
                             <img src={item.image} alt={item.title} className="w-full h-full object-cover" />

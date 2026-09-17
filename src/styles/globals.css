@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "SwitzerR", sans-serif;
+}
+
 * {
   scroll-behavior: smooth;
   user-select: none;

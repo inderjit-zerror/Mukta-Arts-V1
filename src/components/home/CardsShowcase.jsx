@@ -2,7 +2,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import gsap from "gsap";
 
 let arr = [
   {
@@ -57,6 +58,24 @@ let arr = [
 
 export default function CardsShowcase() {
   const [cardOrder, setCardOrder] = useState(arr.map((_, i) => i));
+  const cursorRef = useRef(null);
+  const [isHovering, setIsHovering] = useState(false);
+
+  useEffect(() => {
+    // Create smooth interpolators for x and y
+    const xTo = gsap.quickTo(cursorRef.current, "x", { duration: 0.4, ease: "power3" });
+    const yTo = gsap.quickTo(cursorRef.current, "y", { duration: 0.4, ease: "power3" });
+
+    const moveCursor = (e) => {
+      xTo(e.clientX);
+      yTo(e.clientY);
+    };
+
+    window.addEventListener("mousemove", moveCursor);
+    return () => {
+      window.removeEventListener("mousemove", moveCursor);
+    };
+  }, []);
 
   const handleCardClick = (clickedIndex) => {
     const currentVisualIndex = cardOrder.indexOf(clickedIndex);
@@ -71,6 +90,24 @@ export default function CardsShowcase() {
     newCardOrder[frontVisualIndex] = temp;
 
     setCardOrder(newCardOrder);
+  };
+
+  const handleNext = () => {
+    setCardOrder((prev) => {
+      const newOrder = [...prev];
+      const frontCard = newOrder.pop();
+      newOrder.unshift(frontCard);
+      return newOrder;
+    });
+  };
+
+  const handlePrev = () => {
+    setCardOrder((prev) => {
+      const newOrder = [...prev];
+      const backCard = newOrder.shift();
+      newOrder.push(backCard);
+      return newOrder;
+    });
   };
 
   return (
@@ -95,6 +132,8 @@ export default function CardsShowcase() {
             return (
               <div
                 key={originalIndex}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
                 onClick={() => handleCardClick(originalIndex)}
                 className="group absolute w-[40vw] max-w-[90%] h-[80%] transition-all duration-500 ease-out cursor-pointer"
                 style={{
@@ -146,6 +185,35 @@ export default function CardsShowcase() {
           })}
         </div>
         <div className="w-full h-[10vh] bg-white "></div>
+      </div>
+
+      {/* Navigation Buttons */}
+      <button
+        onClick={handlePrev}
+        className="absolute left-[5%] top-1/2 -translate-y-1/2 z-[9999] w-12 h-12 rounded-full border border-black/20 text-black flex items-center justify-center hover:bg-[#0474BA] hover:text-white transition-colors cursor-pointer bg-white/50 backdrop-blur-md shadow-lg"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button
+        onClick={handleNext}
+        className="absolute right-[5%] top-1/2 -translate-y-1/2 z-[9999] w-12 h-12 rounded-full border border-black/20 text-black flex items-center justify-center hover:bg-[#0474BA] hover:text-white transition-colors cursor-pointer bg-white/50 backdrop-blur-md shadow-lg"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+
+      {/* Custom Cursor */}
+      <div
+        ref={cursorRef}
+        className={`fixed top-0 left-0 pointer-events-none z-[99999] transition-opacity duration-300 ${isHovering ? 'opacity-100' : 'opacity-0'}`}
+        style={{ willChange: 'transform' }}
+      >
+        <div className={`w-fit h-fit px-5 py-2 bg-black/20 backdrop-blur-sm border border-white/10 text-white flex items-center justify-center  transition-transform duration-300 ease-out ${isHovering ? 'scale-100' : 'scale-50'} -translate-x-1/2 translate-y-4 `}>
+          <span className="text-xs font-semibold tracking-widest uppercase">Click</span>
+        </div>
       </div>
     </div>
   );

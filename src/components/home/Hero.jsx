@@ -7,10 +7,13 @@ const Hero = () => {
 
       {/* Huge Background Text */}
       <div className="  w-full  text-center flex justify-start items-start z-0 select-none pointer-events-none">
-        <h1 className="text-[16vw] leading-none font-medium tracking-tight whitespace-nowrap text-black m-0 p-0 flex items-start">
+        <h1 className="text-[120px] md:text-[180px] lg:text-[240px] font-bold leading-none tracking-tight whitespace-nowrap text-black flex items-start">
           Mukta Arts
-          <span className="text-[3vw] font-bold mt-[2.5vw] ml-1 tracking-normal">Pvt</span>
+          <h4 className="text-3xl md:text-5xl lg:text-6xl font-normal mb-auto ">
+            LTD
+          </h4>
         </h1>
+
       </div>
 
       {/* 3D Headphones Model */}

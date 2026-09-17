@@ -81,9 +81,9 @@ export default function Footer() {
       <div className=" -bottom-8 md:-bottom-16 left-4 md:left-12 z-0 overflow-visible pointer-events-none px-10">
         <h1 className="text-[120px] md:text-[180px] lg:text-[240px] font-bold leading-none tracking-tight whitespace-nowrap text-white flex items-start">
           Mukta Arts
-          <span className="text-3xl md:text-5xl lg:text-6xl font-normal mb-auto ">
-            Pvt
-          </span>
+          <h4 className="text-3xl md:text-5xl lg:text-6xl font-normal mb-auto ">
+            LTD
+          </h4>
         </h1>
       </div>
     </div>

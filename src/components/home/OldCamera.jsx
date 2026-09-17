@@ -142,9 +142,7 @@ function AnimatedCameraGroup() {
 
         tl.to(groupRef.current.position, { x: 2, y: -2.5, z: 0, duration: 1 }, 0)
             .to(groupRef.current.rotation, { y: -Math.PI / 1.3 - Math.PI * 2, duration: 1 }, 0)
-            .to(groupRef.current.rotation, { y: "-=" + Math.PI * 2, duration: 1 }, 1.5)
-            .to(groupRef.current.rotation, { y: "-=" + Math.PI * 2, duration: 1 }, 2.7)
-            .to({}, { duration: 0.3 }); // pad to 4.0
+            .to({}, { duration: 3 }); // pad to 4.0 total duration
     });
 
     return (
