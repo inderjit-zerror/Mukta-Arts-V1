@@ -19,48 +19,48 @@ const carouselData = [
     title: 'Rahul Puri',
     subtitle: 'Managing Director',
     description: 'Managing Director: Mukta Arts Ltd • Director - Academics: Whistling Woods International • Director: Mukta A2 Cinemas Private Ltd',
-    bgImage: '/img/last/7.jpg',
-    cardImage: '/img/last/7.jpg',
+    bgImage: '/img/last/2.avif',
+    cardImage: '/img/last/2.avif',
   },
   {
     id: 3,
     title: 'Parvez Farooqui',
     subtitle: 'Director',
     description: 'Director: Mukta Arts Ltd • Executive Director: Mukta A2 Cinemas Private Ltd',
-    bgImage: '/img/last/2.jpg',
-    cardImage: '/img/last/2.jpg',
+    bgImage: '/img/last/3.jpg',
+    cardImage: '/img/last/3.jpg',
   },
   {
     id: 4,
     title: 'Kapil Bagla',
     subtitle: 'Independent Director',
     description: 'Independent Director: Mukta Arts Ltd',
-    bgImage: '/img/last/3.jpg',
-    cardImage: '/img/last/3.jpg',
+    bgImage: '/img/last/4.avif',
+    cardImage: '/img/last/4.avif',
   },
   {
     id: 5,
     title: 'Rajendra Doshi',
     subtitle: 'Independent Director',
     description: 'Independent Director: Mukta Arts Ltd',
-    bgImage: '/img/last/4.jpg',
-    cardImage: '/img/last/4.jpg',
+    bgImage: '/img/last/5.png',
+    cardImage: '/img/last/5.png',
   },
   {
     id: 6,
     title: 'Madhumati Ramchandra Lele',
     subtitle: 'Independent Director',
     description: 'Independent Director: Mukta Arts Ltd',
-    bgImage: '/img/last/5.jpg',
-    cardImage: '/img/last/5.jpg',
+    bgImage: '/img/last/6.jpg',
+    cardImage: '/img/last/6.jpg',
   },
   {
     id: 7,
     title: 'Rentala Chandrashekhar',
     subtitle: 'Independent Director',
     description: 'Independent Director: Mukta Arts Ltd',
-    bgImage: '/img/last/6.jpg',
-    cardImage: '/img/last/6.jpg',
+    bgImage: '/img/last/7.jpg',
+    cardImage: '/img/last/7.jpg',
   }
 ];
 
@@ -125,7 +125,7 @@ const WorkCarousel = () => {
       {/* Background Image */}
       <div
         ref={bgRef}
-        className="absolute inset-0 w-full h-full object-cover object-center bg-top bg-no-repeat"
+        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${activeItem.bgImage})` }}
       />
 

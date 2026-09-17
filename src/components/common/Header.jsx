@@ -164,7 +164,7 @@ const Header = () => {
   });
 
   return (
-    <header ref={containerRef} className="fixed top-0 left-0 w-full z-50 p-6 md:p-8 flex justify-between items-center pointer-events-none">
+    <header ref={containerRef} className="fixed top-0 left-0 w-full z-50 p-6 md:p-8 flex justify-between items-center pointer-events-none z-99999">
       <div className="pointer-events-auto relative z-[60]">
         {pathname !== '/' && (
           <Link href="/">

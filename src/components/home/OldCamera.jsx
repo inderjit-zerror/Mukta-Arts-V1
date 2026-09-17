@@ -63,7 +63,7 @@ function FilmReel() {
 
                             {/* Text Content */}
                             <div className="relative z-10 text-center">
-                                <h3 className="text-[#f97316] text-3xl font-bold mb-1 drop-shadow-md">{item.title}</h3>
+                                <h3 className="text-[#f97316] text-4xl! font-bold mb-1 drop-shadow-md">{item.title}</h3>
                                 <p className="text-white text-sm opacity-90 drop-shadow-md font-semibold">{item.subtitle}</p>
                             </div>
                         </div>

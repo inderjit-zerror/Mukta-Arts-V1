@@ -156,7 +156,7 @@ const Elder = () => {
     return (
         <div
             ref={containerRef}
-            className="w-full h-[1000vh] relative z-[99999] text-white overflow-clip"
+            className="w-full h-[1000vh] relative z-[888] text-white overflow-clip"
             style={{
                 "--color1": "#0474BA",
                 "--color2": "#0474BA",
@@ -195,7 +195,7 @@ const Elder = () => {
                     <div
                         key={i}
                         ref={el => popupsRef.current[i] = el}
-                        className={`absolute z-[99999] w-64 md:w-80 lg:w-96 flex flex-col gap-3 opacity-0 invisible transform -translate-x-1/2 ${item.pos}`}
+                        className={`absolute z-[888] w-64 md:w-80 lg:w-96 flex flex-col gap-3 opacity-0 invisible transform -translate-x-1/2 ${item.pos}`}
                     >
                         <div className="w-full aspect-video relative overflow-hidden shadow-2xl rounded-sm">
                             <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
@@ -248,11 +248,11 @@ const Elder = () => {
 
                 {/* Sidebar for Full Description */}
                 <div
-                    className={`fixed top-0 right-0 h-[100dvh] w-full md:w-[50vw] bg-[#0474BA] backdrop-blur-2xl border-l border-white/10 z-[999999] transform transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] ${activeItem ? 'translate-x-0' : 'translate-x-full'} pointer-events-auto shadow-2xl flex flex-col`}
+                    className={`fixed top-0 right-0 h-[100dvh] w-full md:w-[50vw] bg-[#0474BA] backdrop-blur-2xl border-l border-white/10 z-[888] transform transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] ${activeItem ? 'translate-x-0' : 'translate-x-full'} pointer-events-auto shadow-2xl flex flex-col`}
                 >
                     <button
                         onClick={() => setActiveItem(null)}
-                        className="absolute top-4 right-4 md:top-8 md:right-8 text-white text-3xl font-extralight hover:text-white/60 transition-colors cursor-pointer w-12 h-12 flex items-center justify-center z-20 bg-black/20 hover:bg-black/40 backdrop-blur-md rounded-full"
+                        className="absolute top-4 left-4 md:top-8 md:left-8 text-white text-1xl font-extralight hover:text-white/60 transition-colors cursor-pointer w-12 h-12 flex items-center justify-center z-20 bg-black/20 hover:bg-black/40 backdrop-blur-md rounded-full"
                     >
                         ✕
                     </button>
@@ -265,7 +265,7 @@ const Elder = () => {
                                     <img src={activeItem.image} alt={activeItem.title} className="w-full h-full object-cover" />
                                 </div> */}
 
-                                <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white mb-6 tracking-wide">{activeItem.title}</h2>
+                                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-wide">{activeItem.title}</h2>
 
                                 <p className="text-white/80 text-sm md:text-base lg:text-lg font-light leading-relaxed whitespace-pre-wrap">
                                     {activeItem.fullDesc}

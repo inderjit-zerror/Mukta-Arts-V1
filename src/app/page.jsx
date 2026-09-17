@@ -22,7 +22,7 @@ const HomePage = () => {
 
       <CardsShowcase />
 
-      {/* <div className="w-full h-[10vh] bg-white "></div> */}
+
     </>
   );
 };

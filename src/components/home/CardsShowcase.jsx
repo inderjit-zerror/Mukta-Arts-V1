@@ -74,7 +74,7 @@ export default function CardsShowcase() {
   };
 
   return (
-    <div className="w-full h-[120vh] max-sm:hidden  relative z-[10] mt-[30vh] overflow-hidden ">
+    <div className="w-full h-[100vh] max-sm:hidden  relative z-[10] mt-[30vh] overflow-hidden ">
       {/* Title */}
       <div className="w-full absolute top-[-10%] left-2 px-10 pt-20 z-50 pointer-events-none">
         <h1 className="text-[8vw] font-semibold tracking-tighter text-black">Awards.</h1>
@@ -82,7 +82,7 @@ export default function CardsShowcase() {
 
       {/* 3D Container */}
       <div
-        className="absolute inset-0 flex items-center justify-center pt-[15vh] translate-y-30"
+        className="absolute inset-0 flex flex-col items-center justify-center pt-[15vh] translate-y-30"
         style={{ perspective: "1500px" }}
       >
         <div
@@ -96,9 +96,8 @@ export default function CardsShowcase() {
               <div
                 key={originalIndex}
                 onClick={() => handleCardClick(originalIndex)}
-                className="absolute w-[40vw] max-w-[90%] h-[80%] shadow-[-15px_15px_40px_rgba(0,0,0,0.2)] transition-all duration-500 ease-out cursor-pointer flex border-l border-white/10"
+                className="group absolute w-[40vw] max-w-[90%] h-[80%] transition-all duration-500 ease-out cursor-pointer"
                 style={{
-                  backgroundColor: item.clr,
                   zIndex: visualIndex,
                   // We center the 8 cards by using (arr.length - 1) / 2 which is 3.5
                   // Kept a similar proportion for X offset and Z spacing to retain the exact same animation feel!
@@ -106,34 +105,39 @@ export default function CardsShowcase() {
                   transformOrigin: "center center",
                 }}
               >
-                {/* Number is removed as requested */}
+                <div
+                  className="w-full h-full shadow-[-15px_15px_40px_rgba(0,0,0,0.2)] flex border-l border-white/10 transition-transform duration-300 group-hover:-translate-y-6"
+                  style={{ backgroundColor: item.clr }}
+                >
+                  {/* Number is removed as requested */}
 
-                {/* Content */}
-                <div className="w-full h-full flex flex-row items-center pt-16">
-                  {/* Image Area */}
-                  <div className="w-1/2 h-full relative flex items-center justify-center p-8">
-                    <div className="relative w-full h-[80%]">
-                      <Image
-                        src={item.img}
-                        alt={item.title}
-                        fill
-                        className="object-contain drop-shadow-2xl mix-blend-screen"
-                      />
+                  {/* Content */}
+                  <div className="w-full h-full flex flex-row items-center pt-16">
+                    {/* Image Area */}
+                    <div className="w-1/2 h-full relative flex items-center justify-center p-8">
+                      <div className="relative w-full h-[80%]">
+                        <Image
+                          src={item.img}
+                          alt={item.title}
+                          fill
+                          className="object-contain drop-shadow-2xl mix-blend-screen"
+                        />
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Vertical Divider */}
-                  <div className="w-px h-[50%] bg-white/50"></div>
+                    {/* Vertical Divider */}
+                    <div className="w-px h-[50%] bg-white/50"></div>
 
-                  {/* Text Area */}
-                  <div className="w-1/2 h-full flex flex-col  p-12 pl-10 text-white">
-                    <div className="mt-1 mb-5">
-                      <h3 className="text-3xl md:text-4xl ">{item.title}</h3>
-                    </div>
-                    <div className="mb-4">
-                      <p className=" tracking-tighter  capitalize  ">
-                        {item.desc}
-                      </p>
+                    {/* Text Area */}
+                    <div className="w-1/2 h-full flex flex-col  p-12 pl-10 text-white">
+                      <div className="mt-1 mb-5">
+                        <h3 className="text-3xl md:text-4xl ">{item.title}</h3>
+                      </div>
+                      <div className="mb-4">
+                        <p className=" tracking-tighter  capitalize  ">
+                          {item.desc}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -141,6 +145,7 @@ export default function CardsShowcase() {
             );
           })}
         </div>
+        <div className="w-full h-[10vh] bg-white "></div>
       </div>
     </div>
   );
