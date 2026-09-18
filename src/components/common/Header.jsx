@@ -531,12 +531,8 @@ const Header = () => {
           {[
             { name: "Home", url: '/' },
             {
-              name: "About",
-              dropdown: [
-                { name: "Board of Directors", url: "/under-development" },
-                { name: "Investor Relations", url: "/under-development" },
-                { name: "Company Overview", url: "/under-development" }
-              ]
+              name: "About", url: "/under-development"
+
             },
             { name: "Subhash Ghai", url: "/under-development" },
             {
@@ -585,7 +581,8 @@ const Header = () => {
                         onClick={(e) => handleLinkClick(e, subItem.url)}
                         className="block w-fit group menu-subitem-text"
                       >
-                        <span className="inline-block text-white/70 group-hover:text-white transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-skew-x-12 group-hover:translate-x-4 text-lg md:text-xl font-light transform origin-left">
+                        <span className="relative inline-block text-white/70 group-hover:text-white transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-skew-x-12 group-hover:translate-x-5 text-lg md:text-xl font-light transform origin-left">
+                          <span className="absolute -left-4 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
                           {subItem.name}
                         </span>
                       </a>

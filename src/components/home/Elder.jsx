@@ -187,13 +187,13 @@ const Elder = () => {
                 {/* Camera Recording Overlay */}
                 <div className={`absolute inset-0 pointer-events-none z-[880] transition-transform duration-500 ease-out flex items-center justify-center ${isScrolling ? 'scale-[1.03]' : 'scale-100'}`}>
                     {/* Top Left - REC */}
-                    <div className="absolute top-8 left-8 md:top-12 md:left-12 flex items-center gap-3">
+                    <div className="absolute top-8 left-8 md:top-28 md:left-15 flex items-center gap-3">
                         <div className="w-3 h-3 md:w-4 md:h-4 bg-red-600 rounded-full animate-[pulse_1.5s_ease-in-out_infinite]"></div>
                         <span className="text-white font-mono text-sm md:text-base tracking-widest font-bold">REC</span>
                     </div>
 
                     {/* Top Right - Specs */}
-                    <div className="absolute top-8 right-8 md:top-12 md:right-12 flex items-center gap-4">
+                    <div className="absolute top-8 right-8 md:top-28 md:right-15 flex items-center gap-4">
                         <span className="text-white/80 font-mono text-xs md:text-sm">4K</span>
                         <span className="text-white/80 font-mono text-xs md:text-sm border border-white/40 px-1">60FPS</span>
                         <div className="w-8 h-4 border border-white/60 rounded-sm p-[2px] flex">
@@ -202,19 +202,19 @@ const Elder = () => {
                     </div>
 
                     {/* Bottom Left - Settings */}
-                    <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 text-white/80 font-mono text-xs md:text-sm flex gap-3">
+                    <div className="absolute bottom-8 left-8 md:bottom-28 md:left-15 text-white/80 font-mono text-xs md:text-sm flex gap-3">
                         <span>ISO 800</span>
                         <span>F/2.8</span>
                         <span>1/50</span>
                     </div>
 
                     {/* Bottom Right - Timecode */}
-                    <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 text-white/80 font-mono text-xs md:text-sm">
+                    <div className="absolute bottom-8 right-8 md:bottom-28 md:right-15 text-white/80 font-mono text-xs md:text-sm">
                         TC 01:23:45:12
                     </div>
 
                     {/* Center Focus Area */}
-                    <div className="opacity-40 w-[97%] h-[92%] absolute inset-0 m-auto pointer-events-none">
+                    <div className="opacity-40 w-[95%] h-[75%] absolute inset-0 m-auto pointer-events-none">
                         <div className="w-full h-full border border-white/20 relative">
                             {/* Focus Corners */}
                             <div className="absolute -top-[1px] -left-[1px] w-6 h-6 border-t-[3px] border-l-[3px] border-white"></div>
@@ -229,7 +229,7 @@ const Elder = () => {
                 </div>
 
                 {/* List Container */}
-                <div className="absolute left-6 md:left-12 lg:left-24 top-1/2 -translate-y-1/2 z-10 pointer-events-none w-full max-w-[45vw]">
+                <div className="absolute left-6 md:left-12 lg:left-20 top-1/2 -translate-y-1/2 z-10 pointer-events-none w-full max-w-[55vw]">
                     <div ref={listRef} className="flex flex-col items-start gap-4 md:gap-6">
                         {data.map((item, i) => (
                             <h2
