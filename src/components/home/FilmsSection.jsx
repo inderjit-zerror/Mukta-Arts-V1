@@ -92,8 +92,8 @@ const FilmsSection = () => {
     <section className="relative w-full py-16 px-4 md:px-8 lg:px-12  film-section-wrapper z-[20]">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4 ">
-        <h2 className="text-6xl md:text-8xl font-bold tracking-tight">Films.</h2>
-        <div className="flex gap-4 pb-2">
+        <h2 className="text-6xl md:text-8xl font-medium tracking-tight mx-auto">Films.</h2>
+        {/* <div className="flex gap-4 pb-2">
           <button
             type="button"
             onClick={scrollPrev}
@@ -108,7 +108,7 @@ const FilmsSection = () => {
           >
             <RiArrowRightLine size={24} />
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Carousel */}
@@ -131,7 +131,7 @@ const FilmsSection = () => {
 
                 {/* Details */}
                 <div className="flex flex-col  ">
-                  <h3 className="text-2xl font-bold mb-4 uppercase tracking-wide">
+                  <h3 className="text-2xl font-bold mb-4 uppercase tracking-wide ">
                     {film.title}
                   </h3>
 

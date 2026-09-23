@@ -1,6 +1,11 @@
+"use client";
 import React from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isHome = pathname === '/';
+
   return (
     <div id="footer" className="min-h-screen bg-[#0474BA] text-white flex flex-col font-sans relative overflow-hidden">
 
@@ -17,10 +22,19 @@ export default function Footer() {
       {/* Main Content */}
       <main className="flex-1 flex flex-col lg:flex-row items-center justify-between px-6 md:px-20 lg:px-32 py-12 lg:py-20 ">
 
-        {/* HEADPHONE */}
-        <div id="footer-headphone" className="w-full bg- lg:w-1/2 flex justify-center lg:justify-start mb-12 lg:mb-0 min-h-[300px]">
-
-        </div>
+        {/* HEADPHONE or Fallback Image */}
+        {isHome ? (
+          <div id="footer-headphone" className="w-full bg- lg:w-1/2 flex justify-center lg:justify-start mb-12 lg:mb-0 min-h-[300px]">
+          </div>
+        ) : (
+          <div className="w-full lg:w-1/2 flex justify-center lg:justify-start mb-12 lg:mb-0 min-h-[300px] items-center">
+            <img
+              src="/img/sg/HeadLogo.png"
+              alt="Mukta Arts Logo"
+              className="object-contain opacity-100"
+            />
+          </div>
+        )}
 
         {/* Right Column - Text & Call to Action */}
         <div className="w-full lg:w-1/2 flex flex-col items-start max-w-xl relative z-20">

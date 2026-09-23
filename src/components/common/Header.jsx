@@ -534,7 +534,7 @@ const Header = () => {
               name: "About", url: "/under-development"
 
             },
-            { name: "Subhash Ghai", url: "/under-development" },
+            { name: "Subhash Ghai", url: "/subhash-ghai" },
             {
               name: "The Ecosystem",
               dropdown: [
