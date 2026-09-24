@@ -16,10 +16,10 @@ const HeroSG = () => {
             </div>
 
             {/* 3 Column Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-stretch mt-8 lg:mt-24">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16 items-stretch mt-8 lg:mt-24">
 
                 {/* Left Column - Stats */}
-                <div className="lg:col-span-3 flex flex-col justify-end order-2 lg:order-1">
+                <div className="flex flex-col justify-end order-2 lg:order-1">
                     <div className="border-b border-gray-300 pb-5 mb-8">
                         <h3 className="text-[1.75rem] leading-tight font-bold font-['SwitzerSB'] text-black mb-2">45+ Years</h3>
                         <p className="text-gray-600 text-base font-['SwitzerR']">A legacy built over decades.</p>
@@ -35,7 +35,7 @@ const HeroSG = () => {
                 </div>
 
                 {/* Middle Column - Image */}
-                <div className="lg:col-span-5 relative order-1 lg:order-2 h-[400px] md:h-[600px] lg:h-[700px]">
+                <div className="relative order-1 lg:order-2 h-[400px] md:h-[600px] lg:h-[700px]">
                     <img
                         src="/img/sg/1.jpg"
                         alt="Subhash Ghai"
@@ -44,7 +44,7 @@ const HeroSG = () => {
                 </div>
 
                 {/* Right Column - Text & Socials */}
-                <div className="lg:col-span-4 flex flex-col justify-between order-3 lg:order-3 pt-4">
+                <div className="flex flex-col justify-between order-3 lg:order-3 pt-4">
                     <p className="text-[#4A4A4A] text-[1.1rem] leading-relaxed font-['SwitzerR'] pr-4">
                         A five-decade career marked by iconic films, powerful storytelling, memorable music, and enduring cultural influence, Subhash Ghai stands among India's most celebrated filmmakers. With 42 films and 35 blockbusters, his visionary approach has shaped mainstream Indian cinema and created stories that continue to inspire audiences across generations.
                     </p>

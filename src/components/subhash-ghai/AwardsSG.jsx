@@ -66,7 +66,7 @@ export default function AwardsSG() {
               <img
                 src={award.img}
                 alt={award.title}
-                className="w-full h-[500px] object-cover transition-transform duration-700 ease-out hover:scale-110"
+                className="w-full h-[300px] lg:h-[350px] object-cover transition-transform duration-700 ease-out hover:scale-110"
               />
             </div>
 

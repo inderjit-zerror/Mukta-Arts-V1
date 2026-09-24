@@ -245,7 +245,10 @@ export default function FilmsComponent() {
               : "bg-transparent text-gray-600 border-gray-400 hover:bg-gray-100 hover:text-black hover:border-gray-500"
               }`}
           >
-            {category}
+            <p>
+
+              {category}
+            </p>
           </button>
         ))}
       </div>

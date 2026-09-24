@@ -193,7 +193,7 @@ export default function OldCamera() {
             <section className="sticky top-0 w-full h-[100vh] bg-white  flex items-center justify-center">
 
                 {/* Title */}
-                <h2 className="absolute top-[10%] tracking-tighter font-bold left-[4%] f z-40 text-black leading-none pointer-events-none">
+                <h2 className="absolute top-[10%] tracking-tighter  left-[4%] f z-40 text-black leading-none pointer-events-none">
                     About us.
                 </h2>
 

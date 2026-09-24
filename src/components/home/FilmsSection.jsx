@@ -92,7 +92,7 @@ const FilmsSection = () => {
     <section className="relative w-full py-16 px-4 md:px-8 lg:px-12  film-section-wrapper z-[20]">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4 ">
-        <h2 className="text-6xl md:text-8xl font-medium tracking-tight mx-auto">Films.</h2>
+        <h2 className="text-6xl md:text-8xl font-medium tracking-tight mr-auto">Films.</h2>
         {/* <div className="flex gap-4 pb-2">
           <button
             type="button"
@@ -117,7 +117,7 @@ const FilmsSection = () => {
           {films.map((film) => (
             <div
               key={film.id}
-              className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_25%] pl-8"
+              className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_33.3333%] pl-8"
             >
               <div className="flex flex-col group cursor-pointer h-full">
                 {/* Image */}

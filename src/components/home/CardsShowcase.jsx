@@ -114,7 +114,7 @@ export default function CardsShowcase() {
     <div className="w-full h-[100vh] max-sm:hidden  relative z-[10] mt-[30vh] overflow-hidden ">
       {/* Title */}
       <div className="w-full absolute top-[-10%] left-2 px-10 pt-20 z-50 pointer-events-none">
-        <h1 className="text-[8vw] font-semibold tracking-tighter text-black">Awards.</h1>
+        <h2 className="text-[8vw] font-semibold tracking-tighter text-black">Awards.</h2 >
       </div>
 
       {/* 3D Container */}
@@ -170,10 +170,10 @@ export default function CardsShowcase() {
                     {/* Text Area */}
                     <div className="w-1/2 h-full flex flex-col  p-12 pl-10 text-white">
                       <div className="mt-1 mb-5">
-                        <h3 className="text-3xl md:text-4xl ">{item.title}</h3>
+                        <h5 className="text-3xl md:text-4xl ">{item.title}</h5>
                       </div>
                       <div className="mb-4">
-                        <p className=" tracking-tighter  capitalize  ">
+                        <p className="  capitalize  ">
                           {item.desc}
                         </p>
                       </div>

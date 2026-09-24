@@ -9,6 +9,83 @@ if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 }
 
+const milestonesData = [
+    {
+        year: "1976",
+        title: "Directorial Debut",
+        desc: "His directorial debut marked the beginning of a celebrated journey in Indian cinema.",
+        img: "/img/sg/3.png",
+        containerClass: "w-[300px] flex flex-col -mt-50 shrink-0",
+        imgClass: "w-full h-[220px] object-cover grayscale",
+        textPosition: "top"
+    },
+    {
+        year: "1983",
+        title: "Hero — Breakthrough",
+        desc: "Hero became a defining breakthrough, strengthening his position as a leading voice in Hindi cinema.",
+        img: "/img/sg/4.png",
+        containerClass: "w-[360px] flex flex-col -mt-10 shrink-0",
+        imgClass: "w-full h-[450px] object-cover",
+        textPosition: "top",
+        descClass: "pr-8"
+    },
+    {
+        year: "1990",
+        title: "Founded Mukta Arts",
+        desc: "",
+        img: "/img/sg/5.png",
+        containerClass: "w-[320px] flex flex-col mb-40 shrink-0",
+        imgClass: "w-full h-[220px] object-cover mb-4",
+        textPosition: "bottom"
+    },
+    {
+        year: "1997",
+        title: "Pardes — Global Hit",
+        desc: "",
+        img: "/img/sg/6.png",
+        containerClass: "w-[280px] flex flex-col mb-0 shrink-0",
+        imgClass: "w-full h-[300px] object-cover mb-4",
+        textPosition: "bottom"
+    },
+    {
+        year: "2001",
+        title: "Subhash Ghai Foundation",
+        desc: "Expanded vision towards nurturing talent and supporting the entertainment industry.",
+        img: "/img/sg/3.png",
+        containerClass: "w-[300px] flex flex-col -mt-50 shrink-0",
+        imgClass: "w-full h-[220px] object-cover grayscale",
+        textPosition: "top"
+    },
+    {
+        year: "2008",
+        title: "Yuvvraaj",
+        desc: "A musical masterpiece demonstrating continued innovation in Hindi cinema.",
+        img: "/img/sg/4.png",
+        containerClass: "w-[360px] flex flex-col -mt-10 shrink-0",
+        imgClass: "w-full h-[450px] object-cover",
+        textPosition: "top",
+        descClass: "pr-8"
+    },
+    {
+        year: "2015",
+        title: "Lifetime Achievement",
+        desc: "",
+        img: "/img/sg/5.png",
+        containerClass: "w-[320px] flex flex-col mb-40 shrink-0",
+        imgClass: "w-full h-[220px] object-cover mb-4",
+        textPosition: "bottom"
+    },
+    {
+        year: "2023",
+        title: "Global Recognition",
+        desc: "",
+        img: "/img/sg/6.png",
+        containerClass: "w-[280px] flex flex-col mb-0 shrink-0",
+        imgClass: "w-full h-[300px] object-cover mb-4",
+        textPosition: "bottom"
+    }
+];
+
 export default function CareerMilestones() {
     const containerRef = useRef(null);
     const scrollTrackRef = useRef(null);
@@ -50,8 +127,10 @@ export default function CareerMilestones() {
                     scrub: 1,
                     onUpdate: (self) => {
                         const progress = self.progress;
-                        // Thresholds for the 4 milestones (0%, 33%, 66%, 100%)
-                        const thresholds = [0, 0.33, 0.66, 0.99];
+
+                        // Dynamically generate thresholds based on the number of milestones
+                        const numItems = milestonesData.length;
+                        const thresholds = Array.from({ length: numItems }, (_, i) => i / (numItems - 1));
 
                         yearsRef.current.forEach((year, i) => {
                             if (year && dotsRef.current[i]) {
@@ -82,85 +161,49 @@ export default function CareerMilestones() {
             ref={containerRef}
             className="relative h-screen w-full bg-[#F8F9FA] overflow-hidden font-sans text-black"
         >
-            {/* Sticky Header */}
-            {/* <div className="absolute top-16 left-12 md:left-20 z-20 pointer-events-none">
-                <h2 className="text-[2.75rem] leading-[1.1] font-medium tracking-tight">
-                    Career <br /> Milestones
-                </h2>
-            </div> */}
-
             {/* Horizontal Scrolling Track */}
             <div
                 ref={scrollTrackRef}
-                className="flex h-full items-center pl-[50vw] pr-[50vw] gap-[6vw] mb-auto  w-max "
+                className="flex h-full items-center pl-[50vw] pr-[50vw] gap-[6vw] mb-auto w-max"
             >
-                {/* Milestone 1: 1976 */}
-                <div className="w-[300px] flex flex-col -mt-50  shrink-0">
-                    <h3 className="text-[1.35rem] font-medium tracking-tight mb-2">
-                        Directorial Debut
-                    </h3>
-                    <p className="text-gray-600 text-[13px] leading-[1.6] mb-5">
-                        His directorial debut marked the beginning of a celebrated journey in
-                        Indian cinema.
-                    </p>
-                    <span className="text-[10px] font-bold text-gray-500 mb-2 font-mono uppercase tracking-widest">
-                        1976
-                    </span>
-                    <img
-                        src="/img/sg/3.png"
-                        alt="Directorial Debut"
-                        className="w-full h-[220px] object-cover grayscale"
-                    />
-                </div>
-
-                {/* Milestone 2: 1983 */}
-                <div className="w-[360px] flex flex-col -mt-10 shrink-0">
-                    <h3 className="text-[1.35rem] font-medium tracking-tight mb-2">
-                        Hero — Breakthrough
-                    </h3>
-                    <p className="text-gray-600 text-[13px] leading-[1.6] mb-5 pr-8">
-                        Hero became a defining breakthrough, strengthening his position as a
-                        leading voice in Hindi cinema.
-                    </p>
-                    <span className="text-[10px] font-bold text-gray-500 mb-2 font-mono uppercase tracking-widest">
-                        1983
-                    </span>
-                    <img
-                        src="/img/sg/4.png"
-                        alt="Hero Breakthrough"
-                        className="w-full h-[450px] object-cover "
-                    />
-                </div>
-
-                {/* Milestone 3: 1990 */}
-                <div className="w-[320px] flex flex-col mb-40 shrink-0">
-                    <span className="text-[10px] font-bold text-gray-500 mb-2 font-mono uppercase tracking-widest">
-                        1990
-                    </span>
-                    <img
-                        src="/img/sg/5.png"
-                        alt="Founded Mukta Arts"
-                        className="w-full h-[220px] object-cover mb-4"
-                    />
-                    <h3 className="text-[1.25rem] font-medium tracking-tight">
-                        Founded Mukta Arts
-                    </h3>
-                </div>
-
-                {/* Milestone 4: 1997 */}
-                <div className="w-[280px] flex flex-col mb-0 shrink-0">
-                    <span className="text-[10px] font-bold text-gray-500 mb-2 font-mono uppercase tracking-widest">
-                        1997
-                    </span>
-                    <img
-                        src="/img/sg/6.png"
-                        alt="Pardes Global Hit"
-                        className="w-full h-[300px] object-cover mb-4"
-                    />
-                    <h3 className="text-[1.25rem] font-medium tracking-tight">
-                        Pardes — Global Hit
-                    </h3>
-                </div>
+                {milestonesData.map((milestone, index) => (
+                    <div key={index} className={milestone.containerClass}>
+                        {milestone.textPosition === "top" ? (
+                            <>
+                                <h3 className="text-[1.35rem] font-medium tracking-tight mb-2">
+                                    {milestone.title}
+                                </h3>
+                                {milestone.desc && (
+                                    <p className={`text-gray-600 text-[13px] leading-[1.6] mb-5 ${milestone.descClass || ""}`}>
+                                        {milestone.desc}
+                                    </p>
+                                )}
+                                <span className="text-[10px] font-bold text-gray-500 mb-2 font-mono uppercase tracking-widest">
+                                    {milestone.year}
+                                </span>
+                                <img
+                                    src={milestone.img}
+                                    alt={milestone.title}
+                                    className={milestone.imgClass}
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <span className="text-[10px] font-bold text-gray-500 mb-2 font-mono uppercase tracking-widest">
+                                    {milestone.year}
+                                </span>
+                                <img
+                                    src={milestone.img}
+                                    alt={milestone.title}
+                                    className={milestone.imgClass}
+                                />
+                                <h3 className="text-[1.25rem] font-medium tracking-tight">
+                                    {milestone.title}
+                                </h3>
+                            </>
+                        )}
+                    </div>
+                ))}
             </div>
 
             {/* Static Timeline Footer */}
@@ -175,19 +218,19 @@ export default function CareerMilestones() {
                     ></div>
 
                     {/* Timeline Nodes */}
-                    {["1976", "1983", "1990", "1997"].map((year, i) => (
+                    {milestonesData.map((milestone, i) => (
                         <div
-                            key={year}
+                            key={milestone.year}
                             className="absolute top-1/2 -translate-y-1/2"
-                            style={{ left: `${(i / 3) * 100}%` }}
+                            style={{ left: `${(i / (milestonesData.length - 1)) * 100}%` }}
                         >
                             {/* Year Text */}
                             <div
                                 ref={(el) => (yearsRef.current[i] = el)}
-                                className={`absolute bottom-5 left-0 text-[1.75rem] font-medium tracking-tight transition-colors duration-300 ${i === 0 ? "text-black" : "text-gray-400"
+                                className={`absolute bottom-5 left-0 text-[1.25rem] md:text-[1.75rem] font-medium tracking-tight transition-colors duration-300 ${i === 0 ? "text-black" : "text-gray-400"
                                     }`}
                             >
-                                {year}
+                                {milestone.year}
                             </div>
                             {/* Dot */}
                             <div

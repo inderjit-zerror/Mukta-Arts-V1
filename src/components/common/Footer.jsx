@@ -38,12 +38,12 @@ export default function Footer() {
 
         {/* Right Column - Text & Call to Action */}
         <div className="w-full lg:w-1/2 flex flex-col items-start max-w-xl relative z-20">
-          <h1 className="text-4xl md:text-5xl lg:text-[54px] font-medium leading-tight mb-6">
+          <h4 className="text-4xl md:text-5xl lg:text-[54px] font-medium leading-tight mb-6">
             Have something<br />
             worth Sharing?<br />
             Let the world know<br />
             your story.
-          </h1>
+          </h4>
 
           <h3 className=" tracking-tighter  capitalize mb-6">
             Have a story that deserves to be seen? Share your script
@@ -93,7 +93,7 @@ export default function Footer() {
 
       {/* Huge Background Bottom Text */}
       <div className=" -bottom-8 md:-bottom-16 left-4 md:left-12 z-0 overflow-visible pointer-events-none px-10">
-        <h1 className="text-[120px] md:text-[180px] lg:text-[240px] font-bold leading-none tracking-tight whitespace-nowrap text-white flex items-start">
+        <h1 className="text-[120px] md:text-[180px] lg:text-[240px] font-bold leading-none  whitespace-nowrap text-white flex items-start">
           Mukta Arts
           <h4 className="text-3xl md:text-5xl lg:text-6xl font-normal mb-auto ">
             LTD
