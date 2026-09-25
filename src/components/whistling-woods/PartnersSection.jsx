@@ -92,7 +92,7 @@ export default function PartnersSection() {
             ref={sectionRef}
             className="w-full min-h-screen bg-[#f8f9fa] py-24 px-6 flex flex-col items-center justify-center font-sans"
         >
-            <div className="max-w-[1100px] w-full">
+            <div className=" w-full">
 
                 {/* Heading */}
                 <h2 className="heading text-[32px] md:text-[42px] font-semibold text-center text-[#111] mb-16 tracking-tight">

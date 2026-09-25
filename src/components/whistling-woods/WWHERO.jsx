@@ -53,7 +53,7 @@ const WWHERO = () => {
             </div>
 
             {/* Content Container */}
-            <div className="relative z-10 w-full h-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-16 flex flex-col justify-between py-12 md:py-20 lg:py-24">
+            <div className="relative z-10 w-full h-full  mx-auto px-4 md:px-8 lg:px-16 flex flex-col justify-between py-12 md:py-20 lg:py-24">
 
                 {/* Top Spacer & Center Logo */}
                 <div className="flex-1 flex items-center justify-center">
