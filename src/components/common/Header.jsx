@@ -207,13 +207,13 @@ const Header = () => {
               name: "The Ecosystem",
               dropdown: [
                 { name: "Mukta Arts Productions", url: "/our-films" },
-                { name: "Whistling Woods", url: "/under-development" },
+                { name: "Whistling Woods", url: "/whistling-woods" },
                 { name: "Mukta A2 Cinemas", url: "/under-development" },
                 { name: "SGM Studios", url: "/under-development" },
                 { name: "Mukta VN Films", url: "/under-development" }
               ]
             },
-            { name: "Submit Script", url: "/under-development" }
+            { name: "Submit Script", url: "/submit-script" }
           ].map((item, index) => (
             <React.Fragment key={index}>
               {item.dropdown ? (

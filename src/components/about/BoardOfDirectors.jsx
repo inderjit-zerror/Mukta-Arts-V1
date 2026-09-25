@@ -15,32 +15,32 @@ const directors = [
   {
     name: "Subhash Ghai",
     title: "Executive Chairman - Mukta Arts Ltd",
-    image: "/img/actor/1.jpg",
+    image: "/img/last/2.avif",
   },
   {
     name: "Rahul Puri",
     title: "Managing Director - Mukta Arts Ltd",
-    image: "/img/actor/2.jpg",
+    image: "/img/last/3.jpg",
   },
   {
     name: "Parvez Farooqui",
     title: "Director - Mukta Arts Ltd",
-    image: "/img/actor/3.jpg",
+    image: "/img/last/4.avif",
   },
   {
     name: "Kapil Bagla",
     title: "Independent Director - Mukta Arts Ltd",
-    image: "/img/actor/4.jpg",
+    image: "/img/last/5.png",
   },
   {
     name: "Rajendra Doshi",
     title: "Independent Director - Mukta Arts Ltd",
-    image: "/img/actor/5.jpg",
+    image: "/img/last/6.jpg",
   },
   {
     name: "Mrs. Madhumati Ramchandra Lele",
     title: "Independent Director - Mukta Arts Ltd",
-    image: "/img/actor/6.jpg",
+    image: "/img/last/7.jpg",
   },
   {
     name: "Rentala Chandrashekhar",

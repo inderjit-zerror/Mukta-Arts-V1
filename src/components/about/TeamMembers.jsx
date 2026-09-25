@@ -12,12 +12,12 @@ if (typeof window !== "undefined") {
 }
 
 const team = [
-  { name: "Subhash Ghai", titles: ["Executive Chairman - Mukta Arts Ltd"], image: "/img/actor/1.jpg" },
-  { name: "Rahul Puri", titles: ["Managing Director - Mukta Arts Ltd", "Director - Academics - Whistling Woods International", "Director - Mukta A2 Cinemas Private Ltd"], image: "/img/actor/2.jpg" },
-  { name: "Parvez Farooqui", titles: ["Director - Mukta Arts Ltd"], image: "/img/actor/3.jpg" },
-  { name: "Kapil Bagla", titles: ["Independent Director - Mukta Arts Ltd"], image: "/img/actor/4.jpg" },
-  { name: "Rajendra Doshi", titles: ["Independent Director - Mukta Arts Ltd"], image: "/img/actor/5.jpg" },
-  { name: "Mrs. Madhumati Ramchandra Lele", titles: ["Independent Director - Mukta Arts Ltd"], image: "/img/actor/6.jpg" },
+  { name: "Subhash Ghai", titles: ["Executive Chairman - Mukta Arts Ltd"], image: "/img/last/2.avif" },
+  { name: "Rahul Puri", titles: ["Managing Director - Mukta Arts Ltd", "Director - Academics - Whistling Woods International", "Director - Mukta A2 Cinemas Private Ltd"], image: "/img/last/3.jpg" },
+  { name: "Parvez Farooqui", titles: ["Director - Mukta Arts Ltd"], image: "/img/last/4.avif" },
+  { name: "Kapil Bagla", titles: ["Independent Director - Mukta Arts Ltd"], image: "/img/last/5.png" },
+  { name: "Rajendra Doshi", titles: ["Independent Director - Mukta Arts Ltd"], image: "/img/last/6.jpg" },
+  { name: "Mrs. Madhumati Ramchandra Lele", titles: ["Independent Director - Mukta Arts Ltd"], image: "/img/last/7.jpg" },
   { name: "Rentala Chandrashekhar", titles: ["Independent Director - Mukta Arts Ltd"], image: "/img/last/1.jpg" },
   { name: "Meghna Ghai Puri", titles: ["President - Whistling Woods International"], image: "/img/last/3.jpg" },
   { name: "Ravi Gupta", titles: ["Dean - Whistling Woods International"], image: "/img/last/5.png" },

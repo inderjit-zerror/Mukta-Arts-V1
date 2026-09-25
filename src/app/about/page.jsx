@@ -4,15 +4,19 @@ import MissionVision from "@/components/about/MissionVision";
 import AboutEcosystem from "@/components/about/AboutEcosystem";
 import BoardOfDirectors from "@/components/about/BoardOfDirectors";
 import TeamMembers from "@/components/about/TeamMembers";
+import InvestorRelations from "@/components/about/InvestorRelations";
+import FilmLegacy from "@/components/about/FilmLegacy";
 
 const AboutPage = () => {
   return (
     <>
       <AboutHero />
       <MissionVision />
+      <FilmLegacy />
       <AboutEcosystem />
       <BoardOfDirectors />
       <TeamMembers />
+      <InvestorRelations />
     </>
   );
 };

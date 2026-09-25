@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { div } from "three/src/nodes/math/OperatorNode";
 
 export default function Noise({
-  opacity = 0.14,      // overlay strength (0–1)
+  opacity = 0.09,      // overlay strength (0–1)
   speed = 30,          // how often the grain pattern refreshes (ms)
   patternSize = 200,   // size of the tileable noise tile (px)
   blendMode = "overlay", // try "overlay", "screen", "soft-light", etc.

@@ -1,0 +1,114 @@
+'use client'
+
+import React, { useRef } from 'react';
+import Image from 'next/image';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+
+const WWHERO = () => {
+    const containerRef = useRef(null);
+
+    useGSAP(() => {
+        const tl = gsap.timeline();
+
+        // Animate the main logo
+        tl.from(".wwi-logo", {
+            y: 40,
+            opacity: 0,
+            duration: 1.2,
+            ease: "power3.out",
+            delay: 0.2
+        })
+            // Animate the divider line
+            .from(".wwi-divider", {
+                scaleX: 0,
+                transformOrigin: "left",
+                duration: 1,
+                ease: "power3.inOut"
+            }, "-=0.8")
+            // Animate the bottom text and button
+            .from(".wwi-text-anim", {
+                y: 20,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power2.out"
+            }, "-=0.4");
+    }, { scope: containerRef });
+
+    return (
+        <section ref={containerRef} className="relative w-full h-screen min-h-[700px] flex flex-col bg-black overflow-hidden">
+            {/* Background Image */}
+            <div className="absolute inset-0 w-full h-full z-0">
+                {/* Note: Update the src to your actual background image */}
+                <Image
+                    src="/img/home/BGt.png"
+                    alt="Whistling Woods Background"
+                    fill
+                    className="object-cover object-center"
+                    priority
+                />
+                {/* Dark overlay to ensure text and logo readability */}
+                <div className="absolute inset-0 bg-black/50"></div>
+            </div>
+
+            {/* Content Container */}
+            <div className="relative z-10 w-full h-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-16 flex flex-col justify-between py-12 md:py-20 lg:py-24">
+
+                {/* Top Spacer & Center Logo */}
+                <div className="flex-1 flex items-center justify-center">
+                    <div className="wwi-logo relative w-[280px] h-[100px] md:w-[450px] md:h-[160px]">
+                        {/* Note: Update the src to your actual Whistling Woods logo */}
+                        <Image
+                            src="/img/wwi-logo.png"
+                            alt="Whistling Woods International Logo"
+                            fill
+                            className="object-contain"
+                        />
+                    </div>
+                </div>
+
+                {/* Bottom Section */}
+                <div className="w-full">
+                    {/* Divider Line */}
+                    <div className="wwi-divider w-full h-[1px] bg-white/30 mb-10 md:mb-12"></div>
+
+                    {/* Content Columns */}
+                    <div className="flex flex-col lg:flex-row justify-between items-start gap-12 lg:gap-8">
+
+                        {/* Left Side: Description and Button */}
+                        <div className="flex flex-col gap-8 max-w-[420px]">
+                            <p className="wwi-text-anim text-white text-[15px]  md:text-[17px] leading-[1.6]">
+                                Founded by filmmaker Subhash Ghai,<br /> WWI offers world-class education in Film,<br /> Communication, Creative and Performing Arts.
+                            </p>
+                            <div className="wwi-text-anim">
+                                <a href="#" className="inline-block bg-white text-black px-8 py-3.5 text-[11px] font-bold tracking-[0.15em] transition-colors hover:bg-gray-200">
+                                    VISIT OUR WEBSITE
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Right Side: Details Grid */}
+                        <div className="flex flex-col gap-3.5 text-white lg:min-w-[400px]">
+                            <div className="wwi-text-anim grid grid-cols-[80px_1fr] md:grid-cols-[100px_1fr] gap-4">
+                                <p className="text-[#A0A0A0] text-[13px] md:text-[14.5px]">Founder:</p>
+                                <p className="text-white text-[13px] md:text-[14.5px]">Subhash Ghai (2006)</p>
+                            </div>
+                            <div className="wwi-text-anim grid grid-cols-[80px_1fr] md:grid-cols-[100px_1fr] gap-4">
+                                <p className="text-[#A0A0A0] text-[13px] md:text-[14.5px]">Location:</p>
+                                <p className="text-white text-[13px] md:text-[14.5px]">Filmcity, Mumbai</p>
+                            </div>
+                            <div className="wwi-text-anim grid grid-cols-[80px_1fr] md:grid-cols-[100px_1fr] gap-4">
+                                <p className="text-[#A0A0A0] text-[13px] md:text-[14.5px]">Focus:</p>
+                                <p className="text-white text-[13px] md:text-[14.5px]">Film, Communication & Creative Arts</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+export default WWHERO;
