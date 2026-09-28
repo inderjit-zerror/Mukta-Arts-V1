@@ -208,9 +208,9 @@ const Header = () => {
               dropdown: [
                 { name: "Mukta Arts Productions", url: "/our-films" },
                 { name: "Whistling Woods", url: "/whistling-woods" },
-                { name: "Mukta A2 Cinemas", url: "/under-development" },
-                { name: "SGM Studios", url: "/under-development" },
-                { name: "Mukta VN Films", url: "/under-development" }
+                { name: "Mukta A2 Cinemas", url: "/mukta-a2-cinemas" },
+                { name: "SGM Studios", url: "/sgm-studios" },
+                { name: "Mukta VN Films", url: "/mukta-vn-films" }
               ]
             },
             { name: "Submit Script", url: "/submit-script" }

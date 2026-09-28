@@ -42,29 +42,22 @@ const TeamMembers = () => {
         start: "top top",
         end: `+=${team.length * 150}`, // Scrolling length to get through all members
         pin: true,
-        scrub: true,
+        scrub: 1,
         onUpdate: (self) => {
           let progress = self.progress;
           let newIndex = Math.round(progress * (team.length - 1));
 
+          const itemHeight = 48; // Corresponds to h-12
+          const maxLineHeight = (team.length - 1) * itemHeight;
+          const currentLineHeight = progress * maxLineHeight;
+
+          // Draw the line and indicator smoothly and continuously based on raw scroll progress
+          gsap.set(indicatorRef.current, { y: currentLineHeight });
+          gsap.set(lineFillRef.current, { height: currentLineHeight });
+
           setActiveIndex((prev) => {
             if (prev !== newIndex) {
-              const itemHeight = 48; // Corresponds to h-12
               const targetY = newIndex * itemHeight;
-
-              // Animate the white square indicator down the line
-              gsap.to(indicatorRef.current, {
-                y: targetY,
-                duration: 0.2,
-                ease: "power2.out"
-              });
-
-              // Animate the solid line filling up down to the indicator
-              gsap.to(lineFillRef.current, {
-                height: targetY,
-                duration: 0.2,
-                ease: "power2.out"
-              });
 
               // Auto-scroll the names list up if it goes beyond the visible container
               if (namesInnerRef.current && namesInnerRef.current.parentElement) {
@@ -126,18 +119,18 @@ const TeamMembers = () => {
           </div>
 
           {/* Right Border Line & Indicator */}
-          <div className="absolute right-0 top-10 bottom-10 w-[1px] bg-white/20">
+          <div className="absolute right-0 top-0 bottom-10 w-[1px] bg-white/20">
             {/* Bold solid line that draws down */}
             <div
               ref={lineFillRef}
-              className="absolute top-0 left-1/2 -translate-x-1/2 w-[2px] bg-white mt-6"
+              className="absolute top-0 left-1/2 -translate-x-1/2 w-[2px] bg-white"
               style={{ height: '0px' }}
             ></div>
 
             {/* Indicator Square */}
             <div
               ref={indicatorRef}
-              className="absolute left-1/2 -translate-x-1/2 w-[6px] h-[6px] bg-white top-0 mt-6"
+              className="absolute left-1/2 -translate-x-1/2 w-[6px] h-[6px] bg-white top-0 -translate-y-1/2"
             ></div>
           </div>
         </div>

@@ -4,11 +4,12 @@ import WWlast from "@/components/whistling-woods/WWlast";
 import WWStats from "@/components/whistling-woods/WWStats";
 import WWMilestones from "@/components/whistling-woods/WWMilestones";
 import WWAcademicPrograms from "@/components/whistling-woods/WWAcademicPrograms";
+import HeroSecMa2 from "@/components/m-a2-cinemas/HeroSecMa2";
 
 const page = () => {
     return (
         <>
-            <WWHERO />
+            <HeroSecMa2 />
             <WWStats />
             <WWMilestones />
 

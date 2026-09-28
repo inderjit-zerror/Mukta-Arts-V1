@@ -23,6 +23,36 @@ const slides = [
     year: "2000",
     desc: "Expanding beyond traditional filmmaking, Mukta Arts has embraced the digital revolution. From state-of-the-art post-production facilities to comprehensive media education at Whistling Woods International, we are building a holistic media ecosystem that nurtures talent and pushes the boundaries of entertainment.",
     bg: "/img/last/3.jpg"
+  },
+  {
+    title: "Exhibition",
+    year: "2011",
+    desc: "Mukta A2 Cinemas was launched to provide a premium yet affordable cinema experience across India and the Middle East, successfully expanding the Mukta Arts ecosystem from film production directly to exhibition.",
+    bg: "/img/last/1.jpg"
+  },
+  {
+    title: "Digital Era",
+    year: "2015",
+    desc: "Stepping into the digital era, Mukta Arts began producing web series, short films, and digital content, ensuring their storytelling adapts to new mediums and continues reaching diverse global audiences.",
+    bg: "/img/last/2.avif"
+  },
+  {
+    title: "Global Reach",
+    year: "2018",
+    desc: "Our films and educational initiatives reached international shores, forging global partnerships and bringing Indian cinema and media education to the world stage, bridging cultural gaps through storytelling.",
+    bg: "/img/last/3.jpg"
+  },
+  {
+    title: "Innovation",
+    year: "2021",
+    desc: "Adopting cutting-edge technology in virtual production, animation, and VFX, we continue to push the boundaries of visual storytelling in our films and across our entire educational curriculum.",
+    bg: "/img/last/1.jpg"
+  },
+  {
+    title: "Future Vision",
+    year: "2026",
+    desc: "Looking ahead, Mukta Arts remains deeply committed to nurturing new talent, embracing new distribution technologies, and continuing its legacy of creating unforgettable cinematic experiences for the next generation.",
+    bg: "/img/last/2.avif"
   }
 ];
 
@@ -42,7 +72,7 @@ const FilmLegacy = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=3000",
+        end: `+=${slides.length * 1000}`, // Scaled end distance so scrubbing speed remains smooth for more slides
         scrub: 1,
         pin: true,
         anticipatePin: 1,
@@ -114,7 +144,7 @@ const FilmLegacy = () => {
               opacity: i === 0 ? 1 : 0
             }}
           >
-            <div className="absolute inset-0 bg-black/60 md:bg-black/80 backdrop-blur-[2px]"></div>
+            <div className="absolute inset-0 bg-black/50 md:bg-black/60 backdrop-blur-[2px]"></div>
           </div>
         ))}
       </div>

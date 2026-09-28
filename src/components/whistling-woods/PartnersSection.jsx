@@ -75,7 +75,7 @@ export default function PartnersSection() {
         [...partners, ...partners].map((partner, index) => (
             <div
                 key={`${blockKey}-${partner.id}-${index}`}
-                className=" bg-white border border-gray-200/80 p-8 w-[320px] flex flex-col justify-between shrink-0 shadow-sm"
+                className=" bg-white border border-gray-200/80 p-8 w-[620px] flex flex-col justify-between shrink-0 shadow-sm"
             >
                 <p className="text-[#555] text-[15px] leading-[1.6]">
                     {partner.description}
@@ -90,14 +90,14 @@ export default function PartnersSection() {
     return (
         <section
             ref={sectionRef}
-            className="w-full min-h-screen bg-[#f8f9fa] py-24 px-6 flex flex-col items-center justify-center font-sans"
+            className="w-full h-fit bg-[#f8f9fa] py-24 px-6 flex flex-col items-center justify-center font-sans"
         >
             <div className=" w-full">
 
                 {/* Heading */}
-                <h2 className="heading text-[32px] md:text-[42px] font-semibold text-center text-[#111] mb-16 tracking-tight">
+                <h4 className="heading text-[32px] md:text-[42px] font-semibold text-center text-[#111] mb-16 tracking-tight">
                     Technology & Industry Partners
-                </h2>
+                </h4>
 
                 {/* Infinite Marquee Section */}
                 <div className="marquee-container overflow-hidden mb-8 w-full relative">
@@ -128,7 +128,7 @@ export default function PartnersSection() {
                         the animation loops back to 0%, the content lines up perfectly,
                         so the seam is invisible.
                     */}
-                    <div className="animate-marquee flex w-max gap-6">
+                    <div className="animate-marquee flex w-max gap-6 ">
                         <div className="flex gap-6">
                             {renderCards("b1")}
                         </div>

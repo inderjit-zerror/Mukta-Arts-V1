@@ -11,21 +11,25 @@ if (typeof window !== "undefined") {
 
 const stats = [
   {
-    value: "42+",
+    endValue: 42,
+    suffix: "+",
     text: "A collection of iconic films that shaped generations, from Karz and Hero to Taal, reflecting Mukta Arts' legacy of memorable storytelling and cinematic excellence.",
   },
   {
-    value: "4,000+",
+    endValue: 4000,
+    suffix: "+",
     text: "Whistling Woods International nurtures emerging creative talent through world-class education, hands-on learning, and industry exposure across film, communication, and the arts.",
   },
   {
-    value: "65+",
+    endValue: 65,
+    suffix: "+",
     text: "Mukta A2 brings the magic of cinema closer to audiences across India and Bahrain, delivering diverse films, modern theatres, and memorable experiences for movie lovers.",
   },
 ];
 
 const MissionVision = () => {
   const sectionRef = useRef(null);
+  const numbersRef = useRef([]);
 
   useGSAP(() => {
     const tl = gsap.timeline({
@@ -52,6 +56,27 @@ const MissionVision = () => {
         { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power3.out" },
         "-=0.4"
       );
+
+    // Animate numbers from 0 in parallel
+    const label = "numbersStart";
+    tl.addLabel(label, "-=0.8");
+
+    numbersRef.current.forEach((el, index) => {
+      const target = { val: 0 };
+      const endVal = stats[index].endValue;
+      const suffix = stats[index].suffix;
+
+      tl.to(target, {
+        val: endVal,
+        duration: 1.5,
+        ease: "power2.out",
+        onUpdate: () => {
+          if (el) {
+            el.innerText = Math.floor(target.val).toLocaleString("en-US") + suffix;
+          }
+        }
+      }, label); // Use the same label so they all start at the exact same time
+    });
   }, { scope: sectionRef });
 
   return (
@@ -77,8 +102,11 @@ const MissionVision = () => {
               key={index}
               className="stat-item flex flex-col justify-between border-l border-black/10 pl-6 md:pl-10 min-h-[300px] md:min-h-[350px]"
             >
-              <h3 className="text-5xl lg:text-[4rem] font-normal text-black tracking-tight">
-                {stat.value}
+              <h3
+                ref={(el) => (numbersRef.current[index] = el)}
+                className="text-5xl lg:text-[4rem] font-normal text-black tracking-tight"
+              >
+                0{stat.suffix}
               </h3>
               <p className="text-[#555] text-base md:text-lg leading-relaxed mt-12 md:mt-auto pr-4">
                 {stat.text}

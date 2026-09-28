@@ -2,6 +2,8 @@
 import React, { useEffect, useRef } from "react";
 import Lenis from "lenis";
 import { usePathname } from "next/navigation";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
 export default function LenisScroll({ children }) {
   const lenis = useRef(null);
@@ -18,7 +20,7 @@ export default function LenisScroll({ children }) {
 
     const instance = new Lenis({
       smooth: !0,
-      lerp: .1,
+      lerp: .05, // Lower lerp for smoother scroll
       wheelMultiplier: .7,
       gestureOrientation: "vertical",
       normalizeWheel: !1,
@@ -28,12 +30,15 @@ export default function LenisScroll({ children }) {
     lenis.current = instance;
     window.lenis = instance;
 
-    let frame;
-    const raf = (time) => {
-      instance.raf(time);
-      frame = requestAnimationFrame(raf);
-    };
-    frame = requestAnimationFrame(raf);
+    // Sync Lenis with GSAP ScrollTrigger
+    instance.on('scroll', ScrollTrigger.update);
+
+    // Use GSAP's ticker for Lenis's raf for perfect sync with GSAP animations
+    gsap.ticker.add((time) => {
+      instance.raf(time * 1000);
+    });
+    
+    gsap.ticker.lagSmoothing(0);
 
     const handleResize = () => {
       instance.resize();
@@ -41,7 +46,9 @@ export default function LenisScroll({ children }) {
     window.addEventListener("resize", handleResize);
 
     return () => {
-      cancelAnimationFrame(frame);
+      gsap.ticker.remove((time) => {
+        instance.raf(time * 1000);
+      });
       window.removeEventListener("resize", handleResize);
       instance.destroy();
       lenis.current = null;

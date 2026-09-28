@@ -46,6 +46,24 @@ const WWStats = () => {
                 start: "top 85%",
             }
         });
+        // Number Animation
+        const statNums = containerRef.current.querySelectorAll('.stat-num');
+        statNums.forEach((num) => {
+            const target = parseInt(num.getAttribute('data-target'), 10);
+            const proxy = { val: 0 };
+            gsap.to(proxy, {
+                val: target,
+                scrollTrigger: {
+                    trigger: ".stats-container",
+                    start: "top 85%",
+                    end: "top 40%", // end scrub when stats are slightly past center
+                    scrub: true,
+                },
+                onUpdate: () => {
+                    num.innerText = Math.round(proxy.val).toLocaleString('en-US');
+                }
+            });
+        });
     }, { scope: containerRef });
 
     return (
@@ -71,7 +89,7 @@ const WWStats = () => {
 
                     {/* Stat 1 */}
                     <div className="stat-col flex flex-col justify-between border-l border-[#D4D4D4] pl-6 lg:pl-10 min-h-[250px] md:min-h-[300px] lg:min-h-[350px]">
-                        <h3 className="text-4xl md:text-[42px] font-normal text-black tracking-tight">18+</h3>
+                        <h4 className="text-4xl md:text-[42px] font-normal text-black tracking-tight"><span className="stat-num" data-target="18">0</span>+</h4>
                         <p className="text-[#555] text-[14px] md:text-[15px] leading-relaxed pr-4">
                             For over 18 years, WWI has shaped creative talent through world-class education, industry exposure, and hands-on learning.
                         </p>
@@ -79,7 +97,7 @@ const WWStats = () => {
 
                     {/* Stat 2 */}
                     <div className="stat-col flex flex-col justify-between border-l border-[#D4D4D4] pl-6 lg:pl-10 min-h-[250px] md:min-h-[300px] lg:min-h-[350px]">
-                        <h3 className="text-4xl md:text-[42px] font-normal text-black tracking-tight">4,000+</h3>
+                        <h4 className="text-4xl md:text-[42px] font-normal text-black tracking-tight"><span className="stat-num" data-target="4000">0</span>+</h4>
                         <p className="text-[#555] text-[14px] md:text-[15px] leading-relaxed pr-4">
                             A global community of 4,000+ alumni shaping successful careers across film, media, communication, and the creative industries.
                         </p>
@@ -87,7 +105,7 @@ const WWStats = () => {
 
                     {/* Stat 3 */}
                     <div className="stat-col flex flex-col justify-between border-l border-[#D4D4D4] pl-6 lg:pl-10 min-h-[250px] md:min-h-[300px] lg:min-h-[350px]">
-                        <h3 className="text-4xl md:text-[42px] font-normal text-black tracking-tight">1,300+</h3>
+                        <h4 className="text-4xl md:text-[42px] font-normal text-black tracking-tight"><span className="stat-num" data-target="1300">0</span>+</h4>
                         <p className="text-[#555] text-[14px] md:text-[15px] leading-relaxed pr-4">
                             A vibrant community of 1,300+ students pursuing diverse undergraduate, postgraduate, and diploma programs.
                         </p>

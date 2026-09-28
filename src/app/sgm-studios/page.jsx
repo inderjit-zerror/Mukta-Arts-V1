@@ -4,16 +4,17 @@ import WWlast from "@/components/whistling-woods/WWlast";
 import WWStats from "@/components/whistling-woods/WWStats";
 import WWMilestones from "@/components/whistling-woods/WWMilestones";
 import WWAcademicPrograms from "@/components/whistling-woods/WWAcademicPrograms";
+import HeroSMG from "@/components/smg/HeroSMG";
 
 const page = () => {
     return (
         <>
-            <WWHERO />
+            <HeroSMG />
             <WWStats />
             <WWMilestones />
 
             <div className="bg-[#f7f8f9]  text-black" >
-                <div className="max-w-[90%]  pt-20 h-full flex flex-col mx-auto">
+                <div className="px-10  pt-20 h-full flex flex-col mx-auto">
 
                     <div className="w-full h-fit ">
                         {/* Top Header */}

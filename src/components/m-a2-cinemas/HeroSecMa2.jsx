@@ -5,7 +5,7 @@ import Image from 'next/image';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
-const WWHERO = () => {
+const HeroSecMa2 = () => {
     const containerRef = useRef(null);
 
     useGSAP(() => {
@@ -41,12 +41,12 @@ const WWHERO = () => {
             {/* Background Image */}
             <div className="absolute inset-0 w-full h-full z-0">
                 {/* Note: Update the src to your actual background image */}
-                <Image
-                    src="/img/wd/wdh.png"
+                <img
+                    src="https://images.unsplash.com/photo-1536962990521-f6854238daba?q=80&w=1148&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Whistling Woods Background"
-                    fill
-                    className="object-cover object-center"
-                    priority
+
+                    className="object-cover w-full h-full object-center"
+
                 />
                 {/* Dark overlay to ensure text and logo readability */}
                 <div className="absolute inset-0 bg-black/50"></div>
@@ -65,7 +65,7 @@ const WWHERO = () => {
                             fill
                             className="object-contain"
                         /> */}
-                        <h2 className='text-white uppercase'>Whistling Woods</h2>
+                        <h2 className='text-white uppercase'>Mukta-A2 Cinemas</h2>
                     </div>
                 </div>
 
@@ -112,4 +112,4 @@ const WWHERO = () => {
     );
 };
 
-export default WWHERO;
+export default HeroSecMa2;

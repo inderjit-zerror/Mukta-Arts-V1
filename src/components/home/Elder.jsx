@@ -61,23 +61,29 @@ const Elder = () => {
     const titlesRef = useRef([]);
     const popupsRef = useRef([]);
     const finalRef = useRef(null);
+    const overlayRef = useRef(null);
     const [activeItem, setActiveItem] = useState(null);
-    const [isScrolling, setIsScrolling] = useState(false);
     const scrollTimeout = useRef(null);
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolling(true);
+            if (overlayRef.current) {
+                overlayRef.current.classList.add('scale-[1.03]');
+                overlayRef.current.classList.remove('scale-100');
+            }
             if (scrollTimeout.current) {
                 clearTimeout(scrollTimeout.current);
             }
             scrollTimeout.current = setTimeout(() => {
-                setIsScrolling(false);
+                if (overlayRef.current) {
+                    overlayRef.current.classList.remove('scale-[1.03]');
+                    overlayRef.current.classList.add('scale-100');
+                }
             }, 150);
         };
 
-        window.addEventListener('wheel', handleScroll);
-        window.addEventListener('touchmove', handleScroll);
+        window.addEventListener('wheel', handleScroll, { passive: true });
+        window.addEventListener('touchmove', handleScroll, { passive: true });
 
         return () => {
             window.removeEventListener('wheel', handleScroll);
@@ -94,15 +100,14 @@ const Elder = () => {
                 trigger: containerRef.current,
                 start: "top top",
                 end: "bottom bottom",
-                scrub: 1,
+                scrub: 1.5,
             }
         });
 
         // 1. Text animates from bottom
         tl.fromTo(titlesRef.current,
-            { y: 100, opacity: 0 },
-            { y: 0, opacity: 0.5, stagger: 0.15, duration: 1, ease: "power2.out" },
-            "start+=1.5"
+            { y: 120, opacity: 0 },
+            { y: 0, opacity: 0.5, stagger: 0.2, duration: 0.5, ease: "power3.out" }
         );
 
         // Hold a little bit before continuing
@@ -129,8 +134,8 @@ const Elder = () => {
 
             // Fade in the popup
             tl.fromTo(popupsRef.current[i],
-                { autoAlpha: 0 },
-                { autoAlpha: 1, duration: 1 },
+                { autoAlpha: 0, scale: 0.95 },
+                { autoAlpha: 1, scale: 1, duration: 1.5, ease: "power2.out" },
                 `step${i}`
             );
 
@@ -162,9 +167,9 @@ const Elder = () => {
         tl.to(".final-word", {
             autoAlpha: 1,
             y: 0,
-            duration: 0.8,
-            stagger: 0.05,
-            ease: "power2.out"
+            duration: 1,
+            stagger: 0.08,
+            ease: "power3.out"
         }, "-=1");
 
         // Hold final text
@@ -179,13 +184,15 @@ const Elder = () => {
             style={{
                 "--color1": "#0474BA",
                 "--color2": "#0474BA",
-                background: "linear-gradient(135deg, var(--color1) 0%, var(--color2) 100%)"
             }}
         >
-            <div className="w-full h-[100vh] sticky top-0 left-0 overflow-hidden flex items-center justify-center">
+            <div
+                className="w-full h-[100vh] sticky top-0 left-0 overflow-hidden flex items-center justify-center"
+                style={{ background: "linear-gradient(135deg, var(--color1) 0%, var(--color2) 100%)" }}
+            >
 
                 {/* Camera Recording Overlay */}
-                <div className={`absolute inset-0 pointer-events-none z-[880] transition-transform duration-500 ease-out flex items-center justify-center ${isScrolling ? 'scale-[1.03]' : 'scale-100'}`}>
+                <div ref={overlayRef} className="absolute inset-0 pointer-events-none z-[880] transition-transform duration-500 ease-out flex items-center justify-center scale-100">
                     {/* Top Left - REC */}
                     <div className="absolute top-8 left-8 md:top-28 md:left-15 flex items-center gap-3">
                         <div className="w-3 h-3 md:w-4 md:h-4 bg-red-600 rounded-full animate-[pulse_1.5s_ease-in-out_infinite]"></div>
@@ -236,6 +243,7 @@ const Elder = () => {
                                 key={i}
                                 ref={el => titlesRef.current[i] = el}
                                 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-[#7889a1] opacity-50 text-left"
+                                style={{ willChange: "transform, opacity, color" }}
                             >
                                 {item.title}
                             </h2>
@@ -249,6 +257,7 @@ const Elder = () => {
                         key={i}
                         ref={el => popupsRef.current[i] = el}
                         className="absolute right-6 md:right-12 lg:right-24 top-0 z-[888] w-64 md:w-80 lg:w-[28rem] flex flex-col gap-3 opacity-0 invisible"
+                        style={{ willChange: "transform, opacity" }}
                     >
                         <div className="w-full aspect-video relative overflow-hidden shadow-2xl rounded-sm">
                             <img src={item.image} alt={item.title} className="w-full h-full object-cover" />

@@ -24,10 +24,10 @@ export default function Footer() {
 
         {/* HEADPHONE or Fallback Image */}
         {isHome ? (
-          <div id="footer-headphone" className="w-full bg- lg:w-1/2 flex justify-center lg:justify-start mb-12 lg:mb-0 min-h-[300px]">
+          <div id="footer-headphone" className="w-full bg- lg:w-2/3 flex justify-center lg:justify-center mb-12 lg:mb-0 min-h-[300px]">
           </div>
         ) : (
-          <div className="w-full lg:w-1/2 flex justify-center lg:justify-start mb-12 lg:mb-0 min-h-[300px] items-center">
+          <div className="w-full lg:w-2/3 flex justify-center lg:justify-center mb-12 lg:mb-0 min-h-[300px] items-center">
             <img
               src="/img/sg/HeadLogo.png"
               alt="Mukta Arts Logo"
@@ -37,7 +37,7 @@ export default function Footer() {
         )}
 
         {/* Right Column - Text & Call to Action */}
-        <div className="w-full lg:w-1/2 flex flex-col items-start max-w-xl relative z-20">
+        <div className="w-full lg:w-1/3 flex flex-col items-start max-w-xl relative z-20">
           <h4 className="text-4xl md:text-5xl lg:text-[54px] font-medium leading-tight mb-6">
             Have something<br />
             worth Sharing?<br />

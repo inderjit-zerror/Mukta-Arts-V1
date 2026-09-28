@@ -28,10 +28,10 @@ const LocationInfo = () => {
     return (
         <section className="bg-[#FAFAFA] py-16 md:py-24 px-4 md:px-8 lg:px-16 border-t border-[#202020]">
             <div className=" mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-24">
 
                     {/* Map */}
-                    <div className="w-full h-[450px] lg:h-[600px] bg-gray-200">
+                    <div className="lg:col-span-2 w-full h-[450px] lg:h-auto bg-gray-200">
                         <iframe
                             src="https://maps.google.com/maps?q=Mukta%20Arts%20Ltd,%20Film%20City,%20Mumbai&t=&z=15&ie=UTF8&iwloc=&output=embed"
                             width="100%"
@@ -44,7 +44,7 @@ const LocationInfo = () => {
                     </div>
 
                     {/* Details */}
-                    <div className="flex flex-col justify-center">
+                    <div className="lg:col-span-1 flex flex-col justify-center">
 
                         {/* Address Block */}
                         <div className="flex flex-col md:flex-row gap-4 md:gap-16 pb-8 border-b border-[#202020]">

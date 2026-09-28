@@ -22,7 +22,7 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-button {
+/* button {
   cursor: pointer;
 }
 
@@ -56,4 +56,4 @@ button {
 .container {
   max-width: 1440px;
   margin-inline: auto;
-}
+} */

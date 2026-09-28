@@ -41,12 +41,16 @@ const AboutEcosystem = () => {
 
     // Use GSAP quickTo for highly performant, smooth follow-cursor animations
     const xTo = gsap.quickTo(imageRef.current, "x", {
-      duration: 0.4,
-      ease: "power3",
+      duration: 0.7,
+      ease: "power3.out",
     });
     const yTo = gsap.quickTo(imageRef.current, "y", {
-      duration: 0.4,
-      ease: "power3",
+      duration: 0.7,
+      ease: "power3.out",
+    });
+    const rotateTo = gsap.quickTo(imageRef.current, "rotation", {
+      duration: 0.8,
+      ease: "power3.out",
     });
 
     const handleMouseMove = (e) => {
@@ -60,8 +64,14 @@ const AboutEcosystem = () => {
       const x = e.clientX - rect.left - imageWidth / 2;
       const y = e.clientY - rect.top - imageHeight / 2;
 
+      // Calculate a slight rotation based on mouse X position relative to the screen width
+      // This gives a value between -1 and 1, which we multiply by 15 for max 15 degrees rotation
+      const normalizedX = (e.clientX / window.innerWidth) * 2 - 1;
+      const rotation = normalizedX * 12;
+
       xTo(x);
       yTo(y);
+      rotateTo(rotation);
     };
 
     const container = containerRef.current;
@@ -116,9 +126,9 @@ const AboutEcosystem = () => {
         className="pointer-events-none absolute left-0 top-0 z-50 w-[280px] h-[340px] hidden lg:block"
       >
         <div
-          className={`w-full h-full relative overflow-hidden shadow-2xl transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] ${hoveredIndex !== null
-            ? "opacity-100 scale-100 rotate-3"
-            : "opacity-0 scale-90 -rotate-3"
+          className={`w-full h-full relative overflow-hidden shadow-2xl transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] ${hoveredIndex !== null
+            ? "opacity-100 scale-100"
+            : "opacity-0 scale-90"
             }`}
         >
           {ecosystemItems.map((item, idx) => (
@@ -127,7 +137,7 @@ const AboutEcosystem = () => {
               src={item.image}
               alt={item.title}
               fill
-              className={`object-cover transition-opacity duration-300 ${hoveredIndex === idx ? "opacity-100" : "opacity-0"
+              className={`object-cover transition-opacity duration-500 ${hoveredIndex === idx ? "opacity-100" : "opacity-0"
                 }`}
             />
           ))}

@@ -15,7 +15,7 @@ const HomePage = () => {
       <VideoSection />
 
       <SpiralScene />
-      {/* <FilmsSection /> */}
+
       <Elder />
 
       <OldCamera />
