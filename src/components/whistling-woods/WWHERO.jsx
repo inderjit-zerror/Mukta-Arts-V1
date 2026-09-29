@@ -39,14 +39,14 @@ const WWHERO = () => {
     return (
         <section ref={containerRef} className="relative w-full h-screen min-h-[700px] flex flex-col bg-black overflow-hidden">
             {/* Background Image */}
-            <div className="absolute inset-0 w-full h-full z-0">
+            <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
                 {/* Note: Update the src to your actual background image */}
-                <Image
-                    src="/img/wd/wdh.png"
+                <img
+                    src="https://images.unsplash.com/photo-1676677355891-15f45fa7ee8f?q=80&w=1192&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Whistling Woods Background"
-                    fill
-                    className="object-cover object-center"
-                    priority
+
+                    className="object-cover w-full h-full object-center"
+
                 />
                 {/* Dark overlay to ensure text and logo readability */}
                 <div className="absolute inset-0 bg-black/50"></div>

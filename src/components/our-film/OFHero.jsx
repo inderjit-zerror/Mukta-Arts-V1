@@ -5,7 +5,7 @@ import Image from 'next/image';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
-const HeroSecMa2 = () => {
+const OFHero = () => {
     const containerRef = useRef(null);
 
     useGSAP(() => {
@@ -42,7 +42,7 @@ const HeroSecMa2 = () => {
             <div className="absolute inset-0 w-full h-full z-0">
                 {/* Note: Update the src to your actual background image */}
                 <img
-                    src="https://images.unsplash.com/photo-1632670536499-ebc8bc72892a?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    src="https://images.unsplash.com/photo-1704688618021-557e23d44850?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Whistling Woods Background"
 
                     className="object-cover w-full h-full object-center"
@@ -65,7 +65,7 @@ const HeroSecMa2 = () => {
                             fill
                             className="object-contain"
                         /> */}
-                        <h2 className='text-white uppercase'>Mukta-A2 Cinemas</h2>
+                        <h2 className='text-white uppercase'>Mukta Arts Productions</h2>
                     </div>
                 </div>
 
@@ -112,4 +112,4 @@ const HeroSecMa2 = () => {
     );
 };
 
-export default HeroSecMa2;
+export default OFHero;
