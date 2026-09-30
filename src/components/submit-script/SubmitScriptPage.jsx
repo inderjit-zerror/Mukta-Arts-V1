@@ -39,23 +39,23 @@ const SubmitScriptPage = () => {
     }, { scope: containerRef });
 
     return (
-        <section ref={containerRef} className="bg-[#FAFAFA] min-h-screen pt-32 pb-24 px-4 md:px-8 lg:px-16">
-            <div className=" mx-auto">
+        <section ref={containerRef} className="bg-[#FAFAFA]  min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-6 md:px-8 lg:px-16 overflow-x-hidden">
+            <div className=" mx-auto max-sm:pt-[10vh]">
                 {/* Header */}
-                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 md:mb-24 gap-8">
-                    <h2 className="header-anim text-6xl md:text-7xl lg:text-[7.5rem] font-medium tracking-tighter text-black leading-[0.95]">
+                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 sm:mb-16 md:mb-24 gap-6 sm:gap-8">
+                    <h2 className="header-anim text-5xl sm:text-6xl md:text-7xl lg:text-[7.5rem] font-medium tracking-tighter text-black leading-[1] lg:leading-[0.95]">
                         Script<br />Submission
                     </h2>
-                    <p className="header-anim text-[#555] text-base md:text-lg max-w-md leading-relaxed lg:pb-3">
+                    <p className="header-anim text-[#555] text-sm sm:text-base md:text-lg max-w-md leading-relaxed lg:pb-3">
                         Submit your original screenplay to Mukta Arts and give your story the opportunity to be discovered and considered by our creative team.
                     </p>
                 </div>
 
                 {/* Content Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16 items-stretch">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 sm:gap-12 lg:gap-16 items-stretch">
                     {/* Form */}
-                    <div className="lg:col-span-2 flex flex-col gap-6 w-full ">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="lg:col-span-2 flex flex-col gap-5 sm:gap-6 w-full ">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
                             {/* First Name */}
                             <div className="form-element flex flex-col gap-2.5">
                                 <label className="text-[15px] text-[#555]">First name</label>
@@ -79,7 +79,7 @@ const SubmitScriptPage = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
                             {/* Email */}
                             <div className="form-element flex flex-col gap-2.5">
                                 <label className="text-[15px] text-[#555]">Email address</label>
@@ -115,25 +115,25 @@ const SubmitScriptPage = () => {
                         </div>
 
                         {/* Attachments */}
-                        <div className="form-element flex flex-col gap-2.5 mt-2">
-                            <label className="text-[15px] text-[#555]">Attachments</label>
-                            <div className="border border-[#202020] bg-white py-10 flex flex-col items-center justify-center gap-1.5 transition-colors hover:border-gray-400 cursor-pointer">
-                                <p className="text-[14px] font-semibold text-black">Choose file or drag here</p>
-                                <p className="text-[12px] text-gray-400 mb-2">Supported format: JPG, PNG, PDF</p>
-                                <button type="button" className="px-6 py-2 border border-[#202020] bg-transparent text-[11px] font-bold tracking-[0.1em] text-black hover:bg-gray-50 transition-colors">
+                        <div className="form-element flex flex-col gap-2.5 sm:mt-2">
+                            <label className="text-[14px] sm:text-[15px] text-[#555]">Attachments</label>
+                            <div className="border border-[#202020] bg-white py-8 sm:py-10 px-4 flex flex-col items-center justify-center gap-1.5 transition-colors hover:border-gray-400 cursor-pointer text-center">
+                                <p className="text-[13px] sm:text-[14px] font-semibold text-black">Choose file or drag here</p>
+                                <p className="text-[11px] sm:text-[12px] text-gray-400 mb-2">Supported format: JPG, PNG, PDF</p>
+                                <button type="button" className="px-5 sm:px-6 py-2 border border-[#202020] bg-transparent text-[11px] font-bold tracking-[0.1em] text-black hover:bg-gray-50 transition-colors">
                                     BROWSE FILE
                                 </button>
                             </div>
                         </div>
 
                         {/* Submit Button */}
-                        <button className="form-element mt-2 w-full py-4 bg-black text-white text-[13px] font-medium tracking-[0.1em] hover:bg-gray-900 transition-colors">
+                        <button className="form-element sm:mt-2 w-full py-3.5 sm:py-4 bg-black text-white text-[12px] sm:text-[13px] font-medium tracking-[0.1em] hover:bg-gray-900 transition-colors">
                             SUBMIT MESSAGE
                         </button>
                     </div>
 
                     {/* Image */}
-                    <div className="image-anim lg:col-span-1 relative w-full h-[400px] md:h-[500px] lg:h-auto overflow-hidden">
+                    <div className="image-anim lg:col-span-1 relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-auto overflow-hidden">
                         <Image
                             src="/img/home/1.jpg"
                             alt="Script writing placeholder"
