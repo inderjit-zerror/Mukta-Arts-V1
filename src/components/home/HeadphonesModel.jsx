@@ -161,7 +161,7 @@ export function Model(props) {
         footerTl.to(groupRef.current.scale, { x: 11, y: 11, z: 11, ease: "power2.inOut" }, 0);
       });
 
-      mm.add("(max-width: 1023px)", () => {
+      mm.add("(min-width: 768px) and (max-width: 1023px)", () => {
         const footerTl = gsap.timeline({
           scrollTrigger: {
             trigger: "#footer",
@@ -175,6 +175,22 @@ export function Model(props) {
           }
         });
         footerTl.to(groupRef.current.scale, { x: 8, y: 8, z: 8, ease: "power2.inOut" }, 0);
+      });
+
+      mm.add("(max-width: 767px)", () => {
+        const footerTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: "#footer",
+            start: "top 20%",
+            end: "top 0%",
+            scrub: 1,
+
+            onUpdate: (self) => {
+              stateRef.current.footerProgress = self.progress;
+            }
+          }
+        });
+        footerTl.to(groupRef.current.scale, { x: 6, y: 6, z: 6, ease: "power2.inOut" }, 0);
       });
     });
 
@@ -193,6 +209,24 @@ export function Model(props) {
 useGLTF.preload('/model/headphones.glb');
 
 export default function HeadphonesCanvas() {
+  const [modelScale, setModelScale] = React.useState(11);
+
+  useEffect(() => {
+    const updateScale = () => {
+      if (window.innerWidth < 768) {
+        setModelScale(6); // scale down for mobile
+      } else if (window.innerWidth < 1024) {
+        setModelScale(8); // scale down for tablet
+      } else {
+        setModelScale(11); // default desktop scale
+      }
+    };
+
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, []);
+
   return (
     <div className="fixed inset-0 z-10 pointer-events-none flex items-center justify-center">
       <div id="3d-canvas-container" className="w-full h-full pointer-events-auto">
@@ -201,7 +235,7 @@ export default function HeadphonesCanvas() {
           <directionalLight position={[10, 10, 5]} intensity={0} />
           <directionalLight position={[-10, -10, -5]} intensity={0} />
           <Environment preset="city" />
-          <Model position={[0, 0.2, 0]} scale={11} />
+          <Model position={[0, 0.2, 0]} scale={modelScale} />
         </Canvas>
       </div>
     </div>

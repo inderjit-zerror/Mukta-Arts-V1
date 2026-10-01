@@ -65,7 +65,7 @@ export default function Noise({
   }, [speed, patternSize]);
 
   return (
-    <div className="w-full h-full fixed top-0 left-0 z-9999999 pointer-events-none">
+    <div className="w-full h-full fixed top-0 left-0 z-9999999 pointer-events-none overflow-hidden">
 
 
       <canvas

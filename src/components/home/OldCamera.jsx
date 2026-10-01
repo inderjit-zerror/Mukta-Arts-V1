@@ -36,7 +36,7 @@ function FilmReel() {
     const loopContent = [...content, ...content, ...content, ...content, ...content, ...content];
 
     return (
-        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[120vw] z-[100] transform -rotate-[3deg] pointer-events-none">
+        <div className="absolute max-sm:bottom-0 sm:-bottom-40 left-1/2 -translate-x-1/2 w-[120vw] z-[100] transform -rotate-[3deg] pointer-events-none">
             <div className="bg-[#111] py-6 relative flex shadow-2xl overflow-hidden">
                 {/* Top holes */}
                 <div
@@ -51,7 +51,7 @@ function FilmReel() {
                     {loopContent.map((item, i) => (
                         <div
                             key={i}
-                            className="relative flex flex-col items-center justify-center min-w-[280px] h-[160px] px-8 rounded-sm overflow-hidden"
+                            className="relative flex flex-col items-center justify-center min-w-[200px] md:min-w-[280px] h-[120px] md:h-[160px] px-4 md:px-8 rounded-sm overflow-hidden"
                         >
                             {/* Background Image for each frame */}
                             <div
@@ -63,8 +63,8 @@ function FilmReel() {
 
                             {/* Text Content */}
                             <div className="relative z-10 text-center">
-                                <h3 className="text-[#f97316] text-4xl! font-bold mb-1 drop-shadow-md">{item.title}</h3>
-                                <p className="text-white text-sm opacity-90 drop-shadow-md font-semibold">{item.subtitle}</p>
+                                <h3 className="text-[#f97316] text-2xl md:text-4xl! font-bold mb-1 drop-shadow-md">{item.title}</h3>
+                                <p className="text-white text-[10px] md:text-sm opacity-90 drop-shadow-md font-semibold">{item.subtitle}</p>
                             </div>
                         </div>
                     ))}
@@ -172,6 +172,7 @@ export default function OldCamera() {
                 trigger: containerRef.current,
                 start: "top top",
                 end: "bottom bottom",
+                // markers: true,
                 scrub: 1,
             }
         });
@@ -190,36 +191,36 @@ export default function OldCamera() {
         <div ref={containerRef} className="old-camera-container w-full h-[400vh] relative">
 
 
-            <section className="sticky top-0 w-full h-[100vh] bg-white  flex items-center justify-center">
+            <section className="sticky top-0 w-full h-[100vh] bg-white max-sm:overflow-hidden  flex items-center justify-center">
 
                 {/* Title */}
-                <h2 className="absolute top-[10%] tracking-tighter  left-[4%] f z-40 text-black leading-none pointer-events-none">
+                <h2 className="absolute top-[10%] tracking-tighter left-[5%] md:left-[4%] z-40 text-black leading-none pointer-events-none">
                     About us.
                 </h2>
 
                 {/* Text Content */}
-                <div className="absolute top-[45%] -translate-y-1/2 left-[5%] md:left-[4%] w-full max-w-lg z-[60] text-black pointer-events-none">
+                <div className="absolute top-[40%] md:top-[45%] -translate-y-1/2 left-[5%] md:left-[4%] w-[90%] md:max-w-lg z-[60] text-black pointer-events-none">
 
                     {/* Text Content 1 */}
                     <div ref={text1Ref} className="absolute top-0 left-0 w-full">
-                        <h3 className="text-4xl md:text-5xl font-semibold mb-2">45+ Years Of Cinema</h3>
-                        <p className="text-base opacity-90 leading-relaxed ">
+                        <h3 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-2">45+ Years Of Cinema</h3>
+                        <p className="text-sm md:text-base opacity-90 leading-relaxed ">
                             For Over Four Decades, Mukta Arts Has Been Part Of India's Cinematic Journey, Creating Films And Stories That Have Entertained, Inspired, And Stayed With Audiences Across Generations.For Over Four Decades, Mukta Arts Has Been Part Of India's Cinematic Journey, Creating Films And Stories That Have Entertained, Inspired, And Stayed With Audiences Across Generations.
                         </p>
                     </div>
 
                     {/* Text Content 2 */}
                     <div ref={text2Ref} className="absolute top-0 left-0 w-full">
-                        <h3 className="text-4xl md:text-5xl font-semibold mb-2">Global Recognition</h3>
-                        <p className="text-base opacity-90 leading-relaxed ">
+                        <h3 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-2">Global Recognition</h3>
+                        <p className="text-sm md:text-base opacity-90 leading-relaxed ">
                             With numerous national and international awards, our commitment to excellence has resonated with audiences and critics alike, setting new benchmarks in the industry.  With numerous national and international awards, our commitment to excellence has resonated with audiences and critics alike, setting new benchmarks in the industry.
                         </p>
                     </div>
 
                     {/* Text Content 3 */}
                     <div ref={text3Ref} className="absolute top-0 left-0 w-full">
-                        <h3 className="text-4xl md:text-5xl font-semibold mb-2">Future of Storytelling</h3>
-                        <p className="text-base opacity-90 leading-relaxed ">
+                        <h3 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-2">Future of Storytelling</h3>
+                        <p className="text-sm md:text-base opacity-90 leading-relaxed ">
                             Embracing new technologies and fresh narratives, we continue to evolve, bringing innovative and captivating stories to screens worldwide for the next generation. Embracing new technologies and fresh narratives, we continue to evolve, bringing innovative and captivating stories to screens worldwide for the next generation.
                         </p>
                     </div>
@@ -227,7 +228,7 @@ export default function OldCamera() {
                 </div>
 
                 {/* 3D Canvas */}
-                <div className="absolute inset-0 z-50">
+                <div className="absolute inset-0 z-50  w-full h-full ">
                     <Canvas
 
                         camera={{ position: [0, 0, 5], fov: 45 }}

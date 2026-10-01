@@ -111,19 +111,19 @@ export default function CardsShowcase() {
   };
 
   return (
-    <div className="w-full h-[100vh] max-sm:hidden  relative z-[10] mt-[30vh] overflow-hidden ">
+    <div className="w-full h-[100vh] relative z-[10] mt-[10vh] md:mt-[30vh] overflow-hidden">
       {/* Title */}
-      <div className="w-full absolute top-[-10%] left-2 px-10 pt-20 z-50 pointer-events-none">
-        <h2 className="text-[8vw] font-semibold tracking-tighter text-black">Awards.</h2 >
+      <div className="w-full absolute top-[-5%] md:top-[-10%] left-2 px-4 md:px-10 pt-10 md:pt-20 z-50 pointer-events-none">
+        <h2 className="text-[12vw] md:text-[8vw] font-semibold tracking-tighter text-black">Awards.</h2>
       </div>
 
       {/* 3D Container */}
       <div
-        className="absolute inset-0 flex flex-col items-center justify-center pt-[15vh] translate-y-30"
+        className="absolute inset-0 flex flex-col items-center max-sm:scale-[0.6] justify-center pt-[10vh] md:pt-[15vh] translate-y-20 md:translate-y-30"
         style={{ perspective: "1500px" }}
       >
         <div
-          className="relative w-full max-w-6xl h-[65vh] flex items-center justify-center"
+          className="relative w-full max-w-6xl h-[70vh] md:h-[65vh] flex items-center justify-center"
           style={{ transformStyle: "preserve-3d" }}
         >
           {arr.map((item, originalIndex) => {
@@ -135,7 +135,7 @@ export default function CardsShowcase() {
                 onMouseEnter={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
                 onClick={() => handleCardClick(originalIndex)}
-                className="group absolute w-[40vw] max-w-[90%] h-[80%] transition-all duration-500 ease-out cursor-pointer"
+                className="group absolute w-[75vw] md:w-[40vw] max-w-[90%] h-[90%] md:h-[80%] transition-all duration-500 ease-out cursor-pointer"
                 style={{
                   zIndex: visualIndex,
                   // We center the 8 cards by using (arr.length - 1) / 2 which is 3.5
@@ -148,13 +148,11 @@ export default function CardsShowcase() {
                   className="w-full h-full shadow-[-15px_15px_40px_rgba(0,0,0,0.2)] flex border-l border-white/10 transition-transform duration-300 group-hover:-translate-y-6"
                   style={{ backgroundColor: item.clr }}
                 >
-                  {/* Number is removed as requested */}
-
                   {/* Content */}
-                  <div className="w-full h-full flex flex-row items-center pt-16">
+                  <div className="w-full h-full flex flex-col md:flex-row items-center pt-4 md:pt-16">
                     {/* Image Area */}
-                    <div className="w-1/2 h-full relative flex items-center justify-center p-8">
-                      <div className="relative w-full h-[80%]">
+                    <div className="w-full md:w-1/2 h-1/2 md:h-full relative flex items-center justify-center p-4 md:p-8">
+                      <div className="relative w-full h-full md:h-[80%]">
                         <Image
                           src={item.img}
                           alt={item.title}
@@ -165,15 +163,15 @@ export default function CardsShowcase() {
                     </div>
 
                     {/* Vertical Divider */}
-                    <div className="w-px h-[50%] bg-white/50"></div>
+                    <div className="w-[80%] md:w-px h-px md:h-[50%] bg-white/50 my-2 md:my-0"></div>
 
                     {/* Text Area */}
-                    <div className="w-1/2 h-full flex flex-col  p-12 pl-10 text-white">
-                      <div className="mt-1 mb-5">
-                        <h5 className="text-3xl md:text-4xl ">{item.title}</h5>
+                    <div className="w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center md:justify-start p-6 md:p-12 md:pl-10 text-white text-center md:text-left">
+                      <div className="mt-1 mb-2 md:mb-5">
+                        <h5 className="text-2xl md:text-4xl">{item.title}</h5>
                       </div>
                       <div className="mb-4">
-                        <p className="  capitalize  ">
+                        <p className="capitalize text-sm md:text-base">
                           {item.desc}
                         </p>
                       </div>
@@ -184,23 +182,23 @@ export default function CardsShowcase() {
             );
           })}
         </div>
-        <div className="w-full h-[10vh] bg-white "></div>
+        <div className="w-full h-[10vh] bg-white"></div>
       </div>
 
       {/* Navigation Buttons */}
       <button
         onClick={handlePrev}
-        className="absolute left-[5%] top-1/2 -translate-y-1/2 z-[9999] w-12 h-12 rounded-full border border-black/20 text-black flex items-center justify-center hover:bg-[#0474BA] hover:text-white transition-colors cursor-pointer bg-white/50 backdrop-blur-md shadow-lg"
+        className="absolute left-[2%] md:left-[5%] top-1/2 -translate-y-1/2 z-[9999] w-10 h-10 md:w-12 md:h-12 rounded-full border border-black/20 text-black flex items-center justify-center hover:bg-[#0474BA] hover:text-white transition-colors cursor-pointer bg-white/50 backdrop-blur-md shadow-lg"
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
       <button
         onClick={handleNext}
-        className="absolute right-[5%] top-1/2 -translate-y-1/2 z-[9999] w-12 h-12 rounded-full border border-black/20 text-black flex items-center justify-center hover:bg-[#0474BA] hover:text-white transition-colors cursor-pointer bg-white/50 backdrop-blur-md shadow-lg"
+        className="absolute right-[2%] md:right-[5%] top-1/2 -translate-y-1/2 z-[9999] w-10 h-10 md:w-12 md:h-12 rounded-full border border-black/20 text-black flex items-center justify-center hover:bg-[#0474BA] hover:text-white transition-colors cursor-pointer bg-white/50 backdrop-blur-md shadow-lg"
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
         </svg>
       </button>

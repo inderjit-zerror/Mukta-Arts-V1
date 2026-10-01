@@ -40,7 +40,7 @@ const SubmitScriptPage = () => {
 
     return (
         <section ref={containerRef} className="bg-[#FAFAFA]  min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-6 md:px-8 lg:px-16 overflow-x-hidden">
-            <div className=" mx-auto max-sm:pt-[10vh]">
+            <div className=" mx-auto max-sm:pt-[3vh]">
                 {/* Header */}
                 <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 sm:mb-16 md:mb-24 gap-6 sm:gap-8">
                     <h2 className="header-anim text-5xl sm:text-6xl md:text-7xl lg:text-[7.5rem] font-medium tracking-tighter text-black leading-[1] lg:leading-[0.95]">

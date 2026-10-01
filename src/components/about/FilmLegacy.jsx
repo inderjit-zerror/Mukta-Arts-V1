@@ -36,24 +36,7 @@ const slides = [
     desc: "Stepping into the digital era, Mukta Arts began producing web series, short films, and digital content, ensuring their storytelling adapts to new mediums and continues reaching diverse global audiences.",
     bg: "/img/last/2.avif"
   },
-  {
-    title: "Global Reach",
-    year: "2018",
-    desc: "Our films and educational initiatives reached international shores, forging global partnerships and bringing Indian cinema and media education to the world stage, bridging cultural gaps through storytelling.",
-    bg: "/img/last/3.jpg"
-  },
-  {
-    title: "Innovation",
-    year: "2021",
-    desc: "Adopting cutting-edge technology in virtual production, animation, and VFX, we continue to push the boundaries of visual storytelling in our films and across our entire educational curriculum.",
-    bg: "/img/last/1.jpg"
-  },
-  {
-    title: "Future Vision",
-    year: "2026",
-    desc: "Looking ahead, Mukta Arts remains deeply committed to nurturing new talent, embracing new distribution technologies, and continuing its legacy of creating unforgettable cinematic experiences for the next generation.",
-    bg: "/img/last/2.avif"
-  }
+
 ];
 
 const FilmLegacy = () => {

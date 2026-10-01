@@ -194,29 +194,29 @@ const Elder = () => {
                 {/* Camera Recording Overlay */}
                 <div ref={overlayRef} className="absolute inset-0 pointer-events-none z-[880] transition-transform duration-500 ease-out flex items-center justify-center scale-100">
                     {/* Top Left - REC */}
-                    <div className="absolute top-8 left-8 md:top-28 md:left-15 flex items-center gap-3">
-                        <div className="w-3 h-3 md:w-4 md:h-4 bg-red-600 rounded-full animate-[pulse_1.5s_ease-in-out_infinite]"></div>
-                        <span className="text-white font-mono text-sm md:text-base tracking-widest font-bold">REC</span>
+                    <div className="absolute top-6 left-4 md:top-28 md:left-16 flex items-center gap-2 md:gap-3">
+                        <div className="w-2 h-2 md:w-4 md:h-4 bg-red-600 rounded-full animate-[pulse_1.5s_ease-in-out_infinite]"></div>
+                        <span className="text-white font-mono text-xs md:text-base tracking-widest font-bold">REC</span>
                     </div>
 
                     {/* Top Right - Specs */}
-                    <div className="absolute top-8 right-8 md:top-28 md:right-15 flex items-center gap-4">
-                        <span className="text-white/80 font-mono text-xs md:text-sm">4K</span>
-                        <span className="text-white/80 font-mono text-xs md:text-sm border border-white/40 px-1">60FPS</span>
-                        <div className="w-8 h-4 border border-white/60 rounded-sm p-[2px] flex">
+                    <div className="absolute top-6 right-4 md:top-28 md:right-16 flex items-center gap-2 md:gap-4">
+                        <span className="text-white/80 font-mono text-[10px] md:text-sm">4K</span>
+                        <span className="text-white/80 font-mono text-[10px] md:text-sm border border-white/40 px-1">60FPS</span>
+                        <div className="w-6 h-3 md:w-8 md:h-4 border border-white/60 rounded-sm p-[1px] md:p-[2px] flex">
                             <div className="w-full bg-white/80 rounded-[1px]"></div>
                         </div>
                     </div>
 
                     {/* Bottom Left - Settings */}
-                    <div className="absolute bottom-8 left-8 md:bottom-28 md:left-15 text-white/80 font-mono text-xs md:text-sm flex gap-3">
+                    <div className="absolute bottom-6 left-4 md:bottom-28 md:left-16 text-white/80 font-mono text-[10px] md:text-sm flex gap-2 md:gap-3">
                         <span>ISO 800</span>
                         <span>F/2.8</span>
                         <span>1/50</span>
                     </div>
 
                     {/* Bottom Right - Timecode */}
-                    <div className="absolute bottom-8 right-8 md:bottom-28 md:right-15 text-white/80 font-mono text-xs md:text-sm">
+                    <div className="absolute bottom-6 right-4 md:bottom-28 md:right-16 text-white/80 font-mono text-[10px] md:text-sm">
                         TC 01:23:45:12
                     </div>
 
@@ -236,13 +236,13 @@ const Elder = () => {
                 </div>
 
                 {/* List Container */}
-                <div className="absolute left-6 md:left-12 lg:left-20 top-1/2 -translate-y-1/2 z-10 pointer-events-none w-full max-w-[55vw]">
-                    <div ref={listRef} className="flex flex-col items-start gap-4 md:gap-6">
+                <div className="absolute max-sm:top-1/2  left-4 md:left-12 lg:left-20 md:top-1/2 -translate-y-1/2 z-10 pointer-events-none w-full max-w-[85vw] md:max-w-[55vw]">
+                    <div ref={listRef} className="flex flex-col items-start gap-3 md:gap-6">
                         {data.map((item, i) => (
                             <h2
                                 key={i}
                                 ref={el => titlesRef.current[i] = el}
-                                className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-[#7889a1] opacity-50 text-left"
+                                className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-[#7889a1] opacity-50 text-left"
                                 style={{ willChange: "transform, opacity, color" }}
                             >
                                 {item.title}
@@ -256,20 +256,20 @@ const Elder = () => {
                     <div
                         key={i}
                         ref={el => popupsRef.current[i] = el}
-                        className="absolute right-6 md:right-12 lg:right-24 top-0 z-[888] w-64 md:w-80 lg:w-[28rem] flex flex-col gap-3 opacity-0 invisible"
+                        className="absolute right-4 md:right-12 lg:right-24 top-0 z-[888] w-[65vw] sm:w-[50vw] md:w-80 lg:w-[28rem] flex flex-col gap-2 md:gap-3 opacity-0 invisible"
                         style={{ willChange: "transform, opacity" }}
                     >
                         <div className="w-full aspect-video relative overflow-hidden shadow-2xl rounded-sm">
                             <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
                         </div>
                         <div>
-                            <h3 className="text-white font-semibold text-base md:text-lg lg:text-xl mb-1">{item.title}</h3>
-                            <p className="text-white/70 text-xs md:text-sm line-clamp-3">{item.shortDesc}</p>
+                            <h3 className="text-white font-semibold text-sm md:text-lg lg:text-xl mb-1">{item.title}</h3>
+                            <p className="text-white/70 text-[10px] md:text-sm line-clamp-3 leading-snug">{item.shortDesc}</p>
 
-                            <div className="flex justify-between items-center mt-4 relative z-[9999]">
+                            <div className="flex justify-between items-center mt-2 md:mt-4 relative z-[9999]">
                                 <button
                                     onClick={(e) => { e.stopPropagation(); setActiveItem(item); }}
-                                    className="w-10 h-10 rounded-full border border-white/40 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors cursor-pointer"
+                                    className="w-8 h-8 md:w-10 md:h-10 rounded-full border border-white/40 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors cursor-pointer text-sm md:text-base"
                                 >
                                     +
                                 </button>
@@ -279,7 +279,7 @@ const Elder = () => {
                                         target="_blank"
                                         rel="noreferrer"
                                         onClick={(e) => e.stopPropagation()}
-                                        className="text-xs uppercase tracking-widest border-b border-white/40 hover:border-white text-white/80 hover:text-white transition-colors pb-0.5 cursor-pointer py-2"
+                                        className="text-[10px] md:text-xs uppercase tracking-widest border-b border-white/40 hover:border-white text-white/80 hover:text-white transition-colors pb-0.5 cursor-pointer py-1 md:py-2"
                                     >
                                         Website
                                     </a>
@@ -292,9 +292,9 @@ const Elder = () => {
                 {/* Final Text */}
                 <div
                     ref={finalRef}
-                    className="absolute z-30 w-full max-w-5xl px-6 md:px-12 opacity-0 invisible pointer-events-none"
+                    className="absolute z-30 w-full max-w-5xl px-4 md:px-12 opacity-0 invisible pointer-events-none"
                 >
-                    <h4 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-white/90 flex flex-wrap gap-x-2 md:gap-x-3 gap-y-2">
+                    <h4 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-white/90 flex flex-wrap gap-x-1.5 md:gap-x-3 gap-y-1 md:gap-y-2">
                         {"For over four decades, Mukta Arts has shaped Indian cinema through unforgettable stories, visionary filmmaking, and a lasting passion for the art of storytelling."
                             .split(" ")
                             .map((word, i) => (
@@ -314,12 +314,12 @@ const Elder = () => {
                 >
                     <button
                         onClick={() => setActiveItem(null)}
-                        className="absolute top-4 left-4 md:top-8 md:left-8 text-white text-1xl font-extralight hover:text-white/60 transition-colors cursor-pointer w-12 h-12 flex items-center justify-center z-20 bg-black/20 hover:bg-black/40 backdrop-blur-md rounded-full"
+                        className="absolute top-4 left-4 md:top-8 md:left-8 text-white text-lg md:text-xl font-extralight hover:text-white/60 transition-colors cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center z-20 bg-black/20 hover:bg-black/40 backdrop-blur-md rounded-full"
                     >
                         ✕
                     </button>
 
-                    <div className="flex-1 overflow-y-auto p-6 pt-20 md:p-16 lg:p-20 flex flex-col">
+                    <div className="flex-1 overflow-y-auto p-5 pt-20 md:p-16 lg:p-20 flex flex-col">
                         {activeItem && (
                             <>
                                 {/* <div className="w-full aspect-video rounded-sm overflow-hidden mb-10 flex-shrink-0 shadow-2xl relative">
@@ -327,19 +327,19 @@ const Elder = () => {
                                     <img src={activeItem.image} alt={activeItem.title} className="w-full h-full object-cover" />
                                 </div> */}
 
-                                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-wide">{activeItem.title}</h2>
+                                <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 tracking-wide">{activeItem.title}</h2>
 
-                                <p className="text-white/80 text-sm md:text-base lg:text-lg font-light leading-relaxed whitespace-pre-wrap">
+                                <p className="text-white/80 text-xs sm:text-sm md:text-base lg:text-lg font-light leading-relaxed whitespace-pre-wrap">
                                     {activeItem.fullDesc}
                                 </p>
 
                                 {activeItem.website && (
-                                    <div className="mt-12 mb-4">
+                                    <div className="mt-8 md:mt-12 mb-4">
                                         <a
                                             href={activeItem.website}
                                             target="_blank"
                                             rel="noreferrer"
-                                            className="inline-flex items-center justify-center px-8 py-4 bg-white text-black hover:bg-gray-200 text-xs md:text-sm font-medium tracking-[0.2em] uppercase transition-colors"
+                                            className="inline-flex items-center justify-center px-6 py-3 md:px-8 md:py-4 bg-white text-black hover:bg-gray-200 text-[10px] md:text-xs lg:text-sm font-medium tracking-[0.2em] uppercase transition-colors"
                                         >
                                             Visit Website
                                         </a>

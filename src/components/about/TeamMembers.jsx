@@ -90,26 +90,26 @@ const TeamMembers = () => {
   const activePerson = team[activeIndex];
 
   return (
-    <section ref={sectionRef} className="relative w-full h-screen bg-[#00609C] flex items-center overflow-hidden py-10">
-      <div className="w-full mx-auto px-4 md:px-8  flex flex-col lg:flex-row gap-8 lg:gap-16 w-full h-full lg:max-h-[700px]">
+    <section ref={sectionRef} className="relative w-full h-[100svh] bg-[#00609C] flex items-center overflow-hidden py-6 lg:py-10">
+      <div className="w-full mx-auto px-4 md:px-8 flex flex-col lg:flex-row gap-4 lg:gap-16 w-full h-full lg:max-h-[700px]">
 
         {/* Left Column: Heading */}
-        <div className="lg:w-3/12 flex flex-col justify-start pt-10">
-          <p className="text-white/80 text-sm tracking-wide uppercase mb-3">Team Members</p>
-          <h5 className="text-4xl lg:text-5xl font-semibold text-white leading-tight tracking-tight">
-            People Behind<br />The Vision
+        <div className="lg:w-3/12 flex flex-col justify-start lg:pt-10 shrink-0">
+          <p className="text-white/80 text-xs lg:text-sm tracking-wide uppercase mb-1 lg:mb-3">Team Members</p>
+          <h5 className="text-3xl lg:text-5xl font-semibold text-white leading-tight tracking-tight">
+            People Behind<br className="hidden lg:block" /> The Vision
           </h5>
         </div>
 
         {/* Middle Column: Names List */}
-        <div className="lg:w-4/12 relative h-full max-h-[50vh] lg:max-h-full flex items-start pt-10">
+        <div className="lg:w-4/12 relative h-[30vh] lg:h-full lg:max-h-full flex items-start shrink-0">
           {/* Scrollable Container (hidden overflow, controlled by GSAP) */}
           <div className="relative w-full h-full overflow-hidden">
             <div ref={namesInnerRef} className="w-full relative flex flex-col">
               {team.map((person, i) => (
                 <div
                   key={i}
-                  className={`h-12 flex items-center transition-all duration-300 ${activeIndex === i ? 'text-white text-[1.35rem] font-medium' : 'text-white/50 text-[1.05rem] font-light'
+                  className={`h-12 flex items-center transition-all duration-300 ${activeIndex === i ? 'text-white text-lg lg:text-[1.35rem] font-medium' : 'text-white/50 text-base lg:text-[1.05rem] font-light'
                     }`}
                 >
                   {person.name}
@@ -119,7 +119,7 @@ const TeamMembers = () => {
           </div>
 
           {/* Right Border Line & Indicator */}
-          <div className="absolute right-0 top-0 bottom-10 w-[1px] bg-white/20">
+          <div className="absolute right-0 top-0 bottom-0 lg:bottom-10 w-[1px] bg-white/20">
             {/* Bold solid line that draws down */}
             <div
               ref={lineFillRef}
@@ -136,33 +136,33 @@ const TeamMembers = () => {
         </div>
 
         {/* Right Column: Person Info */}
-        <div className="lg:w-5/12 h-full flex flex-col justify-start lg:justify-center lg:pl-12 pt-10 lg:pt-0 relative">
+        <div className="lg:w-5/12 flex-1 flex flex-col justify-start lg:justify-center lg:pl-12 relative min-h-0 mt-4 lg:mt-0">
 
-          <div className="relative w-full aspect-[4/3] mb-6 overflow-hidden bg-black/10 shadow-xl transition-all duration-500">
+          <div className="relative w-full shrink-0 aspect-[16/9] lg:aspect-[4/3] mb-4 lg:mb-6 overflow-hidden bg-black/10 shadow-xl transition-all duration-500">
             <Image
               src={activePerson.image}
               alt={activePerson.name}
               fill
-              className="object-cover"
+              className="object-cover object-center"
               sizes="(max-width: 768px) 100vw, 40vw"
               priority
             />
           </div>
 
-          <div className="text-white text-sm md:text-[0.95rem] space-y-1 mb-8 opacity-90 font-light">
+          <div className="text-white text-xs md:text-[0.95rem] space-y-1 mb-4 lg:mb-8 opacity-90 font-light overflow-y-auto">
             {activePerson.titles.map((title, i) => (
               <p key={i}>{title}</p>
             ))}
           </div>
 
-          <div className="flex gap-4 items-center">
-            <a href="#" className="w-[34px] h-[34px] border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#00609C] transition-colors">
-              <RiFacebookFill size={16} />
+          <div className="flex gap-3 lg:gap-4 items-center mt-auto lg:mt-0 pb-4 lg:pb-0">
+            <a href="#" className="w-[30px] h-[30px] lg:w-[34px] lg:h-[34px] border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#00609C] transition-colors shrink-0">
+              <RiFacebookFill size={14} className="lg:w-4 lg:h-4" />
             </a>
-            <a href="#" className="w-[34px] h-[34px] border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#00609C] transition-colors">
-              <RiTwitterXLine size={16} />
+            <a href="#" className="w-[30px] h-[30px] lg:w-[34px] lg:h-[34px] border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#00609C] transition-colors shrink-0">
+              <RiTwitterXLine size={14} className="lg:w-4 lg:h-4" />
             </a>
-            <a href="#" className="px-5 py-[7px] border border-white/30 text-[0.65rem] md:text-xs font-semibold tracking-widest text-white hover:bg-white hover:text-[#00609C] transition-colors uppercase">
+            <a href="#" className="px-3 py-[6px] lg:px-5 lg:py-[7px] border border-white/30 text-[0.6rem] lg:text-xs font-semibold tracking-widest text-white hover:bg-white hover:text-[#00609C] transition-colors uppercase whitespace-nowrap">
               View Full Profile
             </a>
           </div>

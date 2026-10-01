@@ -13,8 +13,7 @@ const VideoSection = () => {
                 className="absolute inset-0 w-full h-full object-cover  scale-[2] group-hover:scale-105 transition-transform duration-700 ease-in-out"
             />
 
-            {/* Black Gradient Overlay */}
-            {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/80 pointer-events-none"></div> */}
+
 
 
         </section>

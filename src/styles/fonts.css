@@ -201,3 +201,30 @@ p {
   line-height: 1.2rem;
   font-family: 'SwitzerR';
 }
+
+
+@media (max-width: 650px) {
+  h2 {
+    font-size: 4rem;
+    line-height: 4.2rem;
+    font-family: 'SwitzerSB';
+  }
+
+  h4 {
+    font-size: 2rem;
+    line-height: 2.2rem;
+    font-family: 'SwitzerSB';
+  }
+
+  h5 {
+    font-size: 1.8rem;
+    line-height: 1.8rem;
+    font-family: 'SwitzerSB';
+  }
+
+  p {
+    font-size: 1.2rem;
+    line-height: 1.3rem;
+    font-family: 'SwitzerR';
+  }
+}
