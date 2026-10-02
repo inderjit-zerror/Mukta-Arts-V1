@@ -42,7 +42,7 @@ const OFHero = () => {
             <div className="absolute inset-0 w-full h-full z-0">
                 {/* Note: Update the src to your actual background image */}
                 <img
-                    src="https://images.unsplash.com/photo-1704688618021-557e23d44850?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    src="https://images.unsplash.com/photo-1638961837480-5aee8a8f90cd?q=80&w=2064&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Whistling Woods Background"
 
                     className="object-cover w-full h-full object-center"
