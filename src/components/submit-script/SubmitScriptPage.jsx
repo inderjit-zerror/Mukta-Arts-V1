@@ -134,12 +134,12 @@ const SubmitScriptPage = () => {
 
                     {/* Image */}
                     <div className="image-anim lg:col-span-1 relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-auto overflow-hidden">
-                        <Image
-                            src="/img/home/1.jpg"
+                        <img
+                            src="https://images.unsplash.com/photo-1515634928627-2a4e0dae3ddf?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                             alt="Script writing placeholder"
-                            fill
-                            className="object-cover object-center"
-                            sizes="(max-width: 1024px) 100vw, 33vw"
+                            // fill
+                            className="object-cover w-full h-full  object-center"
+                            // sizes="(max-width: 1024px) 100vw, 33vw"
                         />
                     </div>
                 </div>

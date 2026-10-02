@@ -28,7 +28,7 @@ const LocationInfo = () => {
     return (
         <section className="bg-[#FAFAFA] py-16 md:py-24 px-4 md:px-8 lg:px-16 border-t border-[#202020]">
             <div className=" mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-24">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-18">
 
                     {/* Map */}
                     <div className="lg:col-span-2 w-full h-[450px] lg:h-auto bg-gray-200">
